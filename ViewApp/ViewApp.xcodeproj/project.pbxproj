@@ -478,8 +478,6 @@
 		9078C6662C7876E400FD11BA /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B88C252C77280D00A77D50 /* CoreMedia.framework */; };
 		9078C6682C78771200FD11BA /* CoreMediaIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C6672C78771200FD11BA /* CoreMediaIO.framework */; };
 		9078C6692C78771F00FD11BA /* CoreMediaIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C6672C78771200FD11BA /* CoreMediaIO.framework */; };
-		907900062C7EBF1100B670E9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 907900032C7EBF0500B670E9 /* libz.dylib */; };
-		907900072C7EBF1100B670E9 /* libz.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 907900032C7EBF0500B670E9 /* libz.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9079001E2C7F1B3400B670E9 /* ObsApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9079001C2C7F1B3400B670E9 /* ObsApp.cpp */; };
 		9079002C2C80609D00B670E9 /* MyDisplayView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9079002B2C80609D00B670E9 /* MyDisplayView.mm */; };
 		9079FFF72C7EB82700B670E9 /* obs-ffmpeg.plugin in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 90E7CCA92C7D655000EE024E /* obs-ffmpeg.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -928,7 +926,6 @@
 		90F6C58E2C880B35003483EC /* vi-VN.ini in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = 90F6C50D2C880A7E003483EC /* vi-VN.ini */; };
 		90F6C58F2C880B35003483EC /* zh-CN.ini in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = 90F6C50E2C880A7E003483EC /* zh-CN.ini */; };
 		90F6C5902C880B35003483EC /* zh-TW.ini in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = 90F6C50F2C880A7E003483EC /* zh-TW.ini */; };
-		90F6C5B82C88415F003483EC /* libqjpeg.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 90F6C5B72C884126003483EC /* libqjpeg.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		90F6C6692C8869DE003483EC /* container2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90F6C6682C8869DE003483EC /* container2.png */; };
 		F353DD5E2E5446830036D0D4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C6572C78665900FD11BA /* AVFoundation.framework */; };
 		F37B21782E52BC9200B0C754 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B88C392C77288100A77D50 /* libiconv.tbd */; };
@@ -1291,9 +1288,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				907900072C7EBF1100B670E9 /* libz.dylib in Embed Frameworks */,
 				9088D06E2C789851007EB8B5 /* liblibobs-opengl.dylib in Embed Frameworks */,
-				90F6C5B82C88415F003483EC /* libqjpeg.dylib in Embed Frameworks */,
 				9078C2F72C78591D00FD11BA /* libcore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -2638,7 +2633,6 @@
 				90B88C282C77281700A77D50 /* VideoToolbox.framework in Frameworks */,
 				90B88C262C77280D00A77D50 /* CoreMedia.framework in Frameworks */,
 				9078C6632C78769D00FD11BA /* AVFoundation.framework in Frameworks */,
-				907900062C7EBF1100B670E9 /* libz.dylib in Frameworks */,
 				90B88C382C77285600A77D50 /* libjansson.a in Frameworks */,
 				9078C2F62C78591D00FD11BA /* libcore.framework in Frameworks */,
 				90B88C3A2C77288B00A77D50 /* libiconv.tbd in Frameworks */,
@@ -4968,8 +4962,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ViewApp/ffmpeg/lib",
 					"$(PROJECT_DIR)/ViewApp/libs",
-					"$(PROJECT_DIR)/ViewApp/ffmpeg/dlib",
-					"$(PROJECT_DIR)/ViewApp/ffmpeg/dlib1",
 					"$(PROJECT_DIR)/ViewApp/openssl/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
@@ -5020,8 +5012,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ViewApp/ffmpeg/lib",
 					"$(PROJECT_DIR)/ViewApp/libs",
-					"$(PROJECT_DIR)/ViewApp/ffmpeg/dlib",
-					"$(PROJECT_DIR)/ViewApp/ffmpeg/dlib1",
 					"$(PROJECT_DIR)/ViewApp/openssl/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
@@ -5230,11 +5220,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ViewApp/ffmpeg/lib",
 					"$(PROJECT_DIR)/ViewApp/libs",
-					/usr/local/Cellar/sdl2/2.26.2/lib,
-					"$(PROJECT_DIR)/ViewApp/ffmpeg/dlib",
-					"$(PROJECT_DIR)/ViewApp/ffmpeg/dlib1",
-					/usr/local/Cellar/sdl2/2.30.1/lib,
-					"$(PROJECT_DIR)/ViewApp/sdl",
 					"$(PROJECT_DIR)/ViewApp/deps",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
@@ -5277,11 +5262,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ViewApp/ffmpeg/lib",
 					"$(PROJECT_DIR)/ViewApp/libs",
-					/usr/local/Cellar/sdl2/2.26.2/lib,
-					"$(PROJECT_DIR)/ViewApp/ffmpeg/dlib",
-					"$(PROJECT_DIR)/ViewApp/ffmpeg/dlib1",
-					/usr/local/Cellar/sdl2/2.30.1/lib,
-					"$(PROJECT_DIR)/ViewApp/sdl",
 					"$(PROJECT_DIR)/ViewApp/deps",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;

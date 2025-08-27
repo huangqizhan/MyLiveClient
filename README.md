@@ -1,3 +1,2 @@
 # MyLiveClient
-
-obs
+learning fraom obs
