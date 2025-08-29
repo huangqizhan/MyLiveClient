@@ -11,13 +11,10 @@
 
 
 using namespace std;
-
-string GenerateTimeDateFilename(const char *extension, bool noSpace)
-{
+static string GenerateTimeDateFilename(const char *extension, bool noSpace){
     time_t    now = time(0);
     char      file[256] = {};
     struct tm *cur_time;
-
     cur_time = localtime(&now);
     snprintf(file, sizeof(file), "%d-%02d-%02d%c%02d-%02d-%02d.%s",
         cur_time->tm_year + 1900,
@@ -31,17 +28,13 @@ string GenerateTimeDateFilename(const char *extension, bool noSpace)
 
     return string(file);
 }
-
-string GenerateSpecifiedFilename(const char *extension, bool noSpace,
-    const char *format)
-{
+static string GenerateSpecifiedFilename(const char *extension, bool noSpace, const char *format){
     BPtr<char> filename = os_generate_formatted_filename(extension,
         !noSpace, format);
     return string(filename);
 }
 
-static void OBSStreamStarting(void *data, calldata_t *params)
-{
+static void OBSStreamStarting(void *data, calldata_t *params){
     BasicOutputHandler *output = static_cast<BasicOutputHandler*>(data);
     obs_output_t *obj = (obs_output_t*)calldata_ptr(params, "output");
 
@@ -53,8 +46,7 @@ static void OBSStreamStarting(void *data, calldata_t *params)
     output->main->StreamDelayStarting(sec);
 }
 
-static void OBSStreamStopping(void *data, calldata_t *params)
-{
+static void OBSStreamStopping(void *data, calldata_t *params){
     BasicOutputHandler *output = static_cast<BasicOutputHandler*>(data);
     obs_output_t *obj = (obs_output_t*)calldata_ptr(params, "output");
 
@@ -66,96 +58,73 @@ static void OBSStreamStopping(void *data, calldata_t *params)
         output->main->StreamDelayStopping(sec);
 }
 
-static void OBSStartStreaming(void *data, calldata_t *params)
-{
+static void OBSStartStreaming(void *data, calldata_t *params){
     BasicOutputHandler *output = static_cast<BasicOutputHandler*>(data);
     output->streamingActive = true;
     output->main->StreamingStart();
     UNUSED_PARAMETER(params);
 }
 
-static void OBSStopStreaming(void *data, calldata_t *params)
-{
+static void OBSStopStreaming(void *data, calldata_t *params){
     BasicOutputHandler *output = static_cast<BasicOutputHandler*>(data);
     int code = (int)calldata_int(params, "code");
     const char *last_error = calldata_string(params, "last_error");
-
     output->streamingActive = false;
     output->delayActive = false;
     output->main->StreamingStop(code, last_error);
 }
 
-static void OBSStartRecording(void *data, calldata_t *params)
-{
+static void OBSStartRecording(void *data, calldata_t *params){
     BasicOutputHandler *output = static_cast<BasicOutputHandler*>(data);
-
     output->recordingActive = true;
-
     output->main->RecordingStart();
-
     UNUSED_PARAMETER(params);
 }
 
-static void OBSStopRecording(void *data, calldata_t *params)
-{
+static void OBSStopRecording(void *data, calldata_t *params){
     BasicOutputHandler *output = static_cast<BasicOutputHandler*>(data);
     int code = (int)calldata_int(params, "code");
-
     output->recordingActive = false;
-
     output->main->RecordingStop(code);
-
     UNUSED_PARAMETER(params);
 }
 
-static void OBSRecordStopping(void *data, calldata_t *params)
-{
+static void OBSRecordStopping(void *data, calldata_t *params){
     BasicOutputHandler *output = static_cast<BasicOutputHandler*>(data);
     output->main->RecordStopping();
     UNUSED_PARAMETER(params);
 }
 
-static void OBSStartReplayBuffer(void *data, calldata_t *params)
-{
+static void OBSStartReplayBuffer(void *data, calldata_t *params){
     BasicOutputHandler *output = static_cast<BasicOutputHandler*>(data);
-
     output->replayBufferActive = true;
-
     output->main->ReplayBufferStart();
-
     UNUSED_PARAMETER(params);
 }
 
-static void OBSStopReplayBuffer(void *data, calldata_t *params)
-{
+static void OBSStopReplayBuffer(void *data, calldata_t *params){
     BasicOutputHandler *output = static_cast<BasicOutputHandler*>(data);
     int code = (int)calldata_int(params, "code");
-
     output->replayBufferActive = false;
-
     output->main->ReplayBufferStop(code);
-
     UNUSED_PARAMETER(params);
 }
 
-static void OBSReplayBufferStopping(void *data, calldata_t *params)
-{
+static void OBSReplayBufferStopping(void *data, calldata_t *params){
     BasicOutputHandler *output = static_cast<BasicOutputHandler*>(data);
     output->main->ReplayBufferStopping();
     UNUSED_PARAMETER(params);
 }
 
-static void FindBestFilename(string &strPath, bool noSpace)
-{
+static void FindBestFilename(string &strPath, bool noSpace){
     int num = 2;
-
     if (!os_file_exists(strPath.c_str()))
         return;
 
     const char *ext = strrchr(strPath.c_str(), '.');
     if (!ext)
         return;
-
+    ///此处在同一块内存中 strPath  才能相减 
     int extStart = int(ext - strPath.c_str());
     for (;;) {
         string testPath = strPath;
@@ -176,10 +145,8 @@ static void FindBestFilename(string &strPath, bool noSpace)
 }
 
 /* ------------------------------------------------------------------------ */
-
 static bool CreateAACEncoder(OBSEncoder &res, string &id, int bitrate,
-        const char *name, size_t idx)
-{
+        const char *name, size_t idx){
     const char *id_ = GetAACEncoderForBitrate(bitrate);
     if (!id_) {
         id.clear();
@@ -192,25 +159,23 @@ static bool CreateAACEncoder(OBSEncoder &res, string &id, int bitrate,
 
     id = id_;
     res = obs_audio_encoder_create(id_, name, nullptr, idx, nullptr);
-
     if (res) {
         obs_encoder_release(res);
         return true;
     }
-
     return false;
 }
 
 /* ------------------------------------------------------------------------ */
-
-config_t* BasicOutputHandler::config()const
-{
+config_t* BasicOutputHandler::config()const{
     return main->basicConfig();
 }
 
 struct SimpleOutput : BasicOutputHandler {
+    
     OBSEncoder             aacStreamingEncoder;
     OBSEncoder             h264StreamingEncoder;
+    
     OBSEncoder             aacRecordingEncoder;
     OBSEncoder             h264RecordingEncoder;
 
@@ -229,6 +194,7 @@ struct SimpleOutput : BasicOutputHandler {
     int CalcCRF(int crf);
 
     void UpdateStreamingSettings_amd(obs_data_t *settings, int bitrate);
+    //crf 恒定质量因子  (可动态调整qp值)
     void UpdateRecordingSettings_x264_crf(int crf);
     void UpdateRecordingSettings_qsv11(int crf);
     void UpdateRecordingSettings_nvenc(int cqp);
@@ -259,9 +225,8 @@ struct SimpleOutput : BasicOutputHandler {
     virtual bool RecordingActive() const override;
     virtual bool ReplayBufferActive() const override;
 };
-
-void SimpleOutput::LoadRecordingPreset_Lossless()
-{
+///无损压缩
+void SimpleOutput::LoadRecordingPreset_Lossless(){
     fileOutput = obs_output_create("ffmpeg_output",
             "simple_ffmpeg_output", nullptr, nullptr);
     if (!fileOutput)
@@ -278,8 +243,7 @@ void SimpleOutput::LoadRecordingPreset_Lossless()
     obs_data_release(settings);
 }
 
-void SimpleOutput::LoadRecordingPreset_h264(const char *encoderId)
-{
+void SimpleOutput::LoadRecordingPreset_h264(const char *encoderId){
     h264RecordingEncoder = obs_video_encoder_create(encoderId,
             "simple_h264_recording", nullptr, nullptr);
     if (!h264RecordingEncoder)
@@ -287,8 +251,7 @@ void SimpleOutput::LoadRecordingPreset_h264(const char *encoderId)
     obs_encoder_release(h264RecordingEncoder);
 }
 
-void SimpleOutput::LoadStreamingPreset_h264(const char *encoderId)
-{
+void SimpleOutput::LoadStreamingPreset_h264(const char *encoderId){
     h264StreamingEncoder = obs_video_encoder_create(encoderId,
             "simple_h264_stream", nullptr, nullptr);
     if (!h264StreamingEncoder)
@@ -296,32 +259,31 @@ void SimpleOutput::LoadStreamingPreset_h264(const char *encoderId)
     obs_encoder_release(h264StreamingEncoder);
 }
 
-void SimpleOutput::LoadRecordingPreset()
-{
+void SimpleOutput::LoadRecordingPreset(){
     const char *quality = config_get_string(config(), "SimpleOutput",
             "RecQuality");
     const char *encoder = config_get_string(config(), "SimpleOutput",
             "RecEncoder");
-
+    //Lossless 无损压缩  Stream 推流式压缩 有损
     videoEncoder = encoder;
     videoQuality = quality;
     ffmpegOutput = false;
 
-    if (strcmp(quality, "Stream") == 0) {
+    if (strcmp(quality, "Stream") == 0) {///推流  有损压缩
         h264RecordingEncoder = h264StreamingEncoder;
         aacRecordingEncoder = aacStreamingEncoder;
         usingRecordingPreset = false;
         return;
 
-    } else if (strcmp(quality, "Lossless") == 0) {
+    } else if (strcmp(quality, "Lossless") == 0) { //无损压缩
         LoadRecordingPreset_Lossless();
         usingRecordingPreset = true;
         ffmpegOutput = true;
         return;
 
     } else {
+        //硬件编码
         lowCPUx264 = false;
-
         if (strcmp(encoder, SIMPLE_ENCODER_X264) == 0) {
             LoadRecordingPreset_h264("obs_x264");
         } else if (strcmp(encoder, SIMPLE_ENCODER_X264_LOWCPU) == 0) {
@@ -365,8 +327,8 @@ SimpleOutput::SimpleOutput(ObsBasic *main_) : BasicOutputHandler(main_)
     LoadRecordingPreset();
 
     if (!ffmpegOutput) {
-        bool useReplayBuffer = config_get_bool(config(),
-                "SimpleOutput", "RecRB");
+        //录制缓存
+        bool useReplayBuffer = config_get_bool(config(),"SimpleOutput", "RecRB");
         if (useReplayBuffer) {
             const char *str = config_get_string(config(),
                     "Hotkeys", "ReplayBuffer");
@@ -415,8 +377,7 @@ int SimpleOutput::GetAudioBitrate() const
     return FindClosestAvailableAACBitrate(bitrate);
 }
 
-void SimpleOutput::Update()
-{
+void SimpleOutput::Update(){
     obs_data_t *h264Settings = obs_data_create();
     obs_data_t *aacSettings  = obs_data_create();
 
@@ -485,8 +446,7 @@ void SimpleOutput::Update()
     obs_data_release(aacSettings);
 }
 
-void SimpleOutput::UpdateRecordingAudioSettings()
-{
+void SimpleOutput::UpdateRecordingAudioSettings(){
     obs_data_t *settings = obs_data_create();
     obs_data_set_int(settings, "bitrate", 192);
     obs_data_set_string(settings, "rate_control", "CBR");
@@ -497,9 +457,7 @@ void SimpleOutput::UpdateRecordingAudioSettings()
 }
 
 #define CROSS_DIST_CUTOFF 2000.0
-
-int SimpleOutput::CalcCRF(int crf)
-{
+int SimpleOutput::CalcCRF(int crf){
     int cx = config_get_uint(config(), "Video", "OutputCX");
     int cy = config_get_uint(config(), "Video", "OutputCY");
     double fCX = double(cx);
@@ -516,8 +474,7 @@ int SimpleOutput::CalcCRF(int crf)
     return crf - int(crfResReduction);
 }
 
-void SimpleOutput::UpdateRecordingSettings_x264_crf(int crf)
-{
+void SimpleOutput::UpdateRecordingSettings_x264_crf(int crf){
     obs_data_t *settings = obs_data_create();
     obs_data_set_int(settings, "crf", crf);
     obs_data_set_bool(settings, "use_bufsize", true);
@@ -531,8 +488,7 @@ void SimpleOutput::UpdateRecordingSettings_x264_crf(int crf)
     obs_data_release(settings);
 }
 
-static bool icq_available(obs_encoder_t *encoder)
-{
+static bool icq_available(obs_encoder_t *encoder){
     obs_properties_t *props = obs_encoder_properties(encoder);
     obs_property_t *p = obs_properties_get(props, "rate_control");
     bool icq_found = false;
@@ -550,8 +506,7 @@ static bool icq_available(obs_encoder_t *encoder)
     return icq_found;
 }
 
-void SimpleOutput::UpdateRecordingSettings_qsv11(int crf)
-{
+void SimpleOutput::UpdateRecordingSettings_qsv11(int crf){
     bool icq = icq_available(h264RecordingEncoder);
 
     obs_data_t *settings = obs_data_create();
@@ -572,8 +527,7 @@ void SimpleOutput::UpdateRecordingSettings_qsv11(int crf)
     obs_data_release(settings);
 }
 
-void SimpleOutput::UpdateRecordingSettings_nvenc(int cqp)
-{
+void SimpleOutput::UpdateRecordingSettings_nvenc(int cqp){
     obs_data_t *settings = obs_data_create();
     obs_data_set_string(settings, "rate_control", "CQP");
     obs_data_set_string(settings, "profile", "high");
@@ -586,8 +540,7 @@ void SimpleOutput::UpdateRecordingSettings_nvenc(int cqp)
 }
 
 void SimpleOutput::UpdateStreamingSettings_amd(obs_data_t *settings,
-        int bitrate)
-{
+        int bitrate){
     // Static Properties
     obs_data_set_int(settings, "Usage", 0);
     obs_data_set_int(settings, "Profile", 100); // High
@@ -604,8 +557,7 @@ void SimpleOutput::UpdateStreamingSettings_amd(obs_data_t *settings,
     obs_data_set_int(settings, "BFrame.Pattern", 0);
 }
 
-void SimpleOutput::UpdateRecordingSettings_amd_cqp(int cqp)
-{
+void SimpleOutput::UpdateRecordingSettings_amd_cqp(int cqp){
     obs_data_t *settings = obs_data_create();
 
     // Static Properties
@@ -629,8 +581,7 @@ void SimpleOutput::UpdateRecordingSettings_amd_cqp(int cqp)
     obs_data_release(settings);
 }
 
-void SimpleOutput::UpdateRecordingSettings()
-{
+void SimpleOutput::UpdateRecordingSettings(){
     bool ultra_hq = (videoQuality == "HQ");
     int crf = CalcCRF(ultra_hq ? 16 : 23);
 
@@ -648,8 +599,7 @@ void SimpleOutput::UpdateRecordingSettings()
     }
 }
 
-inline void SimpleOutput::SetupOutputs()
-{
+inline void SimpleOutput::SetupOutputs(){
     SimpleOutput::Update();
     obs_encoder_set_video(h264StreamingEncoder, obs_get_video());
     obs_encoder_set_audio(aacStreamingEncoder,  obs_get_audio());
@@ -665,8 +615,7 @@ inline void SimpleOutput::SetupOutputs()
     }
 }
 
-const char *FindAudioEncoderFromCodec(const char *type)
-{
+const char *FindAudioEncoderFromCodec(const char *type){
     const char *alt_enc_id = nullptr;
     size_t i = 0;
 
@@ -680,8 +629,7 @@ const char *FindAudioEncoderFromCodec(const char *type)
     return nullptr;
 }
 
-bool SimpleOutput::StartStreaming(obs_service_t *service)
-{
+bool SimpleOutput::StartStreaming(obs_service_t *service){
     if (!Active())
         SetupOutputs();
 
@@ -818,8 +766,7 @@ static void remove_reserved_file_characters(string &s)
     replace(s.begin(), s.end(), '<', '_');
 }
 
-static void ensure_directory_exists(string &path)
-{
+static void ensure_directory_exists(string &path){
     replace(path.begin(), path.end(), '\\', '/');
 
     size_t last = path.rfind('/');
@@ -830,8 +777,7 @@ static void ensure_directory_exists(string &path)
     os_mkdirs(directory.c_str());
 }
 
-void SimpleOutput::UpdateRecording()
-{
+void SimpleOutput::UpdateRecording(){
     if (replayBufferActive || recordingActive)
         return;
 
@@ -857,8 +803,7 @@ void SimpleOutput::UpdateRecording()
     recordingConfigured = true;
 }
 
-bool SimpleOutput::ConfigureRecording(bool updateReplayBuffer)
-{
+bool SimpleOutput::ConfigureRecording(bool updateReplayBuffer){
     const char *path = config_get_string(config(),
             "SimpleOutput", "FilePath");
     const char *format = config_get_string(config(),
@@ -873,12 +818,13 @@ bool SimpleOutput::ConfigureRecording(bool updateReplayBuffer)
                 "OverwriteIfExists");
     const char *rbPrefix = config_get_string(config(), "SimpleOutput",
                 "RecRBPrefix");
+    
     const char *rbSuffix = config_get_string(config(), "SimpleOutput",
                 "RecRBSuffix");
-    int rbTime = config_get_int(config(), "SimpleOutput",
-            "RecRBTime");
-    int rbSize = config_get_int(config(), "SimpleOutput",
-            "RecRBSize");
+    //录制缓存时长
+    int rbTime = (int)config_get_int(config(), "SimpleOutput", "RecRBTime");
+    ///录制缓存大小
+    int rbSize = (int)config_get_int(config(), "SimpleOutput", "RecRBSize");
 
     os_dir_t *dir = path && path[0] ? os_opendir(path) : nullptr;
 
@@ -945,8 +891,7 @@ bool SimpleOutput::ConfigureRecording(bool updateReplayBuffer)
     return true;
 }
 
-bool SimpleOutput::StartRecording()
-{
+bool SimpleOutput::StartRecording(){
     UpdateRecording();
     if (!ConfigureRecording(false))
         return false;
@@ -958,8 +903,7 @@ bool SimpleOutput::StartRecording()
     return true;
 }
 
-bool SimpleOutput::StartReplayBuffer()
-{
+bool SimpleOutput::StartReplayBuffer(){
     UpdateRecording();
     if (!ConfigureRecording(true))
         return false;
@@ -967,46 +911,39 @@ bool SimpleOutput::StartReplayBuffer()
         blog(LOG_ERROR, "Output.StartReplayFailed");
         return false;
     }
-
     return true;
 }
 
-void SimpleOutput::StopStreaming(bool force)
-{
+void SimpleOutput::StopStreaming(bool force){
     if (force)
         obs_output_force_stop(streamOutput);
     else
         obs_output_stop(streamOutput);
 }
 
-void SimpleOutput::StopRecording(bool force)
-{
+void SimpleOutput::StopRecording(bool force){
     if (force)
         obs_output_force_stop(fileOutput);
     else
         obs_output_stop(fileOutput);
 }
 
-void SimpleOutput::StopReplayBuffer(bool force)
-{
+void SimpleOutput::StopReplayBuffer(bool force){
     if (force)
         obs_output_force_stop(replayBuffer);
     else
         obs_output_stop(replayBuffer);
 }
 
-bool SimpleOutput::StreamingActive() const
-{
+bool SimpleOutput::StreamingActive() const{
     return obs_output_active(streamOutput);
 }
 
-bool SimpleOutput::RecordingActive() const
-{
+bool SimpleOutput::RecordingActive() const{
     return obs_output_active(fileOutput);
 }
 
-bool SimpleOutput::ReplayBufferActive() const
-{
+bool SimpleOutput::ReplayBufferActive() const{
     return obs_output_active(replayBuffer);
 }
 

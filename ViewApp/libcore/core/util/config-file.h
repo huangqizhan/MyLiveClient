@@ -17,12 +17,56 @@
 #pragma once
 
 #include "c99defs.h"
-
 /*
  * Generic ini-style config file functions
  *
  * NOTE: It is highly recommended to use the default value functions (bottom of
  * the file) before reading any variables from config files.
+ .
+ ├── basic
+ │   ├── profiles
+ │   │   └── 未命名
+ │   │       ├── basic.ini
+ │   │       ├── service.json
+ │   │       ├── service.json.bak
+ │   │       └── streamEncoder.json
+ │   └── scenes
+ │       ├── 未命名.json
+ │       └── 未命名.json.bak
+ ├── global.ini  //全局的项目配置   比如使用opengl/wake
+ ├── logs
+ │   ├── 2025-08-26 18-45-46.txt
+ │   ├── 2025-08-27 17-04-29.txt
+ │   ├── 2025-08-27 18-35-35.txt
+ │   ├── 2025-08-29 16-35-06.txt
+ │   ├── 2025-08-29 16-35-38.txt
+ │   ├── 2025-08-29 16-35-53.txt
+ │   ├── 2025-08-29 16-36-46.txt
+ │   ├── 2025-08-29 16-38-39.txt
+ │   ├── 2025-08-29 16-39-00.txt
+ │   └── 2025-08-29 16-39-42.txt
+ ├── plugin_config
+ │   ├── obs-websocket
+ │   │   └── config.json
+ │   ├── rtmp-services
+ │   │   ├── amazon_ivs_ingests.json
+ │   │   ├── package.json
+ │   │   ├── services.json
+ │   │   └── twitch_ingests.json
+ │   └── text-freetype2
+ ├── profiler_data
+ │   ├── 2025-08-26 18-43-18.csv.gz
+ │   ├── 2025-08-26 18-45-03.csv.gz
+ │   ├── 2025-08-26 18-45-46.csv.gz
+ │   └── 2025-08-27 17-04-29.csv.gz
+ ├── themes
+ │   └── com.obsproject.Yami.Original.out
+ ├── updates
+ │   ├── branches.json
+ │   └── whatsnew.json
+ └── user.ini
+ 
+ 
  */
 
 #ifdef __cplusplus

@@ -1306,7 +1306,7 @@ static uint64_t ffmpeg_output_total_bytes(void *data)
 	struct ffmpeg_output *output = data;
 	return output->total_bytes;
 }
-
+///在本进程中 使用ffmpeg 输出
 struct obs_output_info ffmpeg_output = {
 	.id = "ffmpeg_output",
 	.flags = OBS_OUTPUT_AUDIO | OBS_OUTPUT_VIDEO | OBS_OUTPUT_MULTI_TRACK |

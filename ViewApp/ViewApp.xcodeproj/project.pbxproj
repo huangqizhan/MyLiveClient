@@ -928,6 +928,13 @@
 		90F6C5902C880B35003483EC /* zh-TW.ini in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = 90F6C50F2C880A7E003483EC /* zh-TW.ini */; };
 		90F6C6692C8869DE003483EC /* container2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90F6C6682C8869DE003483EC /* container2.png */; };
 		F353DD5E2E5446830036D0D4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C6572C78665900FD11BA /* AVFoundation.framework */; };
+		F353E0D72E618BED0036D0D4 /* obs-ffmpeg-mux.c in Sources */ = {isa = PBXBuildFile; fileRef = F353E0D42E618BD60036D0D4 /* obs-ffmpeg-mux.c */; };
+		F353E0DB2E61918A0036D0D4 /* obs-ffmpeg-mux in ExecConsule */ = {isa = PBXBuildFile; fileRef = F353E0C92E618AFF0036D0D4 /* obs-ffmpeg-mux */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F353E0DC2E6191BE0036D0D4 /* libcore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C2F02C78591D00FD11BA /* libcore.framework */; };
+		F353E0DD2E6191BE0036D0D4 /* libcore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C2F02C78591D00FD11BA /* libcore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F353E0E12E6191E20036D0D4 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F38BB5872E4F0C0D003CC59E /* libavcodec.a */; };
+		F353E0E22E6191E20036D0D4 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F38BB5852E4F0C0D003CC59E /* libavformat.a */; };
+		F353E0E32E6191E20036D0D4 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F38BB5882E4F0C0E003CC59E /* libavutil.a */; };
 		F37B21782E52BC9200B0C754 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B88C392C77288100A77D50 /* libiconv.tbd */; };
 		F37B21792E52BC9B00B0C754 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B88C392C77288100A77D50 /* libiconv.tbd */; };
 		F37B21932E52C4E300B0C754 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F38BB5872E4F0C0D003CC59E /* libavcodec.a */; };
@@ -1015,6 +1022,13 @@
 			remoteInfo = libcore;
 		};
 		90F6C4402C880921003483EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90B88B762C77263400A77D50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9078C2EF2C78591D00FD11BA;
+			remoteInfo = libcore;
+		};
+		F353E0DE2E6191BE0036D0D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 90B88B762C77263400A77D50 /* Project object */;
 			proxyType = 1;
@@ -1675,6 +1689,37 @@
 				90F6C5902C880B35003483EC /* zh-TW.ini in Copy Bundle Resources */,
 			);
 			name = "Copy Bundle Resources";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F353E0C72E618AFF0036D0D4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		F353E0DA2E61913C0036D0D4 /* ExecConsule */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				F353E0DB2E61918A0036D0D4 /* obs-ffmpeg-mux in ExecConsule */,
+			);
+			name = ExecConsule;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F353E0E02E6191BE0036D0D4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F353E0DD2E6191BE0036D0D4 /* libcore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F37B219E2E52C72300B0C754 /* Embed Frameworks */ = {
@@ -2546,6 +2591,9 @@
 		90F6C6132C884D03003483EC /* libswresample.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswresample.dylib; path = "../obs-build/obs-studio/.deps/obs-deps-2023-04-12-x86_64/lib/libswresample.dylib"; sourceTree = "<group>"; };
 		90F6C6162C884D09003483EC /* libswscale.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.dylib; path = "../obs-build/obs-studio/.deps/obs-deps-2023-04-12-x86_64/lib/libswscale.dylib"; sourceTree = "<group>"; };
 		90F6C6682C8869DE003483EC /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
+		F353E0C92E618AFF0036D0D4 /* obs-ffmpeg-mux */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "obs-ffmpeg-mux"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F353E0D42E618BD60036D0D4 /* obs-ffmpeg-mux.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "obs-ffmpeg-mux.c"; sourceTree = "<group>"; };
+		F353E0E42E6192B50036D0D4 /* obs-ffmpeg-mux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "obs-ffmpeg-mux.h"; sourceTree = "<group>"; };
 		F38BB5822E4F0C0D003CC59E /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ViewApp/ffmpeg/lib/libswscale.a; sourceTree = "<group>"; };
 		F38BB5842E4F0C0D003CC59E /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ViewApp/ffmpeg/lib/libavfilter.a; sourceTree = "<group>"; };
 		F38BB5852E4F0C0D003CC59E /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ViewApp/ffmpeg/lib/libavformat.a; sourceTree = "<group>"; };
@@ -2683,6 +2731,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				90F6C43E2C880921003483EC /* libcore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F353E0C62E618AFF0036D0D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F353E0E22E6191E20036D0D4 /* libavformat.a in Frameworks */,
+				F353E0DC2E6191BE0036D0D4 /* libcore.framework in Frameworks */,
+				F353E0E32E6191E20036D0D4 /* libavutil.a in Frameworks */,
+				F353E0E12E6191E20036D0D4 /* libavcodec.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3344,6 +3403,7 @@
 				90F6C4312C8808A7003483EC /* image-source.plugin */,
 				9054B9532C8AEBCC0051AD7F /* obs-transitions.plugin */,
 				90AD9E252D27D00A009F3070 /* mac-capture.plugin */,
+				F353E0C92E618AFF0036D0D4 /* obs-ffmpeg-mux */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3534,8 +3594,6 @@
 				9088D0502C789725007EB8B5 /* ObsUtils.h */,
 				9088D0612C789726007EB8B5 /* ObsVolumeControl.cpp */,
 				9088D0522C789725007EB8B5 /* ObsVolumeControl.h */,
-				9088D0552C789725007EB8B5 /* ObsWin32.cpp */,
-				9088D04D2C789725007EB8B5 /* ObsWin32.h */,
 				9079001C2C7F1B3400B670E9 /* ObsApp.cpp */,
 				9079001D2C7F1B3400B670E9 /* ObsApp.hpp */,
 				9088D05B2C789726007EB8B5 /* ObsBasic.cpp */,
@@ -3545,6 +3603,8 @@
 				9088D0572C789726007EB8B5 /* ObsWindowBase.h */,
 				9088D04E2C789725007EB8B5 /* ObsWindow.cpp */,
 				9088D0562C789725007EB8B5 /* ObsWindow.h */,
+				9088D0552C789725007EB8B5 /* ObsWin32.cpp */,
+				9088D04D2C789725007EB8B5 /* ObsWin32.h */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -3552,6 +3612,7 @@
 		90B88EF72C78253200A77D50 /* plugins */ = {
 			isa = PBXGroup;
 			children = (
+				F353E0C42E618A5B0036D0D4 /* obs-ffmpeg-mux */,
 				90AD9E292D27D017009F3070 /* mac-capt */,
 				9054B94E2C8AEBB40051AD7F /* obs-transitions */,
 				90F6C4352C8808C3003483EC /* image-source */,
@@ -3947,6 +4008,15 @@
 			path = imgs;
 			sourceTree = "<group>";
 		};
+		F353E0C42E618A5B0036D0D4 /* obs-ffmpeg-mux */ = {
+			isa = PBXGroup;
+			children = (
+				F353E0D42E618BD60036D0D4 /* obs-ffmpeg-mux.c */,
+				F353E0E42E6192B50036D0D4 /* obs-ffmpeg-mux.h */,
+			);
+			path = "obs-ffmpeg-mux";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -4192,6 +4262,7 @@
 				90B88EA12C774C3600A77D50 /* Embed PlugIns */,
 				90B88F0E2C7828D100A77D50 /* Embed Frameworks */,
 				90C0EFDB2C7C286B001A0C5B /* Copy Bundle Resources */,
+				F353E0DA2E61913C0036D0D4 /* ExecConsule */,
 			);
 			buildRules = (
 			);
@@ -4283,6 +4354,27 @@
 			productReference = 90F6C4312C8808A7003483EC /* image-source.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		F353E0C82E618AFF0036D0D4 /* obs-ffmpeg-mux */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F353E0CD2E618AFF0036D0D4 /* Build configuration list for PBXNativeTarget "obs-ffmpeg-mux" */;
+			buildPhases = (
+				F353E0C52E618AFF0036D0D4 /* Sources */,
+				F353E0C62E618AFF0036D0D4 /* Frameworks */,
+				F353E0C72E618AFF0036D0D4 /* CopyFiles */,
+				F353E0E02E6191BE0036D0D4 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F353E0DF2E6191BE0036D0D4 /* PBXTargetDependency */,
+			);
+			name = "obs-ffmpeg-mux";
+			packageProductDependencies = (
+			);
+			productName = "obs-ffmpeg-mux";
+			productReference = F353E0C92E618AFF0036D0D4 /* obs-ffmpeg-mux */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -4294,6 +4386,7 @@
 				TargetAttributes = {
 					9054B9522C8AEBCC0051AD7F = {
 						CreatedOnToolsVersion = 15.4;
+						LastSwiftMigration = 1640;
 					};
 					906917C32C788E0E00BF8E5C = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -4309,6 +4402,7 @@
 					};
 					90B88B7D2C77263400A77D50 = {
 						CreatedOnToolsVersion = 15.0.1;
+						LastSwiftMigration = 1640;
 					};
 					90B88EF22C78252500A77D50 = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -4321,6 +4415,9 @@
 					};
 					90F6C4302C8808A7003483EC = {
 						CreatedOnToolsVersion = 15.4;
+					};
+					F353E0C82E618AFF0036D0D4 = {
+						CreatedOnToolsVersion = 16.4;
 					};
 				};
 			};
@@ -4347,6 +4444,7 @@
 				90F6C4302C8808A7003483EC /* image-source */,
 				9054B9522C8AEBCC0051AD7F /* obs-transitions */,
 				90AD9E242D27D00A009F3070 /* mac-capture */,
+				F353E0C82E618AFF0036D0D4 /* obs-ffmpeg-mux */,
 			);
 		};
 /* End PBXProject section */
@@ -4749,6 +4847,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F353E0C52E618AFF0036D0D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F353E0D72E618BED0036D0D4 /* obs-ffmpeg-mux.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -4802,6 +4908,11 @@
 			target = 9078C2EF2C78591D00FD11BA /* libcore */;
 			targetProxy = 90F6C4402C880921003483EC /* PBXContainerItemProxy */;
 		};
+		F353E0DF2E6191BE0036D0D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9078C2EF2C78591D00FD11BA /* libcore */;
+			targetProxy = F353E0DE2E6191BE0036D0D4 /* PBXContainerItemProxy */;
+		};
 		F37B219D2E52C72300B0C754 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9078C2EF2C78591D00FD11BA /* libcore */;
@@ -4824,6 +4935,7 @@
 		9054B9552C8AEBCD0051AD7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -4840,6 +4952,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -4847,6 +4961,7 @@
 		9054B9562C8AEBCD0051AD7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -4863,6 +4978,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -4904,6 +5020,7 @@
 					"$(PROJECT_DIR)/ViewApp/thirdparty/",
 					"$(PROJECT_DIR)/libcore/core/",
 				);
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -4922,6 +5039,7 @@
 					"$(PROJECT_DIR)/ViewApp/thirdparty/",
 					"$(PROJECT_DIR)/libcore/core/",
 				);
+				INSTALL_PATH = "@rpath";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -5194,6 +5312,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ViewApp/UI/ViewApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -5227,6 +5346,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = TS.ViewApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -5236,6 +5357,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ViewApp/UI/ViewApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -5269,6 +5391,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = TS.ViewApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -5509,6 +5632,48 @@
 			};
 			name = Release;
 		};
+		F353E0CE2E618AFF0036D0D4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 85CWKC69K9;
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/ViewApp/ffmpeg/include/",
+					"$(PROJECT_DIR)/libcore/core/",
+				);
+				INSTALL_PATH = "$(LOCAL_APPS_DIR)/ViewApp.app/Contents/MacOS";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ViewApp/ffmpeg/lib",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F353E0CF2E618AFF0036D0D4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 85CWKC69K9;
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/ViewApp/ffmpeg/include/",
+					"$(PROJECT_DIR)/libcore/core/",
+				);
+				INSTALL_PATH = "$(LOCAL_APPS_DIR)/ViewApp.app/Contents/MacOS";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ViewApp/ffmpeg/lib",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -5607,6 +5772,15 @@
 			buildConfigurations = (
 				90F6C4322C8808A7003483EC /* Debug */,
 				90F6C4332C8808A7003483EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F353E0CD2E618AFF0036D0D4 /* Build configuration list for PBXNativeTarget "obs-ffmpeg-mux" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F353E0CE2E618AFF0036D0D4 /* Debug */,
+				F353E0CF2E618AFF0036D0D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -80,10 +80,14 @@ public:
     void StopReplayBuffer();
 
     
-    //由obsoutput调用接口
+    ///由obsoutput调用接口
+    
+    //推流延迟开始 
     void StreamDelayStarting(int delay);
-    void StreamStopping();
+    //推流延迟停止
     void StreamDelayStopping(int delay);
+    //推流立即停止
+    void StreamStopping();
     void StreamingStart();
     void StreamingStop(int code, const char* error);
     void RecordingStart();

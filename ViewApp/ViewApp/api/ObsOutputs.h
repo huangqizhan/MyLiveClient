@@ -18,32 +18,45 @@ class ObsBasic;
 #define SIMPLE_ENCODER_AMD                     "amd"
 
 struct BasicOutputHandler {
+    ///文件输出
     OBSOutput              fileOutput;
+    ///推流输出
     OBSOutput              streamOutput;
+    ///播放缓存
     OBSOutput              replayBuffer;
+    
     bool                   streamingActive = false;
     bool                   recordingActive = false;
     bool                   delayActive = false;
     bool                   replayBufferActive = false;
+    
+    
     ObsBasic               *main;
 
     std::string            outputType;
 
+    
     OBSSignal              startRecording;
     OBSSignal              stopRecording;
+    
+    
     OBSSignal              startReplayBuffer;
     OBSSignal              stopReplayBuffer;
+
+    
     OBSSignal              startStreaming;
     OBSSignal              stopStreaming;
+    
+    
     OBSSignal              streamDelayStarting;
     OBSSignal              streamStopping;
+    
     OBSSignal              recordStopping;
     OBSSignal              replayBufferStopping;
+    
 
     inline BasicOutputHandler(ObsBasic *main_) : main(main_) {}
-
     virtual ~BasicOutputHandler() {};
-
     virtual bool StartStreaming(obs_service_t *service) = 0;
     virtual bool StartRecording() = 0;
     virtual bool StartReplayBuffer() {return false;}
@@ -53,11 +66,8 @@ struct BasicOutputHandler {
     virtual bool StreamingActive() const = 0;
     virtual bool RecordingActive() const = 0;
     virtual bool ReplayBufferActive() const {return false;}
-
     virtual void Update() = 0;
-
-    inline bool Active() const
-    {
+    inline bool Active() const{
         return streamingActive || recordingActive || delayActive ||
             replayBufferActive;
     }
