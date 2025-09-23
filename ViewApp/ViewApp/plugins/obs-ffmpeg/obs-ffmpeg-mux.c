@@ -915,7 +915,7 @@ uint64_t ffmpeg_mux_total_bytes(void *data)
 	struct ffmpeg_muxer *stream = data;
 	return stream->total_bytes;
 }
-
+//与ffmpeg_muxer进程交互
 struct obs_output_info ffmpeg_muxer = {
 	.id = "ffmpeg_muxer",
 	.flags = OBS_OUTPUT_AV | OBS_OUTPUT_ENCODED | OBS_OUTPUT_MULTI_TRACK |

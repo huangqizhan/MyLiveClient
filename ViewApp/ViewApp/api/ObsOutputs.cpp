@@ -211,7 +211,6 @@ struct SimpleOutput : BasicOutputHandler {
     void LoadRecordingPreset();
 
     void LoadStreamingPreset_h264(const char *encoder);
-
     void UpdateRecording();
     bool ConfigureRecording(bool useReplayBuffer);
 
@@ -225,7 +224,7 @@ struct SimpleOutput : BasicOutputHandler {
     virtual bool RecordingActive() const override;
     virtual bool ReplayBufferActive() const override;
 };
-///无损压缩
+///无损压缩文件输出
 void SimpleOutput::LoadRecordingPreset_Lossless(){
     fileOutput = obs_output_create("ffmpeg_output",
             "simple_ffmpeg_output", nullptr, nullptr);
@@ -242,7 +241,7 @@ void SimpleOutput::LoadRecordingPreset_Lossless(){
     obs_output_update(fileOutput, settings);
     obs_data_release(settings);
 }
-
+///
 void SimpleOutput::LoadRecordingPreset_h264(const char *encoderId){
     h264RecordingEncoder = obs_video_encoder_create(encoderId,
             "simple_h264_recording", nullptr, nullptr);
@@ -327,7 +326,7 @@ SimpleOutput::SimpleOutput(ObsBasic *main_) : BasicOutputHandler(main_)
     LoadRecordingPreset();
 
     if (!ffmpegOutput) {
-        //录制缓存
+        //缓存
         bool useReplayBuffer = config_get_bool(config(),"SimpleOutput", "RecRB");
         if (useReplayBuffer) {
             const char *str = config_get_string(config(),
@@ -457,6 +456,8 @@ void SimpleOutput::UpdateRecordingAudioSettings(){
 }
 
 #define CROSS_DIST_CUTOFF 2000.0
+// CRF（Constant Rate Factor，恒定码率因子）。
+//CRF 在 x264/x265 编码里是“质量因子”，数值越低 → 质量越高 → 码率越大。
 int SimpleOutput::CalcCRF(int crf){
     int cx = config_get_uint(config(), "Video", "OutputCX");
     int cy = config_get_uint(config(), "Video", "OutputCY");
@@ -632,9 +633,6 @@ const char *FindAudioEncoderFromCodec(const char *type){
 bool SimpleOutput::StartStreaming(obs_service_t *service){
     if (!Active())
         SetupOutputs();
-
-    /* --------------------- */
-
     const char *type = obs_service_get_output_type(service);
     if (!type)
         type = "rtmp_output";
@@ -955,7 +953,7 @@ struct AdvancedOutput : BasicOutputHandler {
     OBSEncoder             h264Recording;
 
     OBSEncoder             streamAudioEnc;
-
+    //本进程ffmpeg output
     bool                   ffmpegOutput;
     bool                   ffmpegRecording;
     bool                   useStreamEncoder;

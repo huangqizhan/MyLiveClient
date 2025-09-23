@@ -2096,15 +2096,11 @@
 		9078C6322C78615E00FD11BA /* libobs_EXPORT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libobs_EXPORT.h; sourceTree = "<group>"; };
 		9078C6572C78665900FD11BA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9078C6672C78771200FD11BA /* CoreMediaIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMediaIO.framework; path = System/Library/Frameworks/CoreMediaIO.framework; sourceTree = SDKROOT; };
-		907900032C7EBF0500B670E9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ViewApp/deps/libz.dylib; sourceTree = "<group>"; };
 		9079001C2C7F1B3400B670E9 /* ObsApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ObsApp.cpp; sourceTree = "<group>"; };
 		9079001D2C7F1B3400B670E9 /* ObsApp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ObsApp.hpp; sourceTree = "<group>"; };
 		9079002A2C80609D00B670E9 /* MyDisplayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDisplayView.h; sourceTree = "<group>"; };
 		9079002B2C80609D00B670E9 /* MyDisplayView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = MyDisplayView.mm; sourceTree = "<group>"; };
-		9079FF182C7D83D600B670E9 /* libmbedtls.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmbedtls.a; path = ViewApp/deps/mbedtls/libmbedtls.a; sourceTree = "<group>"; };
 		9079FF242C7DA95600B670E9 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		9079FF262C7DB03D00B670E9 /* libmbedcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmbedcrypto.a; path = ViewApp/deps/mbedtls/libmbedcrypto.a; sourceTree = "<group>"; };
-		9079FFFE2C7EBDFE00B670E9 /* libSDL2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSDL2.dylib; path = ViewApp/sdl/libSDL2.dylib; sourceTree = "<group>"; };
 		9088D04B2C789725007EB8B5 /* ObsMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObsMain.cpp; sourceTree = "<group>"; };
 		9088D04C2C789725007EB8B5 /* ObsAudioControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObsAudioControl.cpp; sourceTree = "<group>"; };
 		9088D04D2C789725007EB8B5 /* ObsWin32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObsWin32.h; sourceTree = "<group>"; };
@@ -2503,8 +2499,6 @@
 		90E7CD6A2C7D6C9500EE024E /* obs-ffmpeg-mpegts.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "obs-ffmpeg-mpegts.c"; sourceTree = "<group>"; };
 		90E7CD6B2C7D6C9500EE024E /* obs-ffmpeg-mux.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "obs-ffmpeg-mux.c"; sourceTree = "<group>"; };
 		90E7CD7A2C7D6CB600EE024E /* opts-parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "opts-parser.c"; sourceTree = "<group>"; };
-		90E7CD982C7D785F00EE024E /* libsrt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsrt.a; path = ViewApp/deps/srt/libsrt.a; sourceTree = "<group>"; };
-		90E7CD9C2C7D78AA00EE024E /* librist.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = librist.a; path = ViewApp/deps/rist/librist.a; sourceTree = "<group>"; };
 		90E7CD9E2C7D79FB00EE024E /* obs-ffmeg-config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "obs-ffmeg-config.h"; sourceTree = "<group>"; };
 		90E7CD9F2C7D7A7300EE024E /* obs-ffmpeg-formats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "obs-ffmpeg-formats.h"; sourceTree = "<group>"; };
 		90E7CDA02C7D7A7300EE024E /* obs-ffmpeg-mux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "obs-ffmpeg-mux.h"; sourceTree = "<group>"; };
@@ -2582,14 +2576,6 @@
 		90F6C50D2C880A7E003483EC /* vi-VN.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "vi-VN.ini"; sourceTree = "<group>"; };
 		90F6C50E2C880A7E003483EC /* zh-CN.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "zh-CN.ini"; sourceTree = "<group>"; };
 		90F6C50F2C880A7E003483EC /* zh-TW.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "zh-TW.ini"; sourceTree = "<group>"; };
-		90F6C5B72C884126003483EC /* libqjpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; name = libqjpeg.dylib; path = ViewApp/libs/imageformats/libqjpeg.dylib; sourceTree = "<group>"; };
-		90F6C6032C884CCF003483EC /* libavcodec.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.dylib; path = "../obs-build/obs-studio/.deps/obs-deps-2023-04-12-x86_64/lib/libavcodec.dylib"; sourceTree = "<group>"; };
-		90F6C6072C884CDB003483EC /* libavdevice.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavdevice.dylib; path = "../obs-build/obs-studio/.deps/obs-deps-2023-04-12-x86_64/lib/libavdevice.dylib"; sourceTree = "<group>"; };
-		90F6C60A2C884CE3003483EC /* libavfilter.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavfilter.dylib; path = "../obs-build/obs-studio/.deps/obs-deps-2023-04-12-x86_64/lib/libavfilter.dylib"; sourceTree = "<group>"; };
-		90F6C60D2C884CE6003483EC /* libavformat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavformat.dylib; path = "../obs-build/obs-studio/.deps/obs-deps-2023-04-12-x86_64/lib/libavformat.dylib"; sourceTree = "<group>"; };
-		90F6C6102C884CEB003483EC /* libavutil.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavutil.dylib; path = "../obs-build/obs-studio/.deps/obs-deps-2023-04-12-x86_64/lib/libavutil.dylib"; sourceTree = "<group>"; };
-		90F6C6132C884D03003483EC /* libswresample.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswresample.dylib; path = "../obs-build/obs-studio/.deps/obs-deps-2023-04-12-x86_64/lib/libswresample.dylib"; sourceTree = "<group>"; };
-		90F6C6162C884D09003483EC /* libswscale.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.dylib; path = "../obs-build/obs-studio/.deps/obs-deps-2023-04-12-x86_64/lib/libswscale.dylib"; sourceTree = "<group>"; };
 		90F6C6682C8869DE003483EC /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
 		F353E0C92E618AFF0036D0D4 /* obs-ffmpeg-mux */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "obs-ffmpeg-mux"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F353E0D42E618BD60036D0D4 /* obs-ffmpeg-mux.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "obs-ffmpeg-mux.c"; sourceTree = "<group>"; };
@@ -3525,21 +3511,7 @@
 				90AD9EB42D27D136009F3070 /* CoreFoundation.framework */,
 				90AD9EB22D27D12D009F3070 /* CoreAudio.framework */,
 				90AD9EAF2D27D118009F3070 /* AudioUnit.framework */,
-				90F6C6162C884D09003483EC /* libswscale.dylib */,
-				90F6C6132C884D03003483EC /* libswresample.dylib */,
-				90F6C6102C884CEB003483EC /* libavutil.dylib */,
-				90F6C60D2C884CE6003483EC /* libavformat.dylib */,
-				90F6C60A2C884CE3003483EC /* libavfilter.dylib */,
-				90F6C6072C884CDB003483EC /* libavdevice.dylib */,
-				90F6C6032C884CCF003483EC /* libavcodec.dylib */,
-				90F6C5B72C884126003483EC /* libqjpeg.dylib */,
-				907900032C7EBF0500B670E9 /* libz.dylib */,
-				9079FFFE2C7EBDFE00B670E9 /* libSDL2.dylib */,
-				9079FF262C7DB03D00B670E9 /* libmbedcrypto.a */,
 				9079FF242C7DA95600B670E9 /* libc++.tbd */,
-				9079FF182C7D83D600B670E9 /* libmbedtls.a */,
-				90E7CD9C2C7D78AA00EE024E /* librist.a */,
-				90E7CD982C7D785F00EE024E /* libsrt.a */,
 				90C0F0692C7C4FCA001A0C5B /* libx264.a */,
 				90C0EFD92C7C2598001A0C5B /* CoreVideo.framework */,
 				9069180C2C78936100BF8E5C /* Cocoa.framework */,
