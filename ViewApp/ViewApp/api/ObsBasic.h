@@ -76,6 +76,8 @@ public:
     //录制
     bool StartRecording();
     void StopRecording();
+    
+    //回放
     bool StartReplayBuffer();
     void StopReplayBuffer();
 

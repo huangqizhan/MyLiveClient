@@ -186,6 +186,7 @@ struct SimpleOutput : BasicOutputHandler {
     string                 videoQuality;
     bool                   usingRecordingPreset = false;
     bool                   recordingConfigured = false;
+    ///本进程ffmpeg 输出
     bool                   ffmpegOutput = false;
     bool                   lowCPUx264 = false;
 

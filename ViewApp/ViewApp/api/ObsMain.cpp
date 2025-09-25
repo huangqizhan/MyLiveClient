@@ -8,9 +8,17 @@
 
 ObsMain* obsMain = NULL;
 
+
+OBSData ObsMain::dateTest(){
+    obs_data *data = obs_data_create();
+    OBSData dataRet(data);
+    obs_data_release(data);
+    return dataRet;
+}
 ObsMain::ObsMain(): ObsBasic(), m_sceneItemList(this){
 //    base_set_log_handler(obs_log, nullptr);
     InitOBSCallbacks();
+    blog(LOG_INFO, "");
 }
 ObsMain::~ObsMain(){
     ClearSceneData();
@@ -1029,8 +1037,8 @@ bool ObsMain::AddVideo(const VideoData* video){
     }
 
     source = obs_source_create(type,
-        GenerateSourceName(name).c_str(),
-        settings, nullptr);
+                               GenerateSourceName(name).c_str(),
+                               settings, nullptr);
     if (source) {
         OBSScene scene = GetCurrentScene();
         obs_scene_add(scene, source);
@@ -1038,11 +1046,8 @@ bool ObsMain::AddVideo(const VideoData* video){
 #if DEBUG
         obs_source_set_monitoring_type(source, OBS_MONITORING_TYPE_MONITOR_ONLY);
 #endif
-        
     }
-
     obs_data_release(settings);
-
     return source != nullptr;
 }
 bool ObsMain::AddText(const TextData* data)

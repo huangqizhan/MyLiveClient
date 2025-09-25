@@ -34,7 +34,7 @@ public:
         ~SceneData()
         {
         }
-
+        
         const char* name() {
             return obs_source_get_name(obs_scene_get_source(scene));
         }
@@ -193,6 +193,10 @@ private:
 
     //场景item维护
     ObsSceneItemList m_sceneItemList;
+    
+private:
+    OBSData dateTest();
+    
 };
 
 inline config_t *GetGlobalConfig() { return ObsMain::Instance()->globalConfig(); }
