@@ -126,7 +126,7 @@ bool ObsBasic::InitObs()
     obs_debug_action();
     return true;
 }
-
+///audio 输出
 bool ObsBasic::ResetAudio()
 {
     struct obs_audio_info ai;
@@ -1007,18 +1007,17 @@ void ObsBasic::InitDefaultTransitions()
 #define OUTPUT_AUDIO_SOURCE "pulse_output_capture"
 #endif
 
-const char *ObsBasic::InputAudioSource()
-{
+#pragma mark --- 输入输出设备检测 及设置
+
+const char *ObsBasic::InputAudioSource(){
     return INPUT_AUDIO_SOURCE;
 }
 
-const char *ObsBasic::OutputAudioSource()
-{
+const char *ObsBasic::OutputAudioSource(){
     return OUTPUT_AUDIO_SOURCE;
 }
 
-void ObsBasic::EnableDesktopAudio(bool enable)
-{
+void ObsBasic::EnableDesktopAudio(bool enable){
     if(enable)
         ResetAudioDevice(OutputAudioSource(), "default",
             Str("Basic.DesktopDevice1"), OUTPUT_AUDIO_CHANNEL1);
@@ -1027,8 +1026,7 @@ void ObsBasic::EnableDesktopAudio(bool enable)
             Str("Basic.DesktopDevice1"), OUTPUT_AUDIO_CHANNEL1);
 }
 
-void ObsBasic::EnableInputAudio(bool enable)
-{
+void ObsBasic::EnableInputAudio(bool enable){
     if (enable)
         ResetAudioDevice(InputAudioSource(), "default",
             Str("Basic.AuxDevice1"), INPUT_AUDIO_CHANNEL1);
@@ -1037,8 +1035,7 @@ void ObsBasic::EnableInputAudio(bool enable)
             Str("Basic.AuxDevice1"), INPUT_AUDIO_CHANNEL1);
 }
 
-static inline bool HasAudioDevices(const char *source_id)
-{
+static inline bool HasAudioDevices(const char *source_id){
     const char *output_id = source_id;
     obs_properties_t *props = obs_get_source_properties(output_id);
     size_t count = 0;
@@ -1054,9 +1051,8 @@ static inline bool HasAudioDevices(const char *source_id)
 
     return count != 0;
 }
-
-void ObsBasic::InitAudioSources()
-{
+///设置全局的音频设备(虚拟设备  外置扬声器  外置麦克风 注意系统的内置扬声器是获取不到的)
+void ObsBasic::InitAudioSources(){
     bool hasDesktopAudio = HasAudioDevices(OutputAudioSource());
     bool hasInputAudio = HasAudioDevices(InputAudioSource());
 
@@ -1067,63 +1063,49 @@ void ObsBasic::InitAudioSources()
         ResetAudioDevice(InputAudioSource(), "default",
             Str("Basic.AuxDevice1"), INPUT_AUDIO_CHANNEL1);
 }
-
-
-void ObsBasic::SetVolume(int channel, int vol)
-{
+void ObsBasic::SetVolume(int channel, int vol){
     obs_source_t* source = obs_get_output_source(channel);
-    if (source)
-    {
+    if (source){
         obs_source_set_volume(source, vol / 100.0);
         obs_source_release(source);
     }
 }
 
-int ObsBasic::GetVolume(int channel)
-{
+int ObsBasic::GetVolume(int channel){
     obs_source_t* source = obs_get_output_source(channel);
     int volume = 0;
-    if (source)
-    {
+    if (source){
         volume = obs_source_get_volume(source) * 100;
         obs_source_release(source);
     }
     return volume;
 }
-
-void ObsBasic::SetMuted(int channel, bool mute)
-{
+void ObsBasic::SetMuted(int channel, bool mute){
     obs_source_t* source = obs_get_output_source(channel);
-    if (source)
-    {
+    if (source){
         obs_source_set_muted(source, mute);
         obs_source_release(source);
     }
 }
-
-bool ObsBasic::GetMuted(int channel)
-{
+bool ObsBasic::GetMuted(int channel){
     bool muted = true;
     obs_source_t* source = obs_get_output_source(channel);
-    if (source)
-    {
+    if (source){
         muted = obs_source_muted(source);
         obs_source_release(source);
     }
     return muted;
 }
 
-bool ObsBasic::CheckChannel(int channel)
-{
+bool ObsBasic::CheckChannel(int channel){
     obs_source_t* source = obs_get_output_source(channel);
-    if (source)
-    {
+    if (source){
         obs_source_release(source);
         return true;
     }
     return false;
 }
-
+///设置全局的音频设备(虚拟设备  外置扬声器  外置麦克风 注意系统的内置扬声器是获取不到的)
 void ObsBasic::ResetAudioDevice(const char *sourceId, const char *deviceId,
     const char *deviceDesc, int channel){
     bool disable = deviceId && strcmp(deviceId, "disabled") == 0;

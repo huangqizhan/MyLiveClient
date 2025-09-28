@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -52,7 +52,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="push" title="media" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Sew-s4-dcg">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                                <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="mediaBtnAction:" target="-2" id="eMc-WI-qCD"/>
@@ -63,7 +63,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="push" title="camera" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Wdl-g4-2ba">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                                <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="cameraBtnAction:" target="-2" id="bfA-eF-5XO"/>
@@ -74,7 +74,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="push" title="window" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="T3t-17-IjX">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                                <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="windowBtnAction:" target="-2" id="1jG-wA-ub9"/>
@@ -85,7 +85,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <buttonCell key="cell" type="push" title="screen" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B5E-jE-gv2">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                                <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
                                                 <action selector="screenBtnAction:" target="-2" id="Exs-XY-p2m"/>
@@ -100,6 +100,17 @@
                                             </buttonCell>
                                             <connections>
                                                 <action selector="startBtnAction:" target="-2" id="Mm7-TF-23C"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NkK-k4-7s2">
+                                            <rect key="frame" x="593" y="13" width="74" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="record" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="26J-As-CC5">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="startRecord:" target="-2" id="xnc-Wp-XGc"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -146,7 +157,7 @@
                 <constraint firstAttribute="trailing" secondItem="bAZ-fJ-VNu" secondAttribute="trailing" id="gWI-dU-Amj"/>
                 <constraint firstAttribute="bottom" secondItem="9j9-pQ-WRO" secondAttribute="bottom" id="i8K-Aj-qYL"/>
             </constraints>
-            <point key="canvasLocation" x="261" y="180.5"/>
+            <point key="canvasLocation" x="240" y="166"/>
         </customView>
     </objects>
 </document>

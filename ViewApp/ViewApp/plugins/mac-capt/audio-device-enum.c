@@ -75,6 +75,11 @@ fail:
 
 static void enum_devices(enum_device_proc_t proc, void *param)
 {
+    /*
+     BlackHole 的定位
+            BlackHole 是一个 虚拟音频驱动，在系统里会注册成一个“音频设备”。
+            它既能当成 输出设备（你把声音播放到 BlackHole），也能当成 输入设备（别的软件从 BlackHole 采集声音）。
+     */
 	AudioObjectPropertyAddress addr = {kAudioHardwarePropertyDevices,
 					   kAudioObjectPropertyScopeGlobal,
 					   kAudioObjectPropertyElementMaster};
