@@ -3280,7 +3280,7 @@
 			path = "media-io";
 			sourceTree = "<group>";
 		};
-		90AD9E292D27D017009F3070 /* mac-capt */ = {
+		90AD9E292D27D017009F3070 /* mac-capture */ = {
 			isa = PBXGroup;
 			children = (
 				90AD9E2A2D27D0F9009F3070 /* audio-device-enum.h */,
@@ -3295,7 +3295,7 @@
 				90AD9E6D2D27D0F9009F3070 /* window-utils.h */,
 				90AD9E672D27D0F9009F3070 /* data */,
 			);
-			path = "mac-capt";
+			path = "mac-capture";
 			sourceTree = "<group>";
 		};
 		90AD9E662D27D0F9009F3070 /* locale */ = {
@@ -3589,7 +3589,7 @@
 			isa = PBXGroup;
 			children = (
 				F353E0C42E618A5B0036D0D4 /* obs-ffmpeg-mux */,
-				90AD9E292D27D017009F3070 /* mac-capt */,
+				90AD9E292D27D017009F3070 /* mac-capture */,
 				9054B94E2C8AEBB40051AD7F /* obs-transitions */,
 				90F6C4352C8808C3003483EC /* image-source */,
 				90E7CCA42C7D651800EE024E /* obs-ffmpeg */,

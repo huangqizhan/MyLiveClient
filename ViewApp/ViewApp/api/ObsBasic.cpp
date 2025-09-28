@@ -1258,3 +1258,8 @@ bool ObsBasic::MakeUserProfileDirs(){
     return true;
 }
 
+
+void ObsBasic::testAction(){
+    config_set_string(m_basicConfig, "SimpleOutput", "RecFormat", "mp4");
+    config_set_string(m_basicConfig, "AdvOut", "RecFormat", "mp4");
+}

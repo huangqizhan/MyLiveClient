@@ -327,7 +327,7 @@ SimpleOutput::SimpleOutput(ObsBasic *main_) : BasicOutputHandler(main_)
     LoadRecordingPreset();
 
     if (!ffmpegOutput) {
-        //缓存
+        //缓存  回放缓存的作用是：OBS 会在后台持续录制一段时间的内容（但不写硬盘，只存放在内存里），当你觉得刚才发生了很精彩的事情，可以立刻按一个快捷键，把刚才的那段画面保存成文件。
         bool useReplayBuffer = config_get_bool(config(),"SimpleOutput", "RecRB");
         if (useReplayBuffer) {
             const char *str = config_get_string(config(),

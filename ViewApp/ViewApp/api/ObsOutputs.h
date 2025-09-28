@@ -22,7 +22,7 @@ struct BasicOutputHandler {
     OBSOutput              fileOutput;
     ///推流输出
     OBSOutput              streamOutput;
-    ///播放缓存
+    ///播放缓存     回放缓存的作用是：OBS 会在后台持续录制一段时间的内容（但不写硬盘，只存放在内存里），当你觉得刚才发生了很精彩的事情，可以立刻按一个快捷键，把刚才的那段画面保存成文件。
     OBSOutput              replayBuffer;
     
     bool                   streamingActive = false;
@@ -57,16 +57,26 @@ struct BasicOutputHandler {
 
     inline BasicOutputHandler(ObsBasic *main_) : main(main_) {}
     virtual ~BasicOutputHandler() {};
+    
+    
     virtual bool StartStreaming(obs_service_t *service) = 0;
-    virtual bool StartRecording() = 0;
-    virtual bool StartReplayBuffer() {return false;}
     virtual void StopStreaming(bool force = false) = 0;
+    
+    
+    virtual bool StartRecording() = 0;
     virtual void StopRecording(bool force = false) = 0;
+    
+    
+    virtual bool StartReplayBuffer() {return false;}
     virtual void StopReplayBuffer(bool force = false) {(void)force;}
+    
     virtual bool StreamingActive() const = 0;
     virtual bool RecordingActive() const = 0;
+    
     virtual bool ReplayBufferActive() const {return false;}
+    
     virtual void Update() = 0;
+    
     inline bool Active() const{
         return streamingActive || recordingActive || delayActive ||
             replayBufferActive;

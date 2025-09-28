@@ -368,7 +368,9 @@ private:
 - (IBAction)startRecord:(id)sender {
     _m_obs->StartRecording();
 }
-
+- (IBAction)testAction:(id)sender {
+    _m_obs->testAction();
+}
 @end
 
 

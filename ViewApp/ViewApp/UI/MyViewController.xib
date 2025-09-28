@@ -113,6 +113,17 @@
                                                 <action selector="startRecord:" target="-2" id="xnc-Wp-XGc"/>
                                             </connections>
                                         </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RFP-MY-oNk">
+                                            <rect key="frame" x="529" y="12" width="58" height="32"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <buttonCell key="cell" type="push" title="test" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AEV-Wa-dGb">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="testAction:" target="-2" id="wGr-ZZ-sqo"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="57" id="1W8-vw-cjY"/>
@@ -157,7 +168,7 @@
                 <constraint firstAttribute="trailing" secondItem="bAZ-fJ-VNu" secondAttribute="trailing" id="gWI-dU-Amj"/>
                 <constraint firstAttribute="bottom" secondItem="9j9-pQ-WRO" secondAttribute="bottom" id="i8K-Aj-qYL"/>
             </constraints>
-            <point key="canvasLocation" x="240" y="166"/>
+            <point key="canvasLocation" x="72" y="-7"/>
         </customView>
     </objects>
 </document>

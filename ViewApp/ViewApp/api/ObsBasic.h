@@ -143,7 +143,7 @@ public:
     const char *OutputAudioSource();
     void ResetAudioDevice(const char *sourceId, const char *deviceId, const char *deviceDesc, int channel);
     virtual void shutDown();
-    
+    virtual void testAction();
 protected:
     int  ResetVideo();
     bool ResetAudio();
