@@ -34,6 +34,7 @@ struct coreaudio_data {
 	char *device_name;
 	char *device_uid;
 	AudioUnit unit;
+    //当前设备 输入/输出
 	AudioDeviceID device_id;
 	AudioBufferList *buf_list;
 	bool au_initialized;
@@ -399,9 +400,8 @@ static void coreaudio_begin_reconnect(struct coreaudio_data *ca)
 		     "create thread, error code: %d",
 		     ret);
 }
-
-static OSStatus
-notification_callback(AudioObjectID id, UInt32 num_addresses,
+///设备有变动  采取重连
+static OSStatus notification_callback(AudioObjectID id, UInt32 num_addresses,
 		      const AudioObjectPropertyAddress addresses[], void *data)
 {
 	struct coreaudio_data *ca = data;
@@ -442,18 +442,19 @@ static bool coreaudio_init_hooks(struct coreaudio_data *ca)
 	OSStatus stat;
 	AURenderCallbackStruct callback_info = {.inputProc = input_callback,
 						.inputProcRefCon = ca};
-
+    //监听 当前使用的音频设备是否还活着（比如 USB 麦克风被拔掉了，或者蓝牙耳机断开了）。
 	stat = add_listener(ca, kAudioDevicePropertyDeviceIsAlive);
 	if (!ca_success(stat, ca, "coreaudio_init_hooks",
 			"set disconnect callback"))
 		return false;
-
+    //监听 音频设备支持的格式变化（采样率、声道数、位深等）。设备插拔时，可能会导致格式改变，比如：  内置麦克风：48kHz 单声道 USB 声卡：44.1kHz 立体声
 	stat = add_listener(ca, PROPERTY_FORMATS);
 	if (!ca_success(stat, ca, "coreaudio_init_hooks",
 			"set format change callback"))
 		return false;
 
 	if (ca->default_device) {
+        ///监听默认设备切换
 		AudioObjectPropertyAddress addr = {
 			PROPERTY_DEFAULT_DEVICE,
 			kAudioObjectPropertyScopeGlobal,
@@ -781,18 +782,17 @@ static obs_properties_t *coreaudio_properties(bool input)
 	struct device_list devices;
 
 	memset(&devices, 0, sizeof(struct device_list));
-    //给props添加一个数组属性 property
+
 	property = obs_properties_add_list(props, "device_id", TEXT_DEVICE,
 					   OBS_COMBO_TYPE_LIST,
 					   OBS_COMBO_FORMAT_STRING);
 
 	coreaudio_enum_devices(&devices, input);
 
-    ///给数组property中添加默认元素
 	if (devices.items.num)
 		obs_property_list_add_string(property, TEXT_DEVICE_DEFAULT,
 					     "default");
-    ///给数组property中添加元素
+
 	for (size_t i = 0; i < devices.items.num; i++) {
 		struct device_item *item = devices.items.array + i;
 		obs_property_list_add_string(property, item->name.array,
@@ -816,7 +816,7 @@ static obs_properties_t *coreaudio_output_properties(void *unused)
 
 	return coreaudio_properties(false);
 }
-
+///底层的audio unit 采集  输入捕获 = 麦克风、外部音源 → 获取 PCM
 struct obs_source_info coreaudio_input_capture_info = {
 	.id = "coreaudio_input_capture",
 	.type = OBS_SOURCE_TYPE_INPUT,
@@ -829,18 +829,7 @@ struct obs_source_info coreaudio_input_capture_info = {
 	.get_properties = coreaudio_input_properties,
 	.icon_type = OBS_ICON_TYPE_AUDIO_INPUT,
 };
-/*
- mac 输出设备采集 (扬声器/外置耳机) Mac默认是不能直接采集输出声音
- 但可以使用三方软件构建一个虚拟的音频设备(soundflower) 重定向系统音频 这样就可以采集了
- "soundflower"
- "wavtap"
- "soundsiphon"
- "ishowu"
- "blackhole"
- "loopback"
- "groundcontrol"
- "vbcable"
- */
+///底层的audio unit 采集      输出捕获 = 系统播放音频 → 获取 PCM
 struct obs_source_info coreaudio_output_capture_info = {
 	.id = "coreaudio_output_capture",
 	.type = OBS_SOURCE_TYPE_INPUT,
@@ -854,3 +843,21 @@ struct obs_source_info coreaudio_output_capture_info = {
 	.get_properties = coreaudio_output_properties,
 	.icon_type = OBS_ICON_TYPE_AUDIO_OUTPUT,
 };
+/*
+ 录音
+ 最上层 AVFoundation
+ AVAudioRecorder   AVSession
+ 
+ 
+ 中间层 AudioToolBox
+ AudioQueueNewInput
+ 
+ 
+ 底层  AudioUnit
+ AURenderCallbackStruct callback_info = {.inputProc = input_callback,
+ .inputProcRefCon = ca};
+AudioUnitSetProperty(ca->unit, kAudioOutputUnitProperty_SetInputCallback,
+SCOPE_GLOBAL, 0, &callback_info,
+sizeof(callback_info))
+ 
+*/

@@ -345,7 +345,7 @@ static bool init_screen_stream(struct screen_capture *sc)
 	sc->stream_properties = [[SCStreamConfiguration alloc] init];
 	os_sem_wait(sc->shareable_content_available);
 
-	SCDisplay * (^get_target_display)() = ^SCDisplay *()
+    SCDisplay * (^get_target_display)(void) = ^SCDisplay *()
 	{
 		__block SCDisplay *target_display = nil;
 		[sc->shareable_content.displays
@@ -1124,7 +1124,7 @@ enum gs_color_space screen_capture_video_get_color_space(
 }
 
 #pragma mark - obs_source_info
-
+///屏幕捕获 有视频和音频 其中视频桢一直绑定到GPU的缓存中
 struct obs_source_info screen_capture_info = {
 	.id = "screen_capture",
 	.type = OBS_SOURCE_TYPE_INPUT,

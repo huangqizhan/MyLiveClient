@@ -25,7 +25,11 @@ struct window_capture {
 	os_event_t *capture_event;
 	os_event_t *stop_event;
 };
-
+/*
+ 这个函数获取系统中的窗口列表。
+     •    参数 kCGWindowListOptionIncludingWindow 表示只包含指定 window_id 的窗口。
+     •    返回值是一个 NSArray，包含符合条件的窗口信息（字典 NSDictionary）。
+ */
 static CGImageRef get_image(struct window_capture *wc)
 {
 	NSArray *arr = (NSArray *)CGWindowListCreate(
@@ -39,7 +43,7 @@ static CGImageRef get_image(struct window_capture *wc)
 				       kCGWindowListOptionIncludingWindow,
 				       wc->window.window_id, wc->image_option);
 }
-
+///捕获窗口数据
 static inline void capture_frame(struct window_capture *wc)
 {
 	uint64_t ts = os_gettime_ns();
@@ -215,7 +219,7 @@ static void window_capture_tick(void *data, float seconds)
 		return window_capture_tick_internal(data, seconds);
 	}
 }
-
+///捕获某个window 的frame 
 struct obs_source_info window_capture_info = {
 	.id = "window_capture",
 	.type = OBS_SOURCE_TYPE_INPUT,

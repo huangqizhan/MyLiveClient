@@ -8,8 +8,6 @@
 #import <Cocoa/Cocoa.h>
 
 #include "window-utils.h"
-#include "CGDisplayStream.h"
-
 
 enum crop_mode {
 	CROP_NONE,
@@ -665,7 +663,7 @@ static obs_properties_t *display_capture_properties(void *unused)
 
 	return props;
 }
-
+///显示器捕获 一弃用
 struct obs_source_info display_capture_info = {
 	.id = "display_capture",
 	.type = OBS_SOURCE_TYPE_INPUT,
