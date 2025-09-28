@@ -955,6 +955,8 @@
 		F37B21A52E52CE7200B0C754 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F38BB5822E4F0C0D003CC59E /* libswscale.a */; };
 		F38BB5972E4F1344003CC59E /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F38BB5952E4F1333003CC59E /* libcrypto.a */; };
 		F38BB5982E4F1344003CC59E /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F38BB5962E4F1333003CC59E /* libssl.a */; };
+		F3C9D28A2E891A5600063EB8 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B88C272C77281700A77D50 /* VideoToolbox.framework */; };
+		F3C9D28B2E891A6900063EB8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B88C252C77280D00A77D50 /* CoreMedia.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2628,11 +2630,13 @@
 			files = (
 				F37B21982E52C4E300B0C754 /* libswresample.a in Frameworks */,
 				9078C6302C7860DA00FD11BA /* libcaption.a in Frameworks */,
+				F3C9D28A2E891A5600063EB8 /* VideoToolbox.framework in Frameworks */,
 				F38BB5972E4F1344003CC59E /* libcrypto.a in Frameworks */,
 				F37B21962E52C4E300B0C754 /* libavformat.a in Frameworks */,
 				9078C6282C7860C100FD11BA /* libiconv.tbd in Frameworks */,
 				F37B21782E52BC9200B0C754 /* libiconv.tbd in Frameworks */,
 				F37B21942E52C4E300B0C754 /* libavdevice.a in Frameworks */,
+				F3C9D28B2E891A6900063EB8 /* CoreMedia.framework in Frameworks */,
 				F37B21972E52C4E300B0C754 /* libavutil.a in Frameworks */,
 				F37B21992E52C4E300B0C754 /* libswscale.a in Frameworks */,
 				F37B21792E52BC9B00B0C754 /* libiconv.tbd in Frameworks */,

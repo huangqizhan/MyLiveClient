@@ -228,6 +228,9 @@ static void *enc_create(obs_data_t *settings, obs_encoder_t *encoder,
 
 	if (!enc->codec && alt) {
 		enc->codec = avcodec_find_encoder_by_name(alt);
+        if (!enc->codec) {
+            enc->codec = avcodec_find_encoder(AV_CODEC_ID_AAC);
+        }
 		enc->type = alt;
 	}
 
@@ -354,7 +357,7 @@ fail:
 
 static void *aac_create(obs_data_t *settings, obs_encoder_t *encoder)
 {
-	return enc_create(settings, encoder, "aac", NULL, AV_SAMPLE_FMT_NONE);
+	return enc_create(settings, encoder, "aac", "aac_at", AV_SAMPLE_FMT_NONE);
 }
 
 static void *opus_create(obs_data_t *settings, obs_encoder_t *encoder)
