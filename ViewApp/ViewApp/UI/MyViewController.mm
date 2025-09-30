@@ -371,6 +371,15 @@ private:
 - (IBAction)testAction:(id)sender {
     _m_obs->testAction();
 }
+- (IBAction)screenCapture:(id)sender {
+    _m_obs->AddCaptureScreen("screen cap", 1, 1);
+}
+//"default"
+- (IBAction)audioCapture:(id)sender {
+    _m_obs->AddAudio("audio", "default");
+}
+
+
 @end
 
 

@@ -3,12 +3,10 @@
 
 struct ObsSize {
     ObsSize()
-        :width(0),height(0)
-    {
+        :width(0),height(0){
     }
     ObsSize(int w,int h)
-        :width(w), height(h)
-    {
+        :width(w), height(h){
     }
     int width;
     int height;
@@ -16,12 +14,10 @@ struct ObsSize {
 
 struct ObsPoint {
     ObsPoint()
-        :x(0), y(0)
-    {
+        :x(0), y(0){
     }
     ObsPoint(int _x, int _y)
-        :x(_x), y(_y)
-    {
+        :x(_x), y(_y){
     }
     int x;
     int y;
@@ -77,8 +73,7 @@ public:
 
     //获取窗口尺寸
     virtual ObsSize GetClientSize() =0;
-    virtual window_handle_t CreateWnd(window_handle_t parent,
-        const ObsRect& pos) =0;
+    virtual window_handle_t CreateWnd(window_handle_t parent, const ObsRect& pos) =0;
     virtual void SetWindowPos(const ObsRect& rc) = 0;
     virtual window_handle_t GetWndHandle() = 0;
     virtual void SetVisible(bool visible) = 0;

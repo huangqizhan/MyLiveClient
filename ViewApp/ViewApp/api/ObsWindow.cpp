@@ -10,13 +10,11 @@
 #define HANDLE_SEL_RADIUS (HANDLE_RADIUS * 1.5f)
 #define PREVIEW_EDGE_SIZE 4
 
-bool ObsWindow::CreateDisplay()
-{
+bool ObsWindow::CreateDisplay(){
     if (m_display)
         return false;
     window_handle_t handle = GetWndHandle();
-    if (!handle)
-    {
+    if (!handle){
         blog(LOG_WARNING, "window not created cant create display");
         return false;
     }
@@ -67,8 +65,7 @@ ObsWindow::~ObsWindow()
 }
 
 
-void ObsWindow::InitPrimitives()
-{
+void ObsWindow::InitPrimitives(){
     obs_enter_graphics();
 
     gs_render_start(true);
@@ -98,8 +95,7 @@ void ObsWindow::InitPrimitives()
     gs_vertex2f(0.0f, 1.0f);
     gs_vertex2f(1.0f, 1.0f);
     boxBottom = gs_render_save();
-
-
+    
     obs_leave_graphics();
 }
 ///用solid.effect 绘制背景色
@@ -386,41 +382,20 @@ static inline void GetScaleAndCenterPos(
     x = windowCX / 2 - newCX / 2;
     y = windowCY / 2 - newCY / 2;
 }
-
-//void ObsWindow::ResetVideo()
-//{
-//    obs_video_info ovi;
-//    if (obs_get_video_info(&ovi))
-//    {
-//        GetScaleAndCenterPos(int(ovi.base_width), int(ovi.base_height),
-//            size.width - PREVIEW_EDGE_SIZE * 2,
-//            size.height - PREVIEW_EDGE_SIZE * 2,
-//            m_previewX, m_previewY, m_previewScale);
-//
-//
-//        m_previewX += float(PREVIEW_EDGE_SIZE);
-//        m_previewY += float(PREVIEW_EDGE_SIZE);
-//    }
-//}
-
-void ObsWindow::OnResize(const ObsSize& size)
-{
-    if (m_display)
-    {
+//画布大小改变
+void ObsWindow::OnResize(const ObsSize& size){
+    if (m_display){
         obs_display_resize(m_display, size.width, size.height);
     }
 
     this->size = size;
-
     obs_video_info ovi;
-    if (obs_get_video_info(&ovi))
-    {
+    if (obs_get_video_info(&ovi)){
         GetScaleAndCenterPos(int(ovi.base_width), int(ovi.base_height),
-            size.width - PREVIEW_EDGE_SIZE * 2,
-            size.height - PREVIEW_EDGE_SIZE * 2,
-            m_previewX, m_previewY, m_previewScale);
-
-
+                             size.width - PREVIEW_EDGE_SIZE * 2,
+                             size.height - PREVIEW_EDGE_SIZE * 2,
+                             m_previewX, m_previewY, m_previewScale);
+        
         m_previewX += float(PREVIEW_EDGE_SIZE);
         m_previewY += float(PREVIEW_EDGE_SIZE);
     }

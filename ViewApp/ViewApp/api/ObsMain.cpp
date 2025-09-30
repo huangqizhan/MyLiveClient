@@ -402,9 +402,6 @@ if (found) \
 
     return found;
 }
-
-
-
 bool ObsMain::LoadScene(){
     char savePath[512];
     char fileName[512];
@@ -880,9 +877,9 @@ static char *get_new_source_name(const char *name){
 bool ObsMain::AddCaptureScreen(const char* name, int screen, bool captureMouse){
     char* newName = get_new_source_name(name);
     obs_data_t* data = obs_data_create();
-    obs_data_set_int(data, "monitor", screen);
-    obs_data_set_bool(data, "capture_cursor", captureMouse);
-    OBSSource source = CreateSource("monitor_capture", newName, data);
+    obs_data_set_int(data, "show_cursor", screen);
+//    obs_data_set_bool(data, "capture_cursor", captureMouse);
+    OBSSource source = CreateSource("screen_capture", newName, data);
     obs_data_release(data);
     bfree(newName);
     return AddSource(source);
@@ -954,11 +951,12 @@ bool ObsMain::AddCamera(const char* name, const CameraInfo* info){
     }
     return AddSource(source);
 }
+///全局的输入 输出(如果有的话) 会默认打开
 bool ObsMain::AddAudio(const char* name, const char* deviceid){
     char* newName = get_new_source_name(name);
     obs_data_t* data = obs_data_create();
     obs_data_set_string(data, "audio_device_id", deviceid);
-    OBSSource source = CreateSource("coreaudio_input_capture", newName, data);
+    OBSSource source = CreateSource("coreaudio_output_capture", newName, data);
     bfree(newName);
     if (!source){
         obs_data_release(data);
@@ -1005,10 +1003,7 @@ bool ObsMain::AddImage(const char* path, int alpha){
     }
     return source != nullptr;
 }
-void ObsMain::shutDown(){
-    SaveProject();
-    ObsBasic::shutDown();
-}
+
 bool ObsMain::AddVideo(const VideoData* video){
     obs_data_t *settings = obs_data_create();
     obs_source_t *source = nullptr;
@@ -1156,4 +1151,9 @@ bool ObsMain::AddText(const TextData* data)
     }
     obs_data_release(settings);
     return source != nullptr;
+}
+
+void ObsMain::shutDown(){
+    SaveProject();
+    ObsBasic::shutDown();
 }

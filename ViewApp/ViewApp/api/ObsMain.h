@@ -27,14 +27,11 @@ class ObsMain:public ObsBasic
 public:
     struct SceneData {
         SceneData(OBSScene s)
-            :scene(s)
-        {
+            :scene(s){
         }
 
-        ~SceneData()
-        {
+        ~SceneData(){
         }
-        
         const char* name() {
             return obs_source_get_name(obs_scene_get_source(scene));
         }
