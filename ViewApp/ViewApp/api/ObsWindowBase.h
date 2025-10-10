@@ -65,7 +65,7 @@ struct ObsMouseEvent
     int x; int y;  //鼠标位置
 };
 
-//窗口api，不同系统不同实现
+//画布 api，不同系统不同实现
 class ObsWindowBase
 {
 public:

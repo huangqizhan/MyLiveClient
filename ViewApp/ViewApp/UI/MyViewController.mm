@@ -329,7 +329,8 @@ private:
 - (IBAction)mediaBtnAction:(NSButton *)sender {
     if(self.mediaNames.count <= 0) return;
     NSString *name = self.mediaNames.firstObject;
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"container2" ofType:@"png"];
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"container2" ofType:@"png"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:name?:@"" ofType:@"png"];
 //    NSString *path = [[NSBundle mainBundle] pathForResource:@"engclpi" ofType:@"mp4"];
     if(path.length == 0){
         blog(LOG_ERROR, "file path empty!!! ");;

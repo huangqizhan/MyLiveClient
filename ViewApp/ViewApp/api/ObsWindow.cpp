@@ -10,6 +10,8 @@
 #define HANDLE_SEL_RADIUS (HANDLE_RADIUS * 1.5f)
 #define PREVIEW_EDGE_SIZE 4
 
+
+#pragma mark: //创建画布对象 并设置渲染回调
 bool ObsWindow::CreateDisplay(){
     if (m_display)
         return false;
@@ -63,8 +65,7 @@ ObsWindow::~ObsWindow()
     gs_vertexbuffer_destroy(boxBottom);
     obs_leave_graphics();
 }
-
-
+#pragma mark : 创建绘图缓冲区对象
 void ObsWindow::InitPrimitives(){
     obs_enter_graphics();
 
@@ -142,7 +143,6 @@ static void DrawSquareAtPos(float x, float y)
     gs_matrix_get(&matrix);
     ///把pos变换到box的变换层面
     vec3_transform(&pos, &pos, &matrix);
-    
     ///再上一个新的矩阵 右是一层新的变换   也就是点本身变换层面
     gs_matrix_push();
     ///单位矩阵
@@ -229,7 +229,7 @@ bool DrawSelectedItem(obs_scene_t *scene, obs_sceneitem_t *item, void *param) {
 
     ObsWindow* window = (ObsWindow*)param;
     gs_load_vertexbuffer(window->box);
-    ///上一个矩阵 变换到box的坐标系
+    //上一个矩阵 变换到box的坐标系
     gs_matrix_push();
     gs_matrix_mul(&boxTransform);
 
@@ -319,7 +319,9 @@ void ObsWindow::RenderWindow(uint32_t cx, uint32_t cy)
 {
     if (!GetWndHandle())
         return;
-
+    obs_enter_graphics();
+    
+    
     obs_video_info ovi;
 
     obs_get_video_info(&ovi);
@@ -345,7 +347,6 @@ void ObsWindow::RenderWindow(uint32_t cx, uint32_t cy)
     
     ///
     ObsSize size = GetClientSize();
-    
     float right = float(size.width) - m_previewX;
     float bottom = float(size.height) - m_previewY;
     gs_ortho(-m_previewX, right, -m_previewY, bottom, -100.0f, 100.0f);
@@ -356,12 +357,10 @@ void ObsWindow::RenderWindow(uint32_t cx, uint32_t cy)
     gs_projection_pop();
     ///退出新的viewport
     gs_viewport_pop();
+    obs_leave_graphics();
 }
 ///====根据video_info base_width(1280) base_height(960)和实际画布的大小 计算出放缩比和起始位置
-static inline void GetScaleAndCenterPos(
-    int baseCX, int baseCY, int windowCX, int windowCY,
-    int &x, int &y, float &scale)
-{
+static inline void GetScaleAndCenterPos( int baseCX, int baseCY, int windowCX, int windowCY, int &x, int &y, float &scale) {
     double windowAspect, baseAspect;
     int newCX, newCY;
 
@@ -372,8 +371,7 @@ static inline void GetScaleAndCenterPos(
         scale = float(windowCY) / float(baseCY);
         newCX = int(double(windowCY) * baseAspect);
         newCY = windowCY;
-    }
-    else {
+    } else {
         scale = float(windowCX) / float(baseCX);
         newCX = windowCX;
         newCY = int(float(windowCX) / baseAspect);
@@ -382,7 +380,7 @@ static inline void GetScaleAndCenterPos(
     x = windowCX / 2 - newCX / 2;
     y = windowCY / 2 - newCY / 2;
 }
-//画布大小改变
+//画布大小改变 重新调整上下左右的边距 及video_info.base_width 与实际画布的比例
 void ObsWindow::OnResize(const ObsSize& size){
     if (m_display){
         obs_display_resize(m_display, size.width, size.height);
@@ -400,18 +398,15 @@ void ObsWindow::OnResize(const ObsSize& size){
         m_previewY += float(PREVIEW_EDGE_SIZE);
     }
 }
-
 /////////////////////////////////////////////////////////////////////////////////////////////
-//鼠标事件处理
-static vec3 GetTransformedPos(float x, float y, const matrix4 &mat)
-{
+// 把x y 转换到mat 所在的空间中
+static vec3 GetTransformedPos(float x, float y, const matrix4 &mat){
     vec3 result;
     vec3_set(&result, x, y, 0.0f);
     vec3_transform(&result, &result, &mat);
     return result;
 }
-
-
+//sceneItem的控制点数据
 struct HandleFindData {
     ///在base_width  base_height上  当前要查找的位置
     const vec2    &pos;
@@ -429,26 +424,20 @@ struct HandleFindData {
     HandleFindData& operator=(HandleFindData &&) = delete;
 
     inline HandleFindData(const vec2 &pos_, float scale)
-        : pos(pos_),
-        radius(HANDLE_SEL_RADIUS / scale)
-    {
+        : pos(pos_), radius(HANDLE_SEL_RADIUS / scale){
         matrix4_identity(&parent_xform);
     }
 
-    inline HandleFindData(const HandleFindData &hfd,
-        obs_sceneitem_t *parent)
+    inline HandleFindData(const HandleFindData &hfd, obs_sceneitem_t *parent)
         : pos(hfd.pos),
         radius(hfd.radius),
         item(hfd.item),
-        handle(hfd.handle)
-    {
+        handle(hfd.handle) {
         obs_sceneitem_get_draw_transform(parent, &parent_xform);
     }
 };
 ///======查找当前位置附近是否有是否有控制点
-static bool FindHandleAtPos(obs_scene_t *scene, obs_sceneitem_t *item,
-    void *param)
-{
+static bool FindHandleAtPos(obs_scene_t *scene, obs_sceneitem_t *item, void *param){
     HandleFindData &data = *reinterpret_cast<HandleFindData*>(param);
 
     if (!obs_sceneitem_selected(item)) {
@@ -459,7 +448,6 @@ static bool FindHandleAtPos(obs_scene_t *scene, obs_sceneitem_t *item,
             data.item = newData.item;
             data.handle = newData.handle;
         }
-
         return true;
     }
 
@@ -500,15 +488,13 @@ static bool FindHandleAtPos(obs_scene_t *scene, obs_sceneitem_t *item,
     return true;
 }
 ///当前item的实际大小
-static vec2 GetItemSize(obs_sceneitem_t *item)
-{
+static vec2 GetItemSize(obs_sceneitem_t *item){
     obs_bounds_type boundsType = obs_sceneitem_get_bounds_type(item);
     vec2 size;
 
     if (boundsType != OBS_BOUNDS_NONE) {
         obs_sceneitem_get_bounds(item, &size);
-    }
-    else {
+    }else {
         ///item的实际大小
         obs_source_t *source = obs_sceneitem_get_source(item);
         obs_sceneitem_crop crop;
@@ -516,18 +502,13 @@ static vec2 GetItemSize(obs_sceneitem_t *item)
 
         obs_sceneitem_get_scale(item, &scale);
         obs_sceneitem_get_crop(item, &crop);
-        size.x = float(obs_source_get_width(source) -
-            crop.left - crop.right) * scale.x;
-        size.y = float(obs_source_get_height(source) -
-            crop.top - crop.bottom) * scale.y;
+        size.x = float(obs_source_get_width(source) - crop.left - crop.right) * scale.x;
+        size.y = float(obs_source_get_height(source) - crop.top - crop.bottom) * scale.y;
     }
-
     return size;
 }
 ///====查找控制点
-void ObsWindow::GetStretchHandleData(const vec2 &pos)
-{
-
+void ObsWindow::GetStretchHandleData(const vec2 &pos){
     OBSScene scene = ObsMain::Instance()->GetCurrentScene();
     if (!scene)
         return;
@@ -541,8 +522,7 @@ void ObsWindow::GetStretchHandleData(const vec2 &pos)
 
     stretchItem = std::move(data.item);
     stretchHandle = data.handle;
-
-    ///有控制点响应 
+    ///有控制点响应
     if (stretchHandle != ItemHandle::None) {
         matrix4 boxTransform;
         vec3    itemUL;
@@ -552,7 +532,7 @@ void ObsWindow::GetStretchHandleData(const vec2 &pos)
 
         obs_sceneitem_get_box_transform(stretchItem, &boxTransform);
         itemRot = obs_sceneitem_get_rot(stretchItem);
-        ///最后一列用作平移
+        ///最后一行用作平移
         vec3_from_vec4(&itemUL, &boxTransform.t);
 
         /* build the item space conversion matrices */
@@ -598,9 +578,7 @@ struct SceneFindData {
     {}
 };
 ///=== 查找ceneitem return true 继续查找下一个 false表示已经找到
-static bool CheckItemSelected(obs_scene_t *scene, obs_sceneitem_t *item,
-    void *param)
-{
+static bool CheckItemSelected(obs_scene_t *scene, obs_sceneitem_t *item, void *param){
     SceneFindData *data = reinterpret_cast<SceneFindData*>(param);
     matrix4       transform;
     vec3          transformedPos;
@@ -641,8 +619,7 @@ static bool CheckItemSelected(obs_scene_t *scene, obs_sceneitem_t *item,
     return true;
 }
 ///====触点是否有可选中的item
-bool ObsWindow::SelectedAtPos(const vec2 &pos)
-{
+bool ObsWindow::SelectedAtPos(const vec2 &pos){
     OBSScene scene = ObsMain::Instance()->GetCurrentScene();
     if (!scene)
         return false;
@@ -652,8 +629,7 @@ bool ObsWindow::SelectedAtPos(const vec2 &pos)
     return !!data.item;
 }
 ///===按下鼠标
-void ObsWindow::OnMousePressEvent(ObsMouseEvent *event)
-{
+void ObsWindow::OnMousePressEvent(ObsMouseEvent *event){
     if (m_locked) {
         return;
     }
@@ -669,12 +645,10 @@ void ObsWindow::OnMousePressEvent(ObsMouseEvent *event)
         mouseDown = true;
     else
         rmouseDown = true;
-
-
+    
     vec2_set(&startPos, x, y);
     ///查找控制点
     GetStretchHandleData(startPos);
-    
     ///换算到 base_width  base_height的空间下
     vec2_divf(&startPos, &startPos, m_previewScale);
     startPos.x = std::round(startPos.x);
@@ -684,8 +658,7 @@ void ObsWindow::OnMousePressEvent(ObsMouseEvent *event)
     vec2_zero(&lastMoveOffset);
 }
 ///把画布的坐标转换到 base_height  base_width上
-vec2 ObsWindow::GetMouseEventPos(ObsMouseEvent *event)
-{
+vec2 ObsWindow::GetMouseEventPos(ObsMouseEvent *event){
     float pixelRatio = 1.0;
     float scale = pixelRatio / m_previewScale;
     vec2 pos;
@@ -696,8 +669,7 @@ vec2 ObsWindow::GetMouseEventPos(ObsMouseEvent *event)
     return pos;
 }
 static bool FindItemAtPos(obs_scene_t *scene, obs_sceneitem_t *item,
-    void *param)
-{
+    void *param){
     SceneFindData *data = reinterpret_cast<SceneFindData*>(param);
     matrix4       transform;
     matrix4       invTransform;
@@ -737,21 +709,16 @@ static bool FindItemAtPos(obs_scene_t *scene, obs_sceneitem_t *item,
     return true;
 }
 
-OBSSceneItem ObsWindow::GetItemAtPos(const vec2 &pos, bool selectBelow)
-{
+OBSSceneItem ObsWindow::GetItemAtPos(const vec2 &pos, bool selectBelow){
     OBSScene scene = ObsMain::Instance()->GetCurrentScene();
     if (!scene)
         return OBSSceneItem();
-
     SceneFindData data(pos, selectBelow);
     obs_scene_enum_items(scene, FindItemAtPos, &data);
     return data.item;
 }
-
-
 static bool FindSelectItemAtPos(obs_scene_t *scene, obs_sceneitem_t *item,
-    void *param)
-{
+    void *param){
     SceneFindData *data = reinterpret_cast<SceneFindData*>(param);
     matrix4       transform;
     matrix4       invTransform;
@@ -783,8 +750,7 @@ static bool FindSelectItemAtPos(obs_scene_t *scene, obs_sceneitem_t *item,
     UNUSED_PARAMETER(scene);
     return true;
 }
-OBSSceneItem ObsWindow::GetSelectItemAtPos(const vec2 &pos)
-{
+OBSSceneItem ObsWindow::GetSelectItemAtPos(const vec2 &pos){
     OBSScene scene = ObsMain::Instance()->GetCurrentScene();
     if (!scene)
         return OBSSceneItem();
@@ -794,9 +760,7 @@ OBSSceneItem ObsWindow::GetSelectItemAtPos(const vec2 &pos)
     return data.item;
 }
 
-
-static bool select_one(obs_scene_t *scene, obs_sceneitem_t *item, void *param)
-{
+static bool select_one(obs_scene_t *scene, obs_sceneitem_t *item, void *param){
     obs_sceneitem_t *selectedItem =
         reinterpret_cast<obs_sceneitem_t*>(param);
     if (obs_sceneitem_is_group(item))
@@ -808,8 +772,7 @@ static bool select_one(obs_scene_t *scene, obs_sceneitem_t *item, void *param)
     return true;
 }
 
-void ObsWindow::DoSelect(const vec2 &pos)
-{
+void ObsWindow::DoSelect(const vec2 &pos){
     OBSScene     scene =ObsMain::Instance()->GetCurrentScene();
     OBSSceneItem item = GetItemAtPos(pos, true);
 
@@ -1037,7 +1000,7 @@ void ObsWindow::CropItem(const vec2 &pos)
         obs_sceneitem_set_pos(stretchItem, (vec2*)&newPos);
     obs_sceneitem_defer_update_end(stretchItem);
 }
-
+//拉伸当前scenw item
 void ObsWindow::StretchItem(const vec2 &pos)
 {
     obs_bounds_type boundsType = obs_sceneitem_get_bounds_type(stretchItem);

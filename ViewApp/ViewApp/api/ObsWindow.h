@@ -19,8 +19,9 @@ public:
     ObsWindow();
     ~ObsWindow();
 
-    static ObsWindow*  Create();
-    bool CreateDisplay();//创建obsdisplay
+//    static ObsWindow*  Create();
+    //创建obsdisplay  画布
+    bool CreateDisplay();
 
     obs_display_t* display() { return m_display; }
 
@@ -55,6 +56,7 @@ protected:
 
     //是否锁定
     bool m_locked = false;
+    //画布对象
     OBSDisplay m_display;
     
     ///实际画布的大小跟video_info.base_width base_height的实际比例
@@ -101,8 +103,11 @@ protected:
     ItemHandle   stretchHandle = ItemHandle::None;
     ///当前item放缩后的实际大小
     vec2         stretchItemSize;
-    matrix4      screenToItem;
-    matrix4      itemToScreen;
+    
+    //在放缩 放大缩小时临时使用的变换矩阵
+    matrix4      screenToItem;   //画布相对于当前item
+    matrix4      itemToScreen;   //当前item相对于screen 
+    
     matrix4      invGroupTransform;
 
     ObsSize      size;

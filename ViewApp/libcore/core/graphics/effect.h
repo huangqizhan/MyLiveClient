@@ -171,8 +171,8 @@ static inline void effect_technique_free(struct gs_effect_technique *t)
 }
 
 /* ------------------------------------------------------------------------- */
+
 /*
- 
  uniform float4x4 ViewProj;
  uniform texture2d image;
  uniform float multiplier;
