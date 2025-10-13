@@ -564,18 +564,14 @@ struct SceneFindData {
     const vec2   &pos;
     OBSSceneItem item;
     bool         selectBelow;
-
     obs_sceneitem_t *group = nullptr;
-
     SceneFindData(const SceneFindData &) = delete;
     SceneFindData(SceneFindData &&) = delete;
     SceneFindData& operator=(const SceneFindData &) = delete;
     SceneFindData& operator=(SceneFindData &&) = delete;
-
-    inline SceneFindData(const vec2 &pos_, bool selectBelow_)
-        : pos(pos_),
-        selectBelow(selectBelow_)
-    {}
+    inline SceneFindData(const vec2 &pos_, bool selectBelow_) : pos(pos_),
+        selectBelow(selectBelow_){
+    }
 };
 ///=== 查找ceneitem return true 继续查找下一个 false表示已经找到
 static bool CheckItemSelected(obs_scene_t *scene, obs_sceneitem_t *item, void *param){
@@ -599,13 +595,13 @@ static bool CheckItemSelected(obs_scene_t *scene, obs_sceneitem_t *item, void *p
 
     vec3_set(&pos3, data->pos.x, data->pos.y, 0.0f);
     obs_sceneitem_get_box_transform(item, &transform);
-
+    
     if (data->group) {
         matrix4 parent_transform;
         obs_sceneitem_get_draw_transform(data->group, &parent_transform);
         matrix4_mul(&transform, &transform, &parent_transform);
     }
-    ///变换回item子空间
+    //变换回item子空间 如果x y 分别在0-1之间  则该item就被选中
     matrix4_inv(&transform, &transform);
     vec3_transform(&transformedPos, &pos3, &transform);
     if (transformedPos.x >= 0.0f && transformedPos.x <= 1.0f &&

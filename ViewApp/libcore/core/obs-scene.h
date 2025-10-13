@@ -86,6 +86,20 @@ struct obs_scene_item {
 	enum obs_blending_method blend_method;
 	enum obs_blending_type blend_type;
     
+    /*
+     每个scene下有多个item
+     scene的是世界坐标系 [0-1]
+     item是在scene 坐标空间下坐标 其变矩阵是box_transform （表示其在scene下 平移 旋转 放缩）
+     
+     M =
+     \begin{bmatrix}
+     m_{00} & m_{01} & m_{02} & m_{03} \\
+     m_{10} & m_{11} & m_{12} & m_{13} \\
+     m_{20} & m_{21} & m_{22} & m_{23} \\
+     0      & 0      & 0      & 1
+     \end{bmatrix}
+     */
+    
     ///当前item边框的变换矩阵可以变换到父空间  如果需要变换到自己本身空间则求逆
 	struct matrix4 box_transform;
 	struct vec2 box_scale;
