@@ -1108,10 +1108,6 @@ bool ObsBasic::CheckChannel(int channel){
 ///设置全局的音频设备(虚拟设备  外置扬声器  外置麦克风 注意系统的内置扬声器是获取不到的)
 void ObsBasic::ResetAudioDevice(const char *sourceId, const char *deviceId,
     const char *deviceDesc, int channel){
-#if DEBUG
-    return;
-#endif
-    
     bool disable = deviceId && strcmp(deviceId, "disabled") == 0;
     obs_source_t *source;
     obs_data_t *settings;
@@ -1131,14 +1127,12 @@ void ObsBasic::ResetAudioDevice(const char *sourceId, const char *deviceId,
             obs_data_release(settings);
         }
         obs_source_release(source);
-
     }else if (!disable) {
         settings = obs_data_create();
         obs_data_set_string(settings, "device_id", deviceId);
         source = obs_source_create(sourceId, deviceDesc, settings,
             nullptr);
         obs_data_release(settings);
-
         obs_set_output_source(channel, source);
         obs_source_release(source);
     }

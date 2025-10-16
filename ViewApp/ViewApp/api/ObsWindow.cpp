@@ -320,8 +320,6 @@ void ObsWindow::RenderWindow(uint32_t cx, uint32_t cy)
     if (!GetWndHandle())
         return;
     obs_enter_graphics();
-    
-    
     obs_video_info ovi;
 
     obs_get_video_info(&ovi);
@@ -573,7 +571,7 @@ struct SceneFindData {
         selectBelow(selectBelow_){
     }
 };
-///=== 查找ceneitem return true 继续查找下一个 false表示已经找到
+///=== 查找当前position下是否有选中的的item
 static bool CheckItemSelected(obs_scene_t *scene, obs_sceneitem_t *item, void *param){
     SceneFindData *data = reinterpret_cast<SceneFindData*>(param);
     matrix4       transform;
@@ -664,6 +662,7 @@ vec2 ObsWindow::GetMouseEventPos(ObsMouseEvent *event){
 
     return pos;
 }
+//查找scene下的item 在当前位置的item
 static bool FindItemAtPos(obs_scene_t *scene, obs_sceneitem_t *item,
     void *param){
     SceneFindData *data = reinterpret_cast<SceneFindData*>(param);
@@ -677,9 +676,7 @@ static bool FindItemAtPos(obs_scene_t *scene, obs_sceneitem_t *item,
         return true;
     if (obs_sceneitem_locked(item))
         return true;
-
     vec3_set(&pos3, data->pos.x, data->pos.y, 0.0f);
-
     obs_sceneitem_get_box_transform(item, &transform);
     ///求transform逆变换   变换到item的子空间
     matrix4_inv(&invTransform, &transform);
@@ -692,19 +689,17 @@ static bool FindItemAtPos(obs_scene_t *scene, obs_sceneitem_t *item,
         transformedPos.x >= 0.0f && transformedPos.x <= 1.0f &&
         transformedPos.y >= 0.0f && transformedPos.y <= 1.0f) {
         if (data->selectBelow && obs_sceneitem_selected(item)) {
-            if (data->item)
+            if (data->item){
                 return false;
+            }
             else
                 data->selectBelow = false;
         }
-
         data->item = item;
     }
-
     UNUSED_PARAMETER(scene);
     return true;
 }
-
 OBSSceneItem ObsWindow::GetItemAtPos(const vec2 &pos, bool selectBelow){
     OBSScene scene = ObsMain::Instance()->GetCurrentScene();
     if (!scene)
@@ -772,11 +767,10 @@ void ObsWindow::DoSelect(const vec2 &pos){
     OBSScene     scene =ObsMain::Instance()->GetCurrentScene();
     OBSSceneItem item = GetItemAtPos(pos, true);
 
-    obs_scene_enum_items(scene, select_one, (obs_sceneitem_t*)item);
+    obs_scene_enum_items(scene, select_one, item);
 }
-
-void ObsWindow::DoCtrlSelect(const vec2 &pos)
-{
+//反选
+void ObsWindow::DoCtrlSelect(const vec2 &pos){
     OBSSceneItem item = GetItemAtPos(pos, false);
     if (!item)
         return;
@@ -785,8 +779,7 @@ void ObsWindow::DoCtrlSelect(const vec2 &pos)
     obs_sceneitem_select(item, !selected);
 }
 
-vec3 ObsWindow::CalculateStretchPos(const vec3 &tl, const vec3 &br)
-{
+vec3 ObsWindow::CalculateStretchPos(const vec3 &tl, const vec3 &br){
     uint32_t alignment = obs_sceneitem_get_alignment(stretchItem);
     vec3 pos;
 
@@ -1301,7 +1294,7 @@ static inline vec2 GetOBSScreenSize()
 //
 //    return clampOffset;
 //}
-
+///拖动item 
 static bool move_items(obs_scene_t *scene, obs_sceneitem_t *item, void *param)
 {
     if (obs_sceneitem_locked(item))
@@ -1332,7 +1325,7 @@ static bool move_items(obs_scene_t *scene, obs_sceneitem_t *item, void *param)
     UNUSED_PARAMETER(scene);
     return true;
 }
-///pos是在base空间 
+///拖动item  pos是在base空间
 void ObsWindow::MoveItems(const vec2 &pos)
 {
     OBSScene scene = ObsMain::Instance()->GetCurrentScene();

@@ -3557,8 +3557,6 @@
 			children = (
 				9088D05F2C789726007EB8B5 /* ObsAudioEncoders.cpp */,
 				9088D0592C789726007EB8B5 /* ObsAudioEncoders.h */,
-				9088D04C2C789725007EB8B5 /* ObsAudioControl.cpp */,
-				9088D0622C789726007EB8B5 /* ObsAudioControl.h */,
 				9088D0582C789726007EB8B5 /* ObsConfig.h */,
 				9088D04F2C789725007EB8B5 /* ObsOutputs.cpp */,
 				9088D0542C789725007EB8B5 /* ObsOutputs.h */,
@@ -3568,6 +3566,8 @@
 				9088D05E2C789726007EB8B5 /* ObsSceneItemList.h */,
 				9088D05A2C789726007EB8B5 /* ObsUtils.cpp */,
 				9088D0502C789725007EB8B5 /* ObsUtils.h */,
+				9088D04C2C789725007EB8B5 /* ObsAudioControl.cpp */,
+				9088D0622C789726007EB8B5 /* ObsAudioControl.h */,
 				9088D0612C789726007EB8B5 /* ObsVolumeControl.cpp */,
 				9088D0522C789725007EB8B5 /* ObsVolumeControl.h */,
 				9079001C2C7F1B3400B670E9 /* ObsApp.cpp */,

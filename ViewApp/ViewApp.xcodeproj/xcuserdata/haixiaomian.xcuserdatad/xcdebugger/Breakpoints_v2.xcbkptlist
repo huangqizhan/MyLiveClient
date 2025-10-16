@@ -71,49 +71,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8A1C2E1D-5D5D-488C-86D4-5B4D2F5F69AC"
+            uuid = "5FCD9F08-6555-43A2-9962-A35E790F58EA"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ViewApp/api/ObsWindow.cpp"
+            filePath = "libcore/core/obs.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "629"
-            endingLineNumber = "629"
-            landmarkName = "ObsWindow::OnMousePressEvent(event)"
-            landmarkType = "7">
+            startingLineNumber = "3179"
+            endingLineNumber = "3179"
+            landmarkName = "obs_add_raw_audio_callback(mix_idx, conversion, callback, param)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "573469BA-783A-4F0F-BEDB-906C63257764"
+            uuid = "165A3F56-F774-4517-B5FB-A3974211188F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ViewApp/api/ObsWindow.cpp"
+            filePath = "libcore/core/audio-monitoring/osx/coreaudio-output.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "630"
-            endingLineNumber = "630"
-            landmarkName = "ObsWindow::OnMousePressEvent(event)"
-            landmarkType = "7">
+            startingLineNumber = "295"
+            endingLineNumber = "295"
+            landmarkName = "audio_monitor_create(source)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B9ACA207-A43D-4BC8-A621-1F3A04B86A84"
+            uuid = "4E199FF0-5897-4F53-AF92-FDCD35B51B22"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ViewApp/api/ObsWindow.cpp"
+            filePath = "libcore/core/media-io/audio-io.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "631"
-            endingLineNumber = "631"
-            landmarkName = "ObsWindow::OnMousePressEvent(event)"
-            landmarkType = "7">
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "do_audio_output(audio, mix_idx, timestamp, frames)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

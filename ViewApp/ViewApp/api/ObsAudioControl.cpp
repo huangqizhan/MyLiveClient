@@ -131,13 +131,11 @@ ObsAudioManager::~ObsAudioManager()
 
 }
 
-bool ObsAudioManager::EnumSources(void *param, obs_source_t *source)
-{
+bool ObsAudioManager::EnumSources(void *param, obs_source_t *source){
     ObsAudioManager *mgr = reinterpret_cast<ObsAudioManager*>(param);
     uint32_t flags = obs_source_get_output_flags(source);
 
-    if ((flags & OBS_SOURCE_AUDIO) != 0 && obs_source_active(source))
-    {
+    if ((flags & OBS_SOURCE_AUDIO) != 0 && obs_source_active(source)){
         mgr->m_controls.push_back(
             std::make_unique<ObsAudioControl>(source, mgr->m_observer));
     }

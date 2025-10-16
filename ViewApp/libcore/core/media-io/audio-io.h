@@ -97,7 +97,7 @@ struct audio_output_info {
 	uint32_t samples_per_sec;
 	enum audio_format format;
 	enum speaker_layout speakers;
-
+    //音频IO线程获取音频数据回调
 	audio_input_callback_t input_callback;
 	void *input_param;
 };

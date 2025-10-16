@@ -46,7 +46,7 @@ extern profiler_name_store_t *obs_get_profiler_name_store(void);
 struct audio_input {
 	struct audio_convert_info conversion;
 	audio_resampler_t *resampler;
-
+    //输出到编码器
 	audio_output_callback_t callback;
 	void *param;
 };

@@ -421,6 +421,7 @@ struct obs_core_audio {
 	audio_t *audio;
 
 	DARRAY(struct obs_source *) render_order;
+    //每个输出通道的root_audio_source
 	DARRAY(struct obs_source *) root_nodes;
     ///开始缓冲时的 时钟时间 
 	uint64_t buffered_ts;
@@ -434,6 +435,7 @@ struct obs_core_audio {
     ///固定缓冲区大小
 	bool fixed_buffer;
     
+    //每一个source对应一个monitor  这里是所有source的monitor的总和  
 	pthread_mutex_t monitoring_mutex;
 	DARRAY(struct audio_monitor *) monitors;
 	char *monitoring_device_name;
@@ -919,6 +921,8 @@ struct obs_source {
 	pthread_mutex_t audio_actions_mutex;
 	pthread_mutex_t audio_buf_mutex;
 	pthread_mutex_t audio_mutex;
+    
+    //音频输出到audio_monitor的回调
 	pthread_mutex_t audio_cb_mutex;
 	DARRAY(struct audio_cb_info) audio_cb_list;
     ///音频source采集后的数据
@@ -1131,7 +1135,7 @@ struct obs_source {
 	/* color space */
 	gs_texrender_t *color_space_texrender;
     
-    //audio ply
+    //audio ply  source中可能会有音频 
 	struct audio_monitor *monitor;
 	enum obs_monitoring_type monitoring_type;
 
@@ -1159,8 +1163,7 @@ extern void obs_transition_enum_sources(obs_source_t *transition,
 extern void obs_transition_save(obs_source_t *source, obs_data_t *data);
 extern void obs_transition_load(obs_source_t *source, obs_data_t *data);
 
-
-
+//有音频的source 会创建一个audio_monitor 
 struct audio_monitor *audio_monitor_create(obs_source_t *source);
 void audio_monitor_reset(struct audio_monitor *monitor);
 extern void audio_monitor_destroy(struct audio_monitor *monitor);
@@ -1439,7 +1442,8 @@ struct obs_output {
     ///初始化完毕之后为true
 	volatile bool active;
 	volatile bool paused;
-    ///音视输出
+
+    ///全局的音视输出
 	video_t *video;
 	audio_t *audio;
 	obs_encoder_t *video_encoder;

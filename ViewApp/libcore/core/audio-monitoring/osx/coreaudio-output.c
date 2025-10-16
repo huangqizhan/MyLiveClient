@@ -44,7 +44,7 @@ static inline bool fill_buffer(struct audio_monitor *monitor)
 			    monitor->buffer_size);
 
 	buf->mAudioDataByteSize = monitor->buffer_size;
-
+    ///往播放器添加数据
 	stat = AudioQueueEnqueueBuffer(monitor->queue, buf, 0, NULL);
 	if (!success(stat, "AudioQueueEnqueueBuffer")) {
 		blog(LOG_WARNING, "%s: %s", __FUNCTION__,
@@ -53,7 +53,7 @@ static inline bool fill_buffer(struct audio_monitor *monitor)
 	}
 	return true;
 }
-//给 audio monitor 添加回调
+//给 audio monitor 添加从source传过来的音频数据回调
 static void on_audio_playback(void *param, obs_source_t *source,
 			      const struct audio_data *audio_data, bool muted)
 {
@@ -186,7 +186,7 @@ static bool audio_monitor_init(struct audio_monitor *monitor,
 			return true;
 		}
 	}
-
+    //初始化播放器
 	stat = AudioQueueNewOutput(&desc, buffer_audio, monitor, NULL, NULL, 0,
 				   &monitor->queue);
 	if (!success(stat, "AudioStreamBasicDescription")) {
@@ -301,7 +301,7 @@ struct audio_monitor *audio_monitor_create(obs_source_t *source)
 	pthread_mutex_lock(&obs->audio.monitoring_mutex);
 	da_push_back(obs->audio.monitors, &monitor);
 	pthread_mutex_unlock(&obs->audio.monitoring_mutex);
-
+    //添加回调
 	audio_monitor_init_final(monitor);
 	return monitor;
 

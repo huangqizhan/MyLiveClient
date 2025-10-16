@@ -36,6 +36,35 @@
 #include "obs-properties.h"
 #include "obs-interaction.h"
 
+
+
+
+/*
+ 
+              ____       ____
+             /    \     /    \
+            /      \   /      \
+            | OBS   | | OUTPUT |
+            \      /   \      /
+             \____/     \____/
+                           |\
+                          \|
+                         ______
+                        /      \
+                        |ENCODER|  encoder 启动之后会跟aio/vio 做关联
+                        \______/
+                          |\
+                         \|
+                 ____       ____
+                /    \     /    \
+               /      \   /      \
+              |  aoi   |  |  vio  |
+               \      /   \      /
+                \____/     \____/
+
+
+ */
+
 struct matrix4;
 
 /* opaque types */
@@ -1289,12 +1318,13 @@ EXPORT void obs_source_set_deinterlace_field_order(
 EXPORT enum obs_deinterlace_field_order
 obs_source_get_deinterlace_field_order(const obs_source_t *source);
 
+//只是对source而言
 enum obs_monitoring_type {
 	OBS_MONITORING_TYPE_NONE,               ///仅输出 不播放
 	OBS_MONITORING_TYPE_MONITOR_ONLY,       ///不用输出  仅播放
 	OBS_MONITORING_TYPE_MONITOR_AND_OUTPUT, ///既输出又播放
 };
-
+///给当前的source设置monitor 类型
 EXPORT void obs_source_set_monitoring_type(obs_source_t *source,
 					   enum obs_monitoring_type type);
 EXPORT enum obs_monitoring_type
@@ -2111,6 +2141,7 @@ EXPORT void obs_output_set_video_encoder(obs_output_t *output,
 					 obs_encoder_t *encoder);
 
 /**
+ *关联output 跟encoder
  * Sets the current audio encoder associated with this output,
  * required for encoded outputs.
  *
@@ -2262,6 +2293,31 @@ EXPORT void obs_output_end_data_capture(obs_output_t *output);
 EXPORT void obs_output_signal_stop(obs_output_t *output, int code);
 
 EXPORT uint64_t obs_output_get_pause_offset(obs_output_t *output);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ------------------------------------------------------------------------- */
 /* Encoders */

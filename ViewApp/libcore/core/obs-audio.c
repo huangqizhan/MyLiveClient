@@ -513,6 +513,7 @@ static inline void execute_audio_tasks(void)
 		pthread_mutex_unlock(&audio->task_mutex);
 	}
 }
+///音频IO线下的回调函数 主要实现收集所有scene->source的音频数据 最后做混音  
 ///音频IO线程获取音频数据回调 每1024个采样处理一次 start_ts_in1024个采样开始的时间   end_ts_in是1024个采样结束的时间
 ///上次tick的结束时间是本次tick的开始时间
 ///此处的同步只是为了保证每个音频source都能有数据 
