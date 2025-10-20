@@ -214,8 +214,8 @@ void obs_hotkey_name_map_free(void);
 //主画布和预览画布都对应一个obs_view
 struct obs_view {
 	pthread_mutex_t channels_mutex;
-    ///视频： 转场source->scene_source->input_sources   当前选中的转场source
-    ///音频： 桌面音频source 、
+    //0：视频： 转场source->scene_source->input_sources   当前选中的转场source
+    //1：音频： 桌面音频source 、
 	obs_source_t *channels[MAX_CHANNELS];
 };
 

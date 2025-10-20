@@ -48,13 +48,13 @@
             \      /   \      /
              \____/     \____/
                            |\
-                          \|
+                    启动   \|
                          ______
                         /      \
-                        |ENCODER|  encoder 启动之后会跟aio/vio 做关联
+                        |ENCODER|   output 启动后 启动encoder   encoder 启动之后会跟aio/vio 做关联
                         \______/
-                          |\
-                         \|
+                          /|\
+                           |
                  ____       ____
                 /    \     /    \
                /      \   /      \
@@ -182,7 +182,7 @@ enum obs_bounds_type {
     OBS_BOUNDS_SCALE_TO_HEIGHT, /**< scales to the height source的高度在边框内与边框一致  宽等比放缩   */
     OBS_BOUNDS_MAX_ONLY,        /**< no scaling, maximum size only */
 };
-
+//scene item 相关的展示信息
 struct obs_transform_info {
 	struct vec2 pos;
 	float rot;
@@ -336,7 +336,7 @@ struct obs_cmdline_args {
 	char **argv;
 };
 
-#pragma mark ---libobs core lib包下的资源文件
+#pragma mark ---libobs core lib包下  其他模考下的资源文件
 EXPORT char *obs_find_data_file(const char *file);
 EXPORT void obs_add_data_path(const char *path);
 EXPORT bool obs_remove_data_path(const char *path);
@@ -354,6 +354,7 @@ EXPORT uint32_t obs_get_version(void);
 EXPORT const char *obs_get_version_string(void);
 EXPORT void obs_set_cmdline_args(int argc, const char *const *argv);
 EXPORT struct obs_cmdline_args obs_get_cmdline_args(void);
+//设置语言
 EXPORT void obs_set_locale(const char *locale);
 EXPORT const char *obs_get_locale(void);
 #ifdef _WIN32
@@ -1781,6 +1782,14 @@ EXPORT void obs_scene_atomic_update(obs_scene_t *scene,
 				    obs_scene_atomic_update_func func,
 				    void *data);
 
+
+
+
+
+
+#pragma mark: sceneitem
+
+
 EXPORT void obs_sceneitem_addref(obs_sceneitem_t *item);
 EXPORT void obs_sceneitem_release(obs_sceneitem_t *item);
 
@@ -2498,6 +2507,20 @@ EXPORT void obs_encoder_set_last_error(obs_encoder_t *encoder,
 
 EXPORT uint64_t obs_encoder_get_pause_offset(const obs_encoder_t *encoder);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma mark: service
 /* ------------------------------------------------------------------------- */
 /* Stream Services */
 

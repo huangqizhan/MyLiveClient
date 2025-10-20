@@ -1008,11 +1008,11 @@ void ObsBasic::InitDefaultTransitions()
 #endif
 
 #pragma mark --- 输入输出设备检测 及设置
-
+//麦克风
 const char *ObsBasic::InputAudioSource(){
     return INPUT_AUDIO_SOURCE;
 }
-
+//扬声器
 const char *ObsBasic::OutputAudioSource(){
     return OUTPUT_AUDIO_SOURCE;
 }

@@ -832,7 +832,11 @@ void profiler_free(void)
 }
 
 /* ------------------------------------------------------------------------- */
-/* Profiler name storage */
+/* Profiler name storage
+ PROFILER_START("video_render");
+ ...
+ PROFILER_END();
+ */
 
 struct profiler_name_store {
 	pthread_mutex_t mutex;
