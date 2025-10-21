@@ -109,16 +109,14 @@ public:
 		return config_open(&config, file, openType);
 	}
 
-	inline int Save() { return config_save(config); }
+    inline int Save() {
+        return config_save(config);
+    }
 
-	inline int SaveSafe(const char *temp_ext,
-			    const char *backup_ext = nullptr)
-	{
+	inline int SaveSafe(const char *temp_ext,const char *backup_ext = nullptr) {
 		return config_save_safe(config, temp_ext, backup_ext);
 	}
-
-	inline void Close()
-	{
+	inline void Close(){
 		config_close(config);
 		config = NULL;
 	}

@@ -268,13 +268,9 @@ void render_display(struct obs_display *display)
 			callback = display->draw_callbacks.array + i;
 			callback->draw(callback->param, cx, cy);
 		}
-
 		pthread_mutex_unlock(&display->draw_callbacks_mutex);
-
 		render_display_end();
-
 		GS_DEBUG_MARKER_END();
-
 		gs_present();
 	}
 }

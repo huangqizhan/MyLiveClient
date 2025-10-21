@@ -730,15 +730,16 @@ EXPORT signal_handler_t *obs_get_signal_handler(void);
 /** Returns the primary obs procedure handler */
 EXPORT proc_handler_t *obs_get_proc_handler(void);
 
-#ifndef SWIG
+//#ifndef SWIG
 /** Renders the main view */
-OBS_DEPRECATED
-EXPORT void obs_render_main_view(void);
-#endif
+//OBS_DEPRECATED
+//EXPORT void obs_render_main_view(void);
+//#endif
 
-/** Renders the last main output texture */
+/** Renders the last main output texture
+    绘制当前在显存中的纹理数据
+ */
 EXPORT void obs_render_main_texture(void);
-
 /** Renders the last main output texture ignoring background color */
 EXPORT void obs_render_main_texture_src_color_only(void);
 
@@ -751,8 +752,6 @@ OBS_DEPRECATED EXPORT void obs_set_master_volume(float volume);
 
 /** Gets the master user volume */
 OBS_DEPRECATED EXPORT float obs_get_master_volume(void);
-
-
 
 /** Saves a source to settings data */
 EXPORT obs_data_t *obs_save_source(obs_source_t *source);
@@ -802,54 +801,61 @@ EXPORT bool obs_obj_invalid(void *obj);
 EXPORT void *obs_obj_get_data(void *obj);
 EXPORT bool obs_obj_is_private(void *obj);
 
+
+
+
+
 typedef bool (*obs_enum_audio_device_cb)(void *data, const char *name,
 					 const char *id);
-
+//播放音频设备是否可用
 EXPORT bool obs_audio_monitoring_available(void);
-
+//列举播放音频
 EXPORT void obs_enum_audio_monitoring_devices(obs_enum_audio_device_cb cb,
 					      void *data);
-
 EXPORT bool obs_set_audio_monitoring_device(const char *name, const char *id);
 EXPORT void obs_get_audio_monitoring_device(const char **name, const char **id);
 
+
+//video 线程 tick
 EXPORT void obs_add_tick_callback(void (*tick)(void *param, float seconds),
-				  void *param);
+                                  void *param);
 EXPORT void obs_remove_tick_callback(void (*tick)(void *param, float seconds),
-				     void *param);
-
-EXPORT void obs_add_main_render_callback(void (*draw)(void *param, uint32_t cx,
-						      uint32_t cy),
-					 void *param);
-EXPORT void obs_remove_main_render_callback(
-	void (*draw)(void *param, uint32_t cx, uint32_t cy), void *param);
-
+                                     void *param);
+///渲染前回调
+EXPORT void obs_add_main_render_callback(void (*draw)(void *param, uint32_t cx, uint32_t cy),
+                                         void *param);
+EXPORT void obs_remove_main_render_callback(void (*draw)(void *param, uint32_t cx, uint32_t cy),
+                                            void *param);
+///渲染后回调
 EXPORT void obs_add_main_rendered_callback(void (*rendered)(void *param),
-					   void *param);
+                                           void *param);
 EXPORT void obs_remove_main_rendered_callback(void (*rendered)(void *param),
-					      void *param);
+                                              void *param);
 
-EXPORT void obs_add_raw_video_callback(
-	const struct video_scale_info *conversion,
-	void (*callback)(void *param, struct video_data *frame), void *param);
-EXPORT void obs_remove_raw_video_callback(
-	void (*callback)(void *param, struct video_data *frame), void *param);
+/// video-io中渲染后的视频数据   输出回调
+EXPORT void obs_add_raw_video_callback(const struct video_scale_info *conversion,
+                                       void (*callback)(void *param, struct video_data *frame),
+                                       void *param);
 
-EXPORT void
-obs_add_raw_audio_callback(size_t mix_idx,
-			   const struct audio_convert_info *conversion,
-			   audio_output_callback_t callback, void *param);
+EXPORT void obs_remove_raw_video_callback(void (*callback)(void *param, struct video_data *frame),
+                                          void *param);
+
+
+/// audio-io中渲染后的视频数据   输出回调
+EXPORT void obs_add_raw_audio_callback(size_t mix_idx,const struct audio_convert_info *conversion,
+                                       audio_output_callback_t callback,
+                                       void *param);
 EXPORT void obs_remove_raw_audio_callback(size_t mix_idx,
-					  audio_output_callback_t callback,
-					  void *param);
+                                          audio_output_callback_t callback,
+                                          void *param);
 
 EXPORT uint64_t obs_get_video_frame_time(void);
-
 EXPORT double obs_get_active_fps(void);
 EXPORT uint64_t obs_get_average_frame_time_ns(void);
 EXPORT uint64_t obs_get_frame_interval_ns(void);
 
 EXPORT uint32_t obs_get_total_frames(void);
+//滞后
 EXPORT uint32_t obs_get_lagged_frames(void);
 
 EXPORT bool obs_nv12_tex_active(void);
@@ -909,7 +915,9 @@ EXPORT void obs_view_set_source(obs_view_t *view, uint32_t channel,
 /** Gets the source currently in use for this view context */
 EXPORT obs_source_t *obs_view_get_source(obs_view_t *view, uint32_t channel);
 
-/** Renders the sources of this view context */
+/** Renders the sources of this view context
+    绘制source链 中每个source的中的video
+*/
 EXPORT void obs_view_render(obs_view_t *view);
 
 /** Adds a view to the main render loop, with current obs_get_video_info state */

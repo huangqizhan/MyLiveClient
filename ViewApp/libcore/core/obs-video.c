@@ -210,8 +210,7 @@ get_scale_effect_internal(struct obs_core_video_mix *mix)
 }
 
 static inline bool resolution_close(struct obs_core_video_mix *mix,
-				    uint32_t width, uint32_t height)
-{
+				    uint32_t width, uint32_t height){
 	long width_cmp = (long)mix->ovi.base_width - (long)width;
 	long height_cmp = (long)mix->ovi.base_height - (long)height;
 
@@ -219,10 +218,8 @@ static inline bool resolution_close(struct obs_core_video_mix *mix,
 }
 
 static inline gs_effect_t *get_scale_effect(struct obs_core_video_mix *mix,
-					    uint32_t width, uint32_t height)
-{
+					    uint32_t width, uint32_t height){
 	struct obs_core_video *video = &obs->video;
-
 	if (resolution_close(mix, width, height)) {
 		return video->default_effect;
 	} else {
@@ -239,8 +236,7 @@ static inline gs_effect_t *get_scale_effect(struct obs_core_video_mix *mix,
 
 static const char *render_output_texture_name = "render_output_texture";
 ///=====把render_texture绘制在output_texture上
-static inline gs_texture_t *render_output_texture(struct obs_core_video_mix *mix)
-{
+static inline gs_texture_t *render_output_texture(struct obs_core_video_mix *mix){
 	struct obs_video_info *const ovi = &mix->ovi;
 	gs_texture_t *texture = mix->render_texture;
 	gs_texture_t *target = mix->output_texture;
@@ -320,8 +316,7 @@ static void render_convert_plane(gs_effect_t *effect, gs_texture_t *target,
 static const char *render_convert_texture_name = "render_convert_texture";
 static void render_convert_texture(struct obs_core_video_mix *video,
 				   gs_texture_t *const *const convert_textures,
-				   gs_texture_t *texture)
-{
+				   gs_texture_t *texture){
 	profile_start(render_convert_texture_name);
 
 	gs_effect_t *effect = obs->video.conversion_effect;

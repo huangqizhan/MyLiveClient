@@ -119,11 +119,9 @@ void obs_view_set_source(obs_view_t *view, uint32_t channel,
  绘制每个窗口内容
  main_view 目前就两个 桌面音频、当前选中的transition_source
  */
-void obs_view_render(obs_view_t *view)
-{
+void obs_view_render(obs_view_t *view){
 	if (!view)
 		return;
-
 	pthread_mutex_lock(&view->channels_mutex);
 	for (size_t i = 0; i < MAX_CHANNELS; i++) {
 		struct obs_source *source;
@@ -140,20 +138,16 @@ void obs_view_render(obs_view_t *view)
 	pthread_mutex_unlock(&view->channels_mutex);
 }
 
-static inline size_t find_mix_for_view(obs_view_t *view)
-{
+static inline size_t find_mix_for_view(obs_view_t *view){
 	for (size_t i = 0, num = obs->video.mixes.num; i < num; i++) {
 		if (obs->video.mixes.array[i]->view == view)
 			return i;
 	}
-
 	return DARRAY_INVALID;
 }
 
-static inline void set_main_mix(void)
-{
+static inline void set_main_mix(void){
 	size_t idx = find_mix_for_view(&obs->data.main_view);
-
 	struct obs_core_video_mix *mix = NULL;
 	if (idx != DARRAY_INVALID)
 		mix = obs->video.mixes.array[idx];

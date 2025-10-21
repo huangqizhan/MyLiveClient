@@ -57,6 +57,10 @@ void ObsBasic:: shutDown(){
     "Failed to initialize video.  Your GPU may not be supported, " \
     "or your graphics drivers may need to be updated."
 
+bool enmuAudioDevice(void *data, const char *name, const char *id){
+    blog(LOG_INFO, "audio device name %s %s",name,id);
+    return true;
+}
 bool ObsBasic::InitObs()
 {
     try {
@@ -120,6 +124,13 @@ bool ObsBasic::InitObs()
         ResetService();
         InitAudioSources();
         InitDefaultTransitions();
+        
+#if DEBUG
+        obs_enum_audio_monitoring_devices(enmuAudioDevice, this);
+#endif
+        
+        
+        
     } catch (const char* error) {
         blog(LOG_ERROR, "%s", error);
     }
@@ -641,10 +652,9 @@ bool ObsBasic::InitBasicConfigDefaults()
         "Partial");
 
     config_set_default_string(m_basicConfig, "Audio", "MonitoringDeviceId",
-        "default");
+                              "default");
     config_set_default_string(m_basicConfig, "Audio", "MonitoringDeviceName",
-        Str("Basic.Settings.Advanced.Audio.MonitoringDevice"
-            ".Default"));
+                              "Default");
     config_set_default_uint(m_basicConfig, "Audio", "SampleRate", 44100);
     config_set_default_string(m_basicConfig, "Audio", "ChannelSetup",
         "Stereo");

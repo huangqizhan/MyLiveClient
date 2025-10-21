@@ -2204,11 +2204,11 @@ proc_handler_t *obs_get_proc_handler(void)
 }
 ///=======
 /* OBS_DEPRECATED */
-void obs_render_main_view(void)
-{
-	obs_view_render(&obs->data.main_view);
-}
-///==== 把render_texture绘制到屏幕上
+//void obs_render_main_view(void)
+//{
+//	obs_view_render(&obs->data.main_view);
+//}
+///====
 static void obs_render_main_texture_internal(enum gs_blend_type src_c,
 					     enum gs_blend_type dest_c,
 					     enum gs_blend_type src_a,
@@ -3131,14 +3131,12 @@ struct obs_core_video_mix *get_mix_for_video(video_t *v)
 		}
 	}
 	pthread_mutex_unlock(&obs->video.mixes_mutex);
-
 	return result;
 }
 ///======
 void start_raw_video(video_t *v, const struct video_scale_info *conversion,
 		     void (*callback)(void *param, struct video_data *frame),
-		     void *param)
-{
+		     void *param){
 	struct obs_core_video_mix *video = get_mix_for_video(v);
 	if (video)
 		os_atomic_inc_long(&video->raw_active);
@@ -3156,26 +3154,22 @@ void stop_raw_video(video_t *v,
 }
 ///====
 void obs_add_raw_video_callback(const struct video_scale_info *conversion,
-				void (*callback)(void *param,
-						 struct video_data *frame),
-				void *param)
-{
+                                void (*callback)(void *param,
+                                struct video_data *frame),
+                                void *param){
 	struct obs_core_video_mix *video = obs->video.main_mix;
 	start_raw_video(video->video, conversion, callback, param);
 }
 ///====
 void obs_remove_raw_video_callback(void (*callback)(void *param,
-						    struct video_data *frame),
-				   void *param)
-{
+						    struct video_data *frame),void *param){
 	struct obs_core_video_mix *video = obs->video.main_mix;
 	stop_raw_video(video->video, callback, param);
 }
 ///====
 void obs_add_raw_audio_callback(size_t mix_idx,
 				const struct audio_convert_info *conversion,
-				audio_output_callback_t callback, void *param)
-{
+				audio_output_callback_t callback, void *param){
 	struct obs_core_audio *audio = &obs->audio;
 	audio_output_connect(audio->audio, mix_idx, conversion, callback,
 			     param);
@@ -3183,14 +3177,12 @@ void obs_add_raw_audio_callback(size_t mix_idx,
 ///====
 void obs_remove_raw_audio_callback(size_t mix_idx,
 				   audio_output_callback_t callback,
-				   void *param)
-{
+				   void *param){
 	struct obs_core_audio *audio = &obs->audio;
 	audio_output_disconnect(audio->audio, mix_idx, callback, param);
 }
 ///====
-void obs_apply_private_data(obs_data_t *settings)
-{
+void obs_apply_private_data(obs_data_t *settings){
 	if (!settings)
 		return;
 
