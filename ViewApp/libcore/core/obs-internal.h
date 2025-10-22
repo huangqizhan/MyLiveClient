@@ -211,7 +211,7 @@ void obs_hotkey_name_map_free(void);
 /**
  obs主画布的source都是以transition_source开始
  */
-//主画布和预览画布都对应一个obs_view
+//主画布和预览画布都对应一个obs_view    每个obs_view 对应一个obs_core_video_mix
 struct obs_view {
 	pthread_mutex_t channels_mutex;
     //0：视频： 转场source->scene_source->input_sources   当前选中的转场source
@@ -225,9 +225,9 @@ extern void obs_view_free(struct obs_view *view);
 /* ------------------------------------------------------------------------- */
 /* displays */
 /*
- 一个widget 代表一个display  一个display持有一个swap
+ 画布
+ 一个widget 对应一个display  一个display持有一个swap
  渲染线程会遍历所有的display 并且在渲染每一个display时会把display的swap切换到device->cur_swap
- 
  */
 struct obs_display {
 	bool update_color_space;
@@ -273,8 +273,7 @@ struct obs_task_info {
 	void *param;
 };
 /*
- ///每一个画布对应一个obs_core_video_mix和一个线程
- 画布上会有多个source 最终将多个source混合 并输出  (多个source在view->channels里)
+ video_mix 上会有多个source 最终将多个source混合 并输出  (多个source在view->channels里)
  */
 struct obs_core_video_mix {
 	struct obs_view *view;
@@ -409,7 +408,7 @@ struct obs_core_video {
 	struct circlebuf tasks;
 
 	pthread_mutex_t mixes_mutex;
-    ///所有画布(目前看到mixes中只有main_mix)
+    ///所有画布(目前看到mixes中只有main_mix)  (可能还有工作模式/虚拟摄像头)
 	DARRAY(struct obs_core_video_mix *) mixes;
     ///主画布
 	struct obs_core_video_mix *main_mix;
@@ -577,6 +576,7 @@ struct obs_core {
 	struct obs_core_hotkeys hotkeys;
     ///此队列有单独线程执行 (销毁source使用)
 	os_task_queue_t *destruction_task_thread;
+    ///typedef void (*obs_task_handler_t)(obs_task_t task, void *param, bool wait);  此处会保证task在主线程执行
 	obs_task_handler_t ui_task_handler;
 };
 
@@ -639,7 +639,7 @@ struct obs_weak_object {
 };
 
 typedef void (*obs_destroy_cb)(void *obj);
-//此机构体会已对象的形式切套在其他结构体中
+//此机构体会已对象的形式切套在其他结构体中   基类
 struct obs_context_data {
 	char *name;
 	const char *uuid;

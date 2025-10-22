@@ -40,8 +40,8 @@
  用于线程间的通信
  */
 struct os_event_data {
-	pthread_mutex_t mutex;
-	pthread_cond_t cond;
+	pthread_mutex_t mutex;//可以被不同的线程使用
+	pthread_cond_t cond;  //可以被不同的线程使用
 	volatile bool signalled;
 	bool manual;
 };
@@ -182,7 +182,7 @@ void os_event_reset(os_event_t *event)
  初始值>1: 用于控制资源池(如线程池限制并发数)
  */
 struct os_sem_data {
-	semaphore_t sem;
+	semaphore_t sem;//可以被不同的线程使用
 	task_t task;
 };
 

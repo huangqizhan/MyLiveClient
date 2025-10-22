@@ -400,8 +400,7 @@ stage_output_texture(struct obs_core_video_mix *video, int cur_texture,
 		     gs_texture_t *const *const convert_textures,
 		     gs_texture_t *output_texture,
 		     gs_stagesurf_t *const *const copy_surfaces,
-		     size_t channel_count)
-{
+		     size_t channel_count){
 	profile_start(stage_output_texture_name);
 
 	unmap_last_surface(video);
@@ -791,8 +790,7 @@ static void set_gpu_converted_data(struct video_frame *output,
 
 static inline void copy_rgbx_frame(struct video_frame *output,
 				   const struct video_data *input,
-				   const struct video_output_info *info)
-{
+				   const struct video_output_info *info){
 	uint8_t *in_ptr = input->data[0];
 	uint8_t *out_ptr = output->data[0];
 
@@ -811,8 +809,7 @@ static inline void copy_rgbx_frame(struct video_frame *output,
 }
 ///===输出视频到当前画布下的video_output(video-io)
 static inline void output_video_data(struct obs_core_video_mix *video,
-                                     struct video_data *input_frame, int count)
-{
+                                     struct video_data *input_frame, int count){
 	const struct video_output_info *info;
 	struct video_frame output_frame;
 	bool locked;
@@ -833,9 +830,7 @@ static inline void output_video_data(struct obs_core_video_mix *video,
 	}
 }
 ///====绘制线程pts休眠 以及从画布输出每一帧
-static inline void video_sleep(struct obs_core_video *video, uint64_t *p_time,
-			       uint64_t interval_ns)
-{
+static inline void video_sleep(struct obs_core_video *video, uint64_t *p_time, uint64_t interval_ns){
 	struct obs_vframe_info vframe_info;
 	uint64_t cur_time = *p_time;
     ///下一次的tick时间
@@ -940,6 +935,7 @@ static inline void output_frame(struct obs_core_video_mix *video)
 static inline void output_frames(void)
 {
 	pthread_mutex_lock(&obs->video.mixes_mutex);
+    //绘制所有的画布
 	for (size_t i = 0, num = obs->video.mixes.num; i < num; i++) {
 		struct obs_core_video_mix *mix = obs->video.mixes.array[i];
 		if (mix->view) {

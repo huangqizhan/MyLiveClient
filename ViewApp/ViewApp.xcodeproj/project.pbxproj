@@ -2953,6 +2953,7 @@
 				9078C5872C785FEF00FD11BA /* media-io */,
 				9078C5432C785FED00FD11BA /* obs-audio-controls.c */,
 				9078C5822C785FEF00FD11BA /* obs-audio-controls.h */,
+				9078C5A82C785FF000FD11BA /* obs-video.c */,
 				9078C5482C785FEE00FD11BA /* obs-audio.c */,
 				9078C5492C785FEE00FD11BA /* obs-avc.c */,
 				9078C5A62C785FF000FD11BA /* obs-avc.h */,
@@ -3000,7 +3001,6 @@
 				9078C57D2C785FEF00FD11BA /* obs-ui.h */,
 				9078C5802C785FEF00FD11BA /* obs-video-gpu-encode.c */,
 				9078C5862C785FEF00FD11BA /* obs-display.c */,
-				9078C5A82C785FF000FD11BA /* obs-video.c */,
 				9078C5AE2C785FF100FD11BA /* obs-view.c */,
 			);
 			path = core;

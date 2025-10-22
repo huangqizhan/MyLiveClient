@@ -3299,7 +3299,7 @@ struct task_wait_info {
 	void *param;
 	os_event_t *event;
 };
-///====
+///====  异步线程等待回调 任务回调之后 不再阻塞当前线程
 static void task_wait_callback(void *param)
 {
 	struct task_wait_info *info = param;
@@ -3307,7 +3307,7 @@ static void task_wait_callback(void *param)
 		info->task(info->param);
 	os_event_signal(info->event);
 }
-
+//
 THREAD_LOCAL bool is_graphics_thread = false;
 THREAD_LOCAL bool is_audio_thread = false;
 ///====
@@ -3335,7 +3335,7 @@ bool obs_in_task_thread(enum obs_task_type type)
 void obs_queue_task(enum obs_task_type type, obs_task_t task, void *param,
 		    bool wait)
 {
-	if (type == OBS_TASK_UI) {
+	if (type == OBS_TASK_UI) {//主线程的任务
 		if (obs->ui_task_handler) {
 			obs->ui_task_handler(task, param, wait);
 		} else {
@@ -3344,8 +3344,10 @@ void obs_queue_task(enum obs_task_type type, obs_task_t task, void *param,
 		}
 	} else {
 		if (obs_in_task_thread(type)) {
-			task(param);
-
+			task(param);//已经在其他三种个线程中的一个   直接调用
+            
+            
+            //一下情况 均不在obs_task_type 所在的四个线程中
 		} else if (wait) {
             ///此时调用线程会在这里等待  直到目标线程调用后才会往下执行
 			struct task_wait_info info = {
@@ -3399,7 +3401,7 @@ bool obs_wait_for_destroy_queue(void)
 	/* wait for destroy task queue */
 	return os_task_queue_wait(obs->destruction_task_thread);
 }
-///====
+///====  此函数obs会保证在程序启动时 主线程调用   只调用一层
 static void set_ui_thread(void *unused)
 {
 	is_ui_thread = true;
@@ -3507,15 +3509,18 @@ bool obs_enum_output_protocols(size_t idx, char **protocol)
 }
 void obs_debug_action(void){
 #if DEBUG
+  
+    blog(LOG_INFO, "is_graphics_thread %d",is_graphics_thread);
+    blog(LOG_INFO, "is_graphics_thread %d",is_audio_thread);
     
     blog(LOG_INFO, "boundle : %s",boundle());
-    add_default_module_paths();
-    os_get_physical_cores();
-    os_cpu_usage_info_t *s = os_cpu_usage_info_start();
-    double d = os_cpu_usage_info_query(s);
-    blog(LOG_INFO, "q :%f",d);
-    blog(LOG_INFO, "q :%d",OBS_KEY_LAST_VALUE);
-    
+//    add_default_module_paths();
+//    os_get_physical_cores();
+//    os_cpu_usage_info_t *s = os_cpu_usage_info_start();
+//    double d = os_cpu_usage_info_query(s);
+//    blog(LOG_INFO, "q :%f",d);
+//    blog(LOG_INFO, "q :%d",OBS_KEY_LAST_VALUE);
+//    
 //    avdevice_register_all();
 //    avcodec_find_best_pix_fmt_of_list(NULL, 1, 1, NULL);
 //    blog(LOG_INFO, " source_types  %zu",obs->source_types.num);

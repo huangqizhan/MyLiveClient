@@ -27,7 +27,7 @@ static volatile long thread_id_counter = 1;
 
 static void *tiny_tubular_task_thread(void *param);
 
-os_task_queue_t *os_task_queue_create()
+os_task_queue_t *os_task_queue_create(void)
 {
 	struct os_task_queue *tq = bzalloc(sizeof(*tq));
 	tq->id = os_atomic_inc_long(&thread_id_counter);
@@ -102,7 +102,7 @@ bool os_task_queue_wait(os_task_queue_t *tq)
 {
 	if (!tq)
 		return false;
-
+    ///此处的回调会添加到队列的最后  当wait_for_thread调用后此线程的队列任务也就结束了
 	struct os_task_info ti = {
 		wait_for_thread,
 		tq,

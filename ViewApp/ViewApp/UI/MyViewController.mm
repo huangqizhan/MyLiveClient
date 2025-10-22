@@ -351,6 +351,7 @@ private:
 //                                          target:self
 //                                          action:@selector(buttonClicked:)];
 //    [self.sourceStackView  addView:button inGravity:(NSStackViewGravityTrailing)];
+    obs_debug_action();
 }
 - (IBAction)windowBtnAction:(NSButton *)sender {
 //    NSButton *button = [NSButton buttonWithTitle:@"window"

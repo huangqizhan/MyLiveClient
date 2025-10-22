@@ -119,33 +119,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7F1F60F6-A019-4ACD-97DD-47C9D12625EA"
+            uuid = "5B6A040B-B1C8-4F2A-B9E2-547BB6DFD6AB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "libcore/core/obs.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "820"
-            endingLineNumber = "820"
-            landmarkName = "obs_add_tick_callback(, param)"
-            landmarkType = "8">
+            startingLineNumber = "999"
+            endingLineNumber = "999"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C41DB585-7A34-4370-B150-ED250880895B"
+            uuid = "D7B2D4B5-FEDB-4D13-9BD7-223714181D04"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ViewApp/api/ObsBasic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1143"
+            endingLineNumber = "1143"
+            landmarkName = "ObsBasic::ResetAudioDevice(sourceId, deviceId, deviceDesc, channel)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9E7FF2CF-7AD5-4F3A-9309-065555F778B0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ViewApp/api/ObsBasic.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1069"
+            endingLineNumber = "1069"
+            landmarkName = "ObsBasic::InitAudioSources()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C82244D8-CE0F-44CC-8029-10EE237FC5F1"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "libcore/core/obs.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "861"
-            endingLineNumber = "861"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "949"
+            endingLineNumber = "949"
+            landmarkName = "obs_display_create(graphics_data, backround_color)"
+            landmarkType = "8">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -861,45 +861,49 @@ EXPORT uint32_t obs_get_lagged_frames(void);
 EXPORT bool obs_nv12_tex_active(void);
 EXPORT bool obs_p010_tex_active(void);
 
+
+
 EXPORT void obs_apply_private_data(obs_data_t *settings);
 EXPORT void obs_set_private_data(obs_data_t *settings);
 EXPORT obs_data_t *obs_get_private_data(void);
 
+
+
 typedef void (*obs_task_t)(void *param);
 
+//这几种task会在不同的线程执行
 enum obs_task_type {
-	OBS_TASK_UI,
-	OBS_TASK_GRAPHICS,
-	OBS_TASK_AUDIO,
-	OBS_TASK_DESTROY,
+	OBS_TASK_UI,         //主线程
+	OBS_TASK_GRAPHICS,   //视频渲染线程
+	OBS_TASK_AUDIO,      //音频渲染线程
+	OBS_TASK_DESTROY,    //销毁线程
 };
-
+//给不同的线程队列添加任务
 EXPORT void obs_queue_task(enum obs_task_type type, obs_task_t task,
 			   void *param, bool wait);
+//当前调用是否在对应的类型线程中
 EXPORT bool obs_in_task_thread(enum obs_task_type type);
-
+//等待销毁线程结束 会阻塞当前线程
 EXPORT bool obs_wait_for_destroy_queue(void);
-
 typedef void (*obs_task_handler_t)(obs_task_t task, void *param, bool wait);
 EXPORT void obs_set_ui_task_handler(obs_task_handler_t handler);
 
+
+
+#pragma mark: 内存管理
 EXPORT obs_object_t *obs_object_get_ref(obs_object_t *object);
 EXPORT void obs_object_release(obs_object_t *object);
-
 EXPORT void obs_weak_object_addref(obs_weak_object_t *weak);
 EXPORT void obs_weak_object_release(obs_weak_object_t *weak);
 EXPORT obs_weak_object_t *obs_object_get_weak_object(obs_object_t *object);
 EXPORT obs_object_t *obs_weak_object_get_object(obs_weak_object_t *weak);
 EXPORT bool obs_weak_object_expired(obs_weak_object_t *weak);
-EXPORT bool obs_weak_object_references_object(obs_weak_object_t *weak,
-					      obs_object_t *object);
+EXPORT bool obs_weak_object_references_object(obs_weak_object_t *weak, obs_object_t *object);
 
-/* ------------------------------------------------------------------------- */
-/* View context */
-
+#pragma mark---画布
 /**
  * Creates a view context.
- *
+ *  创建画布
  *   A view can be used for things like separate previews, or drawing
  * sources separately.
  */
@@ -930,8 +934,7 @@ EXPORT video_t *obs_view_add2(obs_view_t *view, struct obs_video_info *ovi);
 EXPORT void obs_view_remove(obs_view_t *view);
 
 /** Gets the video settings currently in use for this view context, returns false if no video */
-EXPORT bool obs_view_get_video_info(obs_view_t *view,
-				    struct obs_video_info *ovi);
+EXPORT bool obs_view_get_video_info(obs_view_t *view, struct obs_video_info *ovi);
 
 /* ------------------------------------------------------------------------- */
 /* Display context */
@@ -943,8 +946,7 @@ EXPORT bool obs_view_get_video_info(obs_view_t *view,
  * @param  graphics_data  The swap chain initialization data.
  * @return                The new display context, or NULL if failed.
  */
-EXPORT obs_display_t *
-obs_display_create(const struct gs_init_data *graphics_data,
+EXPORT obs_display_t *obs_display_create(const struct gs_init_data *graphics_data,
 		   uint32_t backround_color);
 
 /** Destroys a display context */
