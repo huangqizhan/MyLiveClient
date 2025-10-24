@@ -181,7 +181,7 @@ static inline bool render_display_begin(struct obs_display *display,
 					bool update_color_space)
 {
 	struct vec4 clear_color;
-    //此处支持多个渲染线程之间切换
+    //此处支持多个渲染管线之间切换 （多个NSOpenglContext (一个视图对应一个)）
 	gs_load_swapchain(display->swap);
 
 	if ((display->cx != cx) || (display->cy != cy)) {

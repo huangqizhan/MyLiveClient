@@ -131,7 +131,7 @@ static inline void unmap_last_surface(struct obs_core_video_mix *video)
 }
 
 static const char *render_main_texture_name = "render_main_texture";
-///绘制主画布的最终纹理
+///绘制最终合成的纹理
 static inline void render_main_texture(struct obs_core_video_mix *video)
 {
 	uint32_t base_width = video->ovi.base_width;
@@ -144,7 +144,7 @@ static inline void render_main_texture(struct obs_core_video_mix *video)
 	struct vec4 clear_color;
     ///设置清除颜色
 	vec4_set(&clear_color, 0.0f, 0.0f, 0.0f, 0.0f);
-    ///设置最终要绘制到的纹理
+    ///设置最终要绘制到的纹理 render_texture
 	gs_set_render_target_with_color_space(video->render_texture, NULL,
 					      video->render_space);
     ///清除color

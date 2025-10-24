@@ -581,7 +581,7 @@ EXPORT bool obs_enum_source_types(size_t idx, const char **id);
 EXPORT bool obs_enum_input_types(size_t idx, const char **id);
 EXPORT bool obs_enum_input_types2(size_t idx, const char **id,
 				  const char **unversioned_id);
-
+///根据unversioned_id 获取最新的输入source info 的id
 EXPORT const char *obs_get_latest_input_type_id(const char *unversioned_id);
 
 /**
@@ -737,7 +737,7 @@ EXPORT proc_handler_t *obs_get_proc_handler(void);
 //#endif
 
 /** Renders the last main output texture
-    绘制当前在显存中的纹理数据
+   绘制缓冲区中的合成后的主纹理到屏幕上
  */
 EXPORT void obs_render_main_texture(void);
 /** Renders the last main output texture ignoring background color */

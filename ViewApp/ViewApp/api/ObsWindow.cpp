@@ -338,7 +338,7 @@ void ObsWindow::RenderWindow(uint32_t cx, uint32_t cy)
     gs_set_viewport(m_previewX, m_previewY, m_previewCX, m_previewCY);
     ///绘制背景
     DrawBackdrop(float(ovi.base_width), float(ovi.base_height));
-    //绘制缓冲区中的纹理到屏幕上
+    //绘制缓冲区中的合成后的主纹理到屏幕上
     obs_render_main_texture();
     ///置空device的顶点缓冲区
     gs_load_vertexbuffer(nullptr);
