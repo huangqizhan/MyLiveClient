@@ -20,13 +20,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import <AppKit/AppKit.h>
-///每一个widget对应一个的子OpenGLContext和帧缓冲 (帧缓冲会默认绑定一个纹理)
-///NSOpenGLView 都有一个对应的 NSOpenGLContext 实例。这个上下文维护了该视图的 OpenGL 状态
+///每一个widget对应一个的子OpenGLContext和帧缓冲 (帧缓冲会默认绑定一个fbo 用于绘制 当切换时会显示在屏幕上)
 struct gl_windowinfo {
 	NSView *view;
 	NSOpenGLContext *context;
 	gs_texture_t *texture;
-	GLuint fbo;
+	GLuint fbo;   //frame buffer object
 };
 ///总的OpenGLContext
 struct gl_platform {
@@ -126,7 +125,9 @@ bool gl_platform_init_swapchain(struct gs_swap_chain *swap)
 		GLint interval = 0;
 		[context setValues:&interval
 			forParameter:NSOpenGLContextParameterSwapInterval];
+        //创建一个 fbo
 		gl_gen_framebuffers(1, &swap->wi->fbo);
+        //并且当前的绘制都会绘制到 swap->wi->fbo
 		gl_bind_framebuffer(GL_FRAMEBUFFER, swap->wi->fbo);
         //将创建好的纹理附加到帧缓冲上
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
@@ -312,20 +313,31 @@ void device_present(gs_device_t *device)
 	CGLLockContext([device->cur_swap->wi->context CGLContextObj]);
 
 	[device->cur_swap->wi->context makeCurrentContext];
-    //把GL_READ_FRAMEBUFFER绑定到自定义 device->cur_swap->wi->fbo)的帧缓冲
+    //把 device->cur_swap->wi->fbo 绑定为当前的 “读帧缓冲（GL_READ_FRAMEBUFFER）”
+    //也就是说，从现在起，所有 读取型的操作（read operations）——比如：
+    //glReadPixels()
+    //glBlitFramebuffer()（作为读取源时）
 	gl_bind_framebuffer(GL_READ_FRAMEBUFFER, device->cur_swap->wi->fbo);
-    //在OpenGL中,默认的帧缓冲区(framebuffer)是ID为0的帧缓冲区,它代表屏幕缓冲区。
+    //把 默认帧缓冲（也就是屏幕） 绑定为 当前的写入目标（DRAW_FRAMEBUFFER）。
+    //也就是说：
+    // 👉 从这一刻开始，所有 写入操作（比如绘制、清屏、glBlitFramebuffer 的目标）
+    // 都会写到 屏幕上，而不是某个自定义 FBO
 	gl_bind_framebuffer(GL_DRAW_FRAMEBUFFER, 0);
 	const uint32_t width = device->cur_swap->info.cx;
 	const uint32_t height = device->cur_swap->info.cy;
-    //OpenGL使用的是右手坐标系,Y轴是从下到上的。而屏幕坐标系通常使用左手坐标系,Y轴是从上到下的
-    //把GL_READ_FRAMEBUFFER拷贝到GL_DRAW_FRAMEBUFFER（即屏幕上--当前画布上）
+//    把 GL_READ_FRAMEBUFFER（源 FBO）中的颜色缓冲区内容
+//    拷贝（blit）到 DRAW_FRAMEBUFFER（目标 FBO）中，
+//    并且在拷贝时 上下翻转（垂直镜像） 了图像。
+    /*
+     gl_bind_framebuffer(GL_READ_FRAMEBUFFER, device->cur_swap->wi->fbo); 设置拷贝来源
+     gl_bind_framebuffer(GL_DRAW_FRAMEBUFFER, 0);设置拷贝目标 (屏幕)
+     glBlitFramebuffer  开始拷贝
+     */
 	glBlitFramebuffer(0, 0, width, height, 0, height, width, 0,
 			  GL_COLOR_BUFFER_BIT, GL_NEAREST);
 	[device->cur_swap->wi->context flushBuffer];
 	glFlush();
 	[NSOpenGLContext clearCurrentContext];
-
 	CGLUnlockContext([device->cur_swap->wi->context CGLContextObj]);
     ///切换到总的NSOpenGLContext
 	[device->plat->context makeCurrentContext];

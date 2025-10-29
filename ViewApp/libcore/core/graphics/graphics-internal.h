@@ -488,6 +488,10 @@ struct blend_state {
 	enum gs_blend_type dest_a;
 	enum gs_blend_op_type op;
 };
+/*
+ OpenGL 绘制 可以渲染到帧缓冲区  也可以绘制到屏幕上
+ obs_display 回调时 会把缓冲区切换到屏幕缓冲区 
+*/
 ///此对象全局只有一个
 struct graphics_subsystem {
     ///当前渲染引擎库的对象

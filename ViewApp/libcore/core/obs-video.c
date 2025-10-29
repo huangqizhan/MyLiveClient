@@ -144,14 +144,13 @@ static inline void render_main_texture(struct obs_core_video_mix *video)
 	struct vec4 clear_color;
     ///设置清除颜色
 	vec4_set(&clear_color, 0.0f, 0.0f, 0.0f, 0.0f);
-    ///设置最终要绘制到的纹理 render_texture
+    ///设置最终要绘制到的纹理 render_texture 及对应的fbo中  此时不会显示到屏幕上  会存放到frame buffer obj 中
 	gs_set_render_target_with_color_space(video->render_texture, NULL,
 					      video->render_space);
     ///清除color
 	gs_clear(GS_CLEAR_COLOR, &clear_color, 1.0f, 0);
     ///设置视口大小
 	set_render_size(base_width, base_height);
-
     ///
 	pthread_mutex_lock(&obs->data.draw_callbacks_mutex);
 	for (size_t i = obs->data.draw_callbacks.num; i > 0; i--) {

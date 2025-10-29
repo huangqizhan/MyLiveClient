@@ -148,7 +148,7 @@ static inline bool gl_bind_renderbuffer(GLenum target, GLuint buffer)
 	glBindRenderbuffer(target, buffer);
 	return gl_success("glBindRendebuffer");
 }
-
+//创建fbo
 static inline bool gl_gen_framebuffers(GLsizei num_arrays, GLuint *arrays)
 {
 	glGenFramebuffers(num_arrays, arrays);

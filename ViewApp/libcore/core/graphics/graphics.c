@@ -644,8 +644,7 @@ gs_vertbuffer_t *gs_render_save(void)
 
 		for (i = 0; i < num_tex; i++) {
 			graphics->vbd->tvarray[i].width = 2;
-			graphics->vbd->tvarray[i].array =
-				graphics->texverts[i].array;
+			graphics->vbd->tvarray[i].array = graphics->texverts[i].array;
 		}
 	}
 
@@ -1416,8 +1415,7 @@ static inline bool is_pow2(uint32_t size)
 gs_texture_t *gs_texture_create(uint32_t width, uint32_t height,
 				enum gs_color_format color_format,
 				uint32_t levels, const uint8_t **data,
-				uint32_t flags)
-{
+				uint32_t flags){
 	graphics_t *graphics = thread_graphics;
 	bool pow2tex = is_pow2(width) && is_pow2(height);
 	bool uses_mipmaps = (flags & GS_BUILD_MIPMAPS || levels != 1);
@@ -1669,7 +1667,7 @@ gs_indexbuffer_t *gs_indexbuffer_create(enum gs_index_type type, void *indices,
 		graphics->device, type, indices, num, flags);
 }
 
-gs_timer_t *gs_timer_create()
+gs_timer_t *gs_timer_create(void)
 {
 	graphics_t *graphics = thread_graphics;
 
@@ -1679,7 +1677,7 @@ gs_timer_t *gs_timer_create()
 	return graphics->exports.device_timer_create(graphics->device);
 }
 
-gs_timer_range_t *gs_timer_range_create()
+gs_timer_range_t *gs_timer_range_create(void)
 {
 	graphics_t *graphics = thread_graphics;
 

@@ -487,14 +487,12 @@ static bool obs_init_textures(struct obs_core_video_mix *video)
 		break;
 	}
 
-	video->render_texture =
-		gs_texture_create(video->ovi.base_width, video->ovi.base_height,
+	video->render_texture = gs_texture_create(video->ovi.base_width, video->ovi.base_height,
 				  format, 1, NULL, GS_RENDER_TARGET);
 	if (!video->render_texture)
 		success = false;
 
-	video->output_texture = gs_texture_create(
-		info->width, info->height, format, 1, NULL, GS_RENDER_TARGET);
+	video->output_texture = gs_texture_create(info->width, info->height, format, 1, NULL, GS_RENDER_TARGET);
 	if (!video->output_texture)
 		success = false;
 

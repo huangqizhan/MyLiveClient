@@ -732,8 +732,8 @@ static bool get_tex_dimensions(gs_texture_t *tex, uint32_t *width,
  * This automatically manages FBOs so that render targets are always given
  * an FBO that matches their width/height/format to maximize optimization
  */
-struct fbo_info *get_fbo(gs_texture_t *tex, uint32_t width, uint32_t height)
-{
+struct fbo_info *get_fbo(gs_texture_t *tex, uint32_t width, uint32_t height){
+    
 	if (tex->fbo && tex->fbo->width == width &&
 	    tex->fbo->height == height && tex->fbo->format == tex->format)
 		return tex->fbo;
@@ -763,7 +763,7 @@ static inline struct fbo_info *get_fbo_by_tex(gs_texture_t *tex)
 
 	return get_fbo(tex, width, height);
 }
-//绑定当前的帧缓冲fbo
+//绑定当前的帧缓冲fbo  之后绘制的内容会存放到fbo上
 static bool set_current_fbo(gs_device_t *device, struct fbo_info *fbo)
 {
 	if (device->cur_fbo != fbo) {
@@ -863,8 +863,7 @@ static bool set_target(gs_device_t *device, gs_texture_t *tex, int side,
 }
 
 void device_set_render_target(gs_device_t *device, gs_texture_t *tex,
-			      gs_zstencil_t *zstencil)
-{
+			      gs_zstencil_t *zstencil){
 	if (tex) {
 		if (tex->type != GS_TEXTURE_2D) {
 			blog(LOG_ERROR, "Texture is not a 2D texture");

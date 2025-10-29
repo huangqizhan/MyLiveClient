@@ -559,6 +559,7 @@ struct gs_program {
 	struct gs_program *next;
 };
 
+//创建着色器程序  （用于链接着色器）
 extern struct gs_program *gs_program_create(struct gs_device *device);
 extern void gs_program_destroy(struct gs_program *program);
 extern void program_update_params(struct gs_program *shader);
@@ -690,9 +691,9 @@ struct gs_swap_chain {
  
  
    gl_bind_framebuffer(
- //绑定fbo
+ //绑定fbo 之后绘制的内容会存到fbo上
  glBindFramebuffer(GL_FRAMEBUFFER, fbo);
- GL_READ_FRAMEBUFFER: 将一个帧缓冲分别绑定到读取目标  绑定到GL_READ_FRAMEBUFFER的帧缓冲将会使用在所有像是glReadPixels的读取操作中，
+ GL_READ_FRAMEBUFFER: 将一个帧缓冲分别绑定到读取目标 绑定到GL_READ_FRAMEBUFFER的帧缓冲将会使用在所有像是glReadPixels的读取操作中，
  GL_DRAW_FRAMEBUFFER: 将一个帧缓冲分别绑定到写入目标  绑定到GL_DRAW_FRAMEBUFFER的帧缓冲将会被用作渲染、清除等写入操作的目标。
  GL_FRAMEBUFFER: 所有的读取和写入帧缓冲的操作 使用GL_FRAMEBUFFER，绑定到读写两个上
  
@@ -729,9 +730,10 @@ struct gs_swap_chain {
        GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, 800, 600, 0,
        GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL
      );
-      
      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, texture, 0);
 
+ 
+    
  }
  //附加渲染缓冲对象附件
   {
@@ -829,16 +831,15 @@ extern struct fbo_info *get_fbo(gs_texture_t *tex, uint32_t width,
 extern void gl_update(gs_device_t *device);
 extern void gl_clear_context(gs_device_t *device);
 
-extern struct gl_platform *gl_platform_create(gs_device_t *device,
-					      uint32_t adapter);
+
+///当前平台
+extern struct gl_platform *gl_platform_create(gs_device_t *device,uint32_t adapter);
 extern void gl_platform_destroy(struct gl_platform *platform);
 
+
+///当前平台 每一个画布  及每个画布对应的fbo
+extern struct gl_windowinfo *gl_windowinfo_create(const struct gs_init_data *info);
+extern void gl_windowinfo_destroy(struct gl_windowinfo *wi);
 extern bool gl_platform_init_swapchain(struct gs_swap_chain *swap);
 extern void gl_platform_cleanup_swapchain(struct gs_swap_chain *swap);
-
-extern struct gl_windowinfo *
-gl_windowinfo_create(const struct gs_init_data *info);
-extern void gl_windowinfo_destroy(struct gl_windowinfo *wi);
-
-extern void gl_getclientsize(const struct gs_swap_chain *swap, uint32_t *width,
-			     uint32_t *height);
+extern void gl_getclientsize(const struct gs_swap_chain *swap, uint32_t *width,uint32_t *height);

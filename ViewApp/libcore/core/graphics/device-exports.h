@@ -31,6 +31,9 @@ EXPORT bool device_enum_adapters(bool (*callback)(void *param, const char *name,
 EXPORT const char *device_preprocessor_name(void);
 EXPORT int device_create(gs_device_t **device, uint32_t adapter);
 EXPORT void device_destroy(gs_device_t *device);
+
+
+
 EXPORT void device_enter_context(gs_device_t *device);
 EXPORT void device_leave_context(gs_device_t *device);
 EXPORT void *device_get_device_obj(gs_device_t *device);
@@ -43,10 +46,9 @@ EXPORT void device_get_size(const gs_device_t *device, uint32_t *x,
 			    uint32_t *y);
 EXPORT uint32_t device_get_width(const gs_device_t *device);
 EXPORT uint32_t device_get_height(const gs_device_t *device);
-EXPORT gs_texture_t *
-device_texture_create(gs_device_t *device, uint32_t width, uint32_t height,
-		      enum gs_color_format color_format, uint32_t levels,
-		      const uint8_t **data, uint32_t flags);
+EXPORT gs_texture_t *device_texture_create(gs_device_t *device, uint32_t width, uint32_t height,
+                                           enum gs_color_format color_format, uint32_t levels,
+                                           const uint8_t **data, uint32_t flags);
 EXPORT gs_texture_t *
 device_cubetexture_create(gs_device_t *device, uint32_t size,
 			  enum gs_color_format color_format, uint32_t levels,
@@ -104,14 +106,18 @@ EXPORT gs_shader_t *device_get_vertex_shader(const gs_device_t *device);
 EXPORT gs_shader_t *device_get_pixel_shader(const gs_device_t *device);
 EXPORT gs_texture_t *device_get_render_target(const gs_device_t *device);
 EXPORT gs_zstencil_t *device_get_zstencil_target(const gs_device_t *device);
-EXPORT void device_set_render_target(gs_device_t *device, gs_texture_t *tex,
-				     gs_zstencil_t *zstencil);
-EXPORT void device_set_render_target_with_color_space(
-	gs_device_t *device, gs_texture_t *tex, gs_zstencil_t *zstencil,
-	enum gs_color_space space);
-EXPORT void device_set_cube_render_target(gs_device_t *device,
-					  gs_texture_t *cubetex, int side,
-					  gs_zstencil_t *zstencil);
+
+
+
+///设置当前绘制的内容要存放的地方 (tex->fbo)
+EXPORT void device_set_render_target(gs_device_t *device, gs_texture_t *tex, gs_zstencil_t *zstencil);
+EXPORT void device_set_render_target_with_color_space(gs_device_t *device, gs_texture_t *tex, gs_zstencil_t
+                                                      *zstencil,
+                                                      enum gs_color_space space);
+EXPORT void device_set_cube_render_target(gs_device_t *device,gs_texture_t *cubetex, int side,
+                                          gs_zstencil_t *zstencil);
+
+
 EXPORT void device_enable_framebuffer_srgb(gs_device_t *device, bool enable);
 EXPORT bool device_framebuffer_srgb_enabled(gs_device_t *device);
 EXPORT void device_copy_texture(gs_device_t *device, gs_texture_t *dst,
