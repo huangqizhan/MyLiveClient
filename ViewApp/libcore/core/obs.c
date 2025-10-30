@@ -3512,6 +3512,14 @@ void obs_debug_action(void){
     blog(LOG_INFO, "is_graphics_thread %d",is_audio_thread);
     
     blog(LOG_INFO, "boundle : %s",boundle());
+    
+    
+    uint32_t cx, cy;
+    gs_get_size(&cx, &cy);
+    blog(LOG_INFO, "cx :%u cy : %u",cx, cy);
+
+    
+    
 //    add_default_module_paths();
 //    os_get_physical_cores();
 //    os_cpu_usage_info_t *s = os_cpu_usage_info_start();

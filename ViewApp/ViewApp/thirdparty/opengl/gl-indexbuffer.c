@@ -17,8 +17,9 @@
 
 #include "gl-subsystem.h"
 
-static inline bool init_ib(struct gs_index_buffer *ib)
-{
+static inline bool init_ib(struct gs_index_buffer *ib){
+//    •    GL_STATIC_DRAW —— 一次上传，多次绘制（静态数据）
+//    •    GL_DYNAMIC_DRAW —— 频繁更新，每帧重写（动态数据）
 	GLenum usage = ib->dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW;
 	bool success;
 

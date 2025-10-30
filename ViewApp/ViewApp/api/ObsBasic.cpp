@@ -134,7 +134,7 @@ bool ObsBasic::InitObs()
     } catch (const char* error) {
         blog(LOG_ERROR, "%s", error);
     }
-    obs_debug_action();
+    
     return true;
 }
 ///audio 输出
@@ -1268,6 +1268,8 @@ bool ObsBasic::MakeUserProfileDirs(){
 
 
 void ObsBasic::testAction(){
-    config_set_string(m_basicConfig, "SimpleOutput", "RecFormat", "mp4");
-    config_set_string(m_basicConfig, "AdvOut", "RecFormat", "mp4");
+//    config_set_string(m_basicConfig, "SimpleOutput", "RecFormat", "mp4");
+//    config_set_string(m_basicConfig, "AdvOut", "RecFormat", "mp4");
+    
+    obs_debug_action();
 }

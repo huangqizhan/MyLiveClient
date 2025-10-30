@@ -619,8 +619,7 @@ static bool assign_program_param(struct gs_program *program,
 }
 
 static inline bool assign_program_shader_params(struct gs_program *program,
-						struct gs_shader *shader)
-{
+						struct gs_shader *shader){
 	for (size_t i = 0; i < shader->params.num; i++) {
 		struct gs_shader_param *param = shader->params.array + i;
 		if (!assign_program_param(program, param))
@@ -630,8 +629,7 @@ static inline bool assign_program_shader_params(struct gs_program *program,
 	return true;
 }
 
-static inline bool assign_program_params(struct gs_program *program)
-{
+static inline bool assign_program_params(struct gs_program *program){
 	if (!assign_program_shader_params(program, program->vertex_shader))
 		return false;
 	if (!assign_program_shader_params(program, program->pixel_shader))
@@ -640,8 +638,7 @@ static inline bool assign_program_params(struct gs_program *program)
 	return true;
 }
 
-struct gs_program *gs_program_create(struct gs_device *device)
-{
+struct gs_program *gs_program_create(struct gs_device *device){
 	struct gs_program *program = bzalloc(sizeof(*program));
 	int linked = false;
 
@@ -731,8 +728,7 @@ void gs_program_destroy(struct gs_program *program)
 	bfree(program);
 }
 
-void gs_shader_set_val(gs_sparam_t *param, const void *val, size_t size)
-{
+void gs_shader_set_val(gs_sparam_t *param, const void *val, size_t size){
 	int count = param->array_count;
 	size_t expected_size = 0;
 	if (!count)
@@ -794,12 +790,10 @@ void gs_shader_set_val(gs_sparam_t *param, const void *val, size_t size)
 	}
 }
 
-void gs_shader_set_default(gs_sparam_t *param)
-{
+void gs_shader_set_default(gs_sparam_t *param){
 	gs_shader_set_val(param, param->def_value.array, param->def_value.num);
 }
 
-void gs_shader_set_next_sampler(gs_sparam_t *param, gs_samplerstate_t *sampler)
-{
+void gs_shader_set_next_sampler(gs_sparam_t *param, gs_samplerstate_t *sampler){
 	param->next_sampler = sampler;
 }
