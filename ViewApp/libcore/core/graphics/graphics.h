@@ -517,6 +517,11 @@ EXPORT void gs_effect_set_next_sampler(gs_eparam_t *param,
 				       gs_samplerstate_t *sampler);
 EXPORT void gs_effect_set_color(gs_eparam_t *param, uint32_t argb);
 
+
+
+
+
+
 ///纹理渲染
 EXPORT gs_texrender_t *gs_texrender_create(enum gs_color_format format,
                                            enum gs_zstencil_format zsformat);
@@ -664,15 +669,14 @@ enum gs_image_alpha_mode {
 
 EXPORT gs_texture_t *gs_texture_create_from_file(const char *file);
 EXPORT uint8_t *gs_create_texture_file_data(const char *file,
-					    enum gs_color_format *format,
-					    uint32_t *cx, uint32_t *cy);
-EXPORT uint8_t *gs_create_texture_file_data2(
-                                             const char *file, enum gs_image_alpha_mode alpha_mode,
+                                            enum gs_color_format *format,
+                                            uint32_t *cx, uint32_t *cy);
+EXPORT uint8_t *gs_create_texture_file_data2(const char *file, enum gs_image_alpha_mode alpha_mode,
                                              enum gs_color_format *format, uint32_t *cx, uint32_t *cy);
 EXPORT uint8_t *gs_create_texture_file_data3(const char *file,
-			     enum gs_image_alpha_mode alpha_mode,
-			     enum gs_color_format *format, uint32_t *cx,
-                             uint32_t *cy, enum gs_color_space *space);
+                                             enum gs_image_alpha_mode alpha_mode,
+                                             enum gs_color_format *format, uint32_t *cx,
+                                             uint32_t *cy, enum gs_color_space *space);
 
 #define GS_FLIP_U (1 << 0)
 #define GS_FLIP_V (1 << 1)
@@ -804,7 +808,7 @@ EXPORT enum gs_color_space gs_get_color_space(void);
 EXPORT gs_texture_t *gs_get_render_target(void);
 EXPORT gs_zstencil_t *gs_get_zstencil_target(void);
 
-#pragma mark --- 设置渲染缓冲区
+#pragma mark --- 设置桢缓冲区
 EXPORT void gs_set_render_target(gs_texture_t *tex, gs_zstencil_t *zstencil);
 EXPORT void gs_set_render_target_with_color_space(gs_texture_t *tex,
                                                   gs_zstencil_t *zstencil,
@@ -904,7 +908,9 @@ EXPORT void *gs_texture_get_obj(gs_texture_t *tex);
 EXPORT void gs_cubetexture_destroy(gs_texture_t *cubetex);
 EXPORT uint32_t gs_cubetexture_get_size(const gs_texture_t *cubetex);
 EXPORT enum gs_color_format gs_cubetexture_get_color_format(const gs_texture_t *cubetex);
-///===?
+
+
+///Volume Texture（体积纹理） 
 EXPORT void gs_voltexture_destroy(gs_texture_t *voltex);
 EXPORT uint32_t gs_voltexture_get_width(const gs_texture_t *voltex);
 EXPORT uint32_t gs_voltexture_get_height(const gs_texture_t *voltex);

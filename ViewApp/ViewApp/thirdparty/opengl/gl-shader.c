@@ -200,10 +200,7 @@ static bool gl_shader_init(struct gs_shader *shader,
 	shader->obj = glCreateShader(type);
 	if (!gl_success("glCreateShader") || !shader->obj)
 		return false;
-//#if DEBUG
-//    blog(LOG_INFO, "\n ======%s=======",shader->type == GS_SHADER_VERTEX ?"vertex":"fragment");
-//    blog(LOG_INFO, "\n%s",glsp->gl_string.array);
-//#endif
+
 	glShaderSource(shader->obj, 1, (const GLchar **)&glsp->gl_string.array,
 		       0);
 	if (!gl_success("glShaderSource"))
@@ -212,14 +209,6 @@ static bool gl_shader_init(struct gs_shader *shader,
 	glCompileShader(shader->obj);
 	if (!gl_success("glCompileShader"))
 		return false;
-
-#if 0
-	blog(LOG_DEBUG, "+++++++++++++++++++++++++++++++++++");
-	blog(LOG_DEBUG, "  GL shader string for: %s", file);
-	blog(LOG_DEBUG, "-----------------------------------");
-	blog(LOG_DEBUG, "%s", glsp->gl_string.array);
-	blog(LOG_DEBUG, "+++++++++++++++++++++++++++++++++++");
-#endif
 
 	glGetShaderiv(shader->obj, GL_COMPILE_STATUS, &compiled);
 	if (!gl_success("glGetShaderiv"))
@@ -254,6 +243,25 @@ static bool gl_shader_init(struct gs_shader *shader,
 	if (success)
 		gl_add_samplers(shader, glsp);
 
+#if DEBUG
+//    blog(LOG_DEBUG, "+++++++++++++++++++++++++++++++++++");
+//    blog(LOG_DEBUG, "  GL shader string for: %s", file);
+//    blog(LOG_DEBUG, "-----------------------------------");
+//    blog(LOG_INFO, "\n ======%s=======",shader->type == GS_SHADER_VERTEX ?"vertex":"fragment");
+//    blog(LOG_DEBUG, "%s", glsp->gl_string.array);
+//    blog(LOG_INFO, "===== shader param  ======");
+//    for (int i = 0; i < shader->params.num; i++) {
+//        struct gs_shader_param p = shader->params.array[i];
+//        blog(LOG_INFO, "%s",p.name);
+//    }
+//    
+//    blog(LOG_INFO, "===== shader attribs  ======");
+//    for (int i = 0; i < shader->attribs.num; i++) {
+//        struct shader_attrib p = shader->attribs.array[i];
+//        blog(LOG_INFO, "%s",p.name);
+//    }
+#endif
+    
 	return success;
 }
 
@@ -541,8 +549,7 @@ static void program_set_param_data(struct gs_program *program,
 	}
 }
 
-void program_update_params(struct gs_program *program)
-{
+void program_update_params(struct gs_program *program){
 	for (size_t i = 0; i < program->params.num; i++) {
 		struct program_param *pp = program->params.array + i;
 		program_set_param_data(program, pp);
@@ -569,8 +576,7 @@ static void print_link_errors(GLuint program)
 }
 
 static bool assign_program_attrib(struct gs_program *program,
-				  struct shader_attrib *attrib)
-{
+				  struct shader_attrib *attrib){
 	GLint attrib_obj = glGetAttribLocation(program->obj, attrib->name);
 	if (!gl_success("glGetAttribLocation"))
 		return false;

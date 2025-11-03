@@ -132,8 +132,7 @@ static void gl_enable_debug()
 static void gl_enable_debug(void) {}
 #endif
 ///开启opengl的一些扩展
-static bool gl_init_extensions(struct gs_device *device)
-{
+static bool gl_init_extensions(struct gs_device *device){
 	if (!GLAD_GL_VERSION_3_3) {
 		blog(LOG_ERROR,
 		     "obs-studio1 requires OpenGL version 3.3 or higher.");
@@ -160,8 +159,7 @@ static bool gl_init_extensions(struct gs_device *device)
 	return true;
 }
 ///解绑纹理绑定
-static void clear_textures(struct gs_device *device)
-{
+static void clear_textures(struct gs_device *device){
 	GLenum i;
 	for (i = 0; i < GS_MAX_TEXTURES; i++) {
 		if (device->cur_textures[i]) {
@@ -173,8 +171,7 @@ static void clear_textures(struct gs_device *device)
 }
 
 void convert_sampler_info(struct gs_sampler_state *sampler,
-			  const struct gs_sampler_info *info)
-{
+			  const struct gs_sampler_info *info){
 	GLint max_anisotropy_max;
 	convert_filter(info->filter, &sampler->min_filter,
 		       &sampler->mag_filter);
@@ -456,8 +453,7 @@ static inline void apply_swizzle(struct gs_texture *tex)
 	}
 }
 ///设置纹理参数
-static bool load_texture_sampler(gs_texture_t *tex, gs_samplerstate_t *ss)
-{
+static bool load_texture_sampler(gs_texture_t *tex, gs_samplerstate_t *ss){
 	bool success = true;
 	GLint min_filter;
 
@@ -832,8 +828,7 @@ static bool attach_zstencil(struct fbo_info *fbo, gs_zstencil_t *zs)
 }
 //设置device当前的帧缓冲对象 及帧缓冲对象对应的附加纹理和深度模版
 static bool set_target(gs_device_t *device, gs_texture_t *tex, int side,
-		       gs_zstencil_t *zs, enum gs_color_space space)
-{
+		       gs_zstencil_t *zs, enum gs_color_space space){
 	device->cur_color_space = space;
 
 	if (device->cur_render_target == tex &&
@@ -888,8 +883,7 @@ fail:
 void device_set_render_target_with_color_space(gs_device_t *device,
 					       gs_texture_t *tex,
 					       gs_zstencil_t *zstencil,
-					       enum gs_color_space space)
-{
+					       enum gs_color_space space){
 	if (tex) {
 		if (tex->type != GS_TEXTURE_2D) {
 			blog(LOG_ERROR, "Texture is not a 2D texture");
@@ -913,8 +907,7 @@ fail:
 }
 
 void device_set_cube_render_target(gs_device_t *device, gs_texture_t *cubetex,
-				   int side, gs_zstencil_t *zstencil)
-{
+				   int side, gs_zstencil_t *zstencil){
 	if (cubetex) {
 		if (cubetex->type != GS_TEXTURE_CUBE) {
 			blog(LOG_ERROR, "Texture is not a cube texture");
@@ -1095,8 +1088,7 @@ static inline struct gs_program *find_program(const struct gs_device *device)
 	return NULL;
 }
 
-static inline struct gs_program *get_shader_program(struct gs_device *device)
-{
+static inline struct gs_program *get_shader_program(struct gs_device *device){
 	struct gs_program *program = find_program(device);
 
 	if (!program)
@@ -1411,8 +1403,7 @@ void device_stencil_function(gs_device_t *device, enum gs_stencil_side side,
 void device_stencil_op(gs_device_t *device, enum gs_stencil_side side,
 		       enum gs_stencil_op_type fail,
 		       enum gs_stencil_op_type zfail,
-		       enum gs_stencil_op_type zpass)
-{
+		       enum gs_stencil_op_type zpass){
 	GLenum gl_side = convert_gs_stencil_side(side);
 	GLenum gl_fail = convert_gs_stencil_op(fail);
 	GLenum gl_zfail = convert_gs_stencil_op(zfail);
@@ -1555,23 +1546,20 @@ void device_projection_pop(gs_device_t *device)
 }
 
 void device_debug_marker_begin(gs_device_t *device, const char *markername,
-			       const float color[4])
-{
+			       const float color[4]){
 	UNUSED_PARAMETER(device);
 	UNUSED_PARAMETER(color);
 
 	glPushDebugGroupKHR(GL_DEBUG_SOURCE_APPLICATION, 0, -1, markername);
 }
 
-void device_debug_marker_end(gs_device_t *device)
-{
+void device_debug_marker_end(gs_device_t *device){
 	UNUSED_PARAMETER(device);
 
 	glPopDebugGroupKHR();
 }
 
-void gs_swapchain_destroy(gs_swapchain_t *swapchain)
-{
+void gs_swapchain_destroy(gs_swapchain_t *swapchain){
 	if (!swapchain)
 		return;
 
@@ -1612,8 +1600,7 @@ enum gs_color_format gs_voltexture_get_color_format(const gs_texture_t *voltex)
 	return GS_UNKNOWN;
 }
 
-void gs_samplerstate_destroy(gs_samplerstate_t *samplerstate)
-{
+void gs_samplerstate_destroy(gs_samplerstate_t *samplerstate){
 	if (!samplerstate)
 		return;
 

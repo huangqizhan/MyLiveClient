@@ -2206,12 +2206,11 @@ proc_handler_t *obs_get_proc_handler(void)
 //{
 //	obs_view_render(&obs->data.main_view);
 //}
-///====
+///==== 调用该函数时 已经切换到了当前的swipe上（已经绑定到了屏幕缓冲区上）
 static void obs_render_main_texture_internal(enum gs_blend_type src_c,
 					     enum gs_blend_type dest_c,
 					     enum gs_blend_type src_a,
-					     enum gs_blend_type dest_a)
-{
+					     enum gs_blend_type dest_a){
 	struct obs_core_video_mix *video;
 	gs_texture_t *tex;
 	gs_effect_t *effect;

@@ -260,9 +260,7 @@ static bool load_vb_buffer(struct shader_attrib *attrib,
 	return success;
 }
 
-bool load_vb_buffers(struct gs_program *program, struct gs_vertex_buffer *vb,
-		     struct gs_index_buffer *ib)
-{
+bool load_vb_buffers(struct gs_program *program, struct gs_vertex_buffer *vb,struct gs_index_buffer *ib){
 	struct gs_shader *shader = program->vertex_shader;
 	size_t i;
 

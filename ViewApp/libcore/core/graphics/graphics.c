@@ -844,7 +844,7 @@ gs_effect_t *gs_effect_create(const char *effect_string, const char *filename,
 	ep_init(&parser);
 	success = ep_parse(&parser, effect, effect_string, filename);
     
-//#if DEBUG
+#if DEBUG
 //    blog(LOG_INFO, "======funcs =======");
 //    for (int i = 0; i < parser.funcs.num; i++) {
 //        struct ep_func *f = &parser.funcs.array[i];
@@ -879,30 +879,33 @@ gs_effect_t *gs_effect_create(const char *effect_string, const char *filename,
 //    blog(LOG_INFO, "======techniques =======");
 //    for (int i = 0; i < effect->techniques.num; i++) {
 //        struct gs_effect_technique *f = &effect->techniques.array[i];
-//        blog(LOG_INFO,"tname:%s",f->name);
+//        blog(LOG_INFO,"technique name :%s",f->name);
 //        for (int j = 0; j < f->passes.num; j++){
 //            struct gs_effect_pass *pass = &f->passes.array[j];
-//            if (pass->vertshader_params.num > 0) {
-//                struct pass_shaderparam *fsp = pass->vertshader_params.array;
-//                struct gs_effect_param *sp = fsp->eparam;
-//                struct gs_shader_param *p = fsp->sparam;
-//                blog(LOG_INFO,"sp.name:%s",sp->name);
+//            blog(LOG_INFO," pass name :%s",pass->name);
+//            for (int p = 0 ; p < pass->vertshader_params.num; p++) {
+//                struct pass_shaderparam *fsp = &pass->vertshader_params.array[p];
+//                struct gs_effect_param *ep = fsp->eparam;
+//                blog(LOG_INFO,"  effect param name :%s",ep->name);
+////                struct gs_shader_param *sp ;//= fsp->sparam;
+////                blog(LOG_INFO,"  shader param name :%s",fsp->sparam->name);
 //            }
-//            if (pass->pixelshader_params.num > 0) {
-//                struct pass_shaderparam *fsp = pass->pixelshader_params.array;
-//                struct gs_effect_param *sp = fsp->eparam;
-//                struct gs_shader_param *p = fsp->sparam;
-//                blog(LOG_INFO,"tname:%s",pass->name);
-//            }
+////            if (pass->pixelshader_params.num > 0) {
+////                struct pass_shaderparam *fsp = pass->pixelshader_params.array;
+////                struct gs_effect_param *sp = fsp->eparam;
+////                struct gs_shader_param *p = fsp->sparam;
+////                blog(LOG_INFO,"tname:%s",pass->name);
+////            }
 //            blog(LOG_INFO,"tname:%s",pass->name);
 //        }
 //    }
-//    blog(LOG_INFO, "======params =======");
-//    for (int i = 0; i < effect->params.num; i++) {
-//        struct gs_effect_param *pf = &effect->params.array[i];
-//        blog(LOG_INFO,"tname:%s",pf->name);
-//    }
-//#endif
+    blog(LOG_INFO,"%s", filename);
+    blog(LOG_INFO, "======effect params =======");
+    for (int i = 0; i < effect->params.num; i++) {
+        struct gs_effect_param *pf = &effect->params.array[i];
+        blog(LOG_INFO,"effect param:%s  effect param default value num %zu  effect param  value num %zu  ",pf->name,pf->default_val.num,pf->default_val.num);
+    }
+#endif
 	if (!success) {
 		if (error_string)
 			*error_string =
@@ -969,8 +972,7 @@ gs_shader_t *gs_pixelshader_create_from_file(const char *file,
 	return shader;
 }
 
-gs_texture_t *gs_texture_create_from_file(const char *file)
-{
+gs_texture_t *gs_texture_create_from_file(const char *file){
 	enum gs_color_format format;
 	uint32_t cx;
 	uint32_t cy;

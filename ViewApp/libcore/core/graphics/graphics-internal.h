@@ -489,8 +489,8 @@ struct blend_state {
 	enum gs_blend_op_type op;
 };
 /*
- OpenGL 绘制 可以渲染到帧缓冲区  也可以绘制到屏幕上
- obs_display 回调时 会把缓冲区切换到屏幕缓冲区 
+ 绘制主流程 obs_video thread 线程 遍历每个source 分别绘制到各自对应的纹理及桢缓冲区上  最终
+ 当绘制所有的display 时 会切换到当前的屏幕缓冲区上 
 */
 ///此对象全局只有一个
 struct graphics_subsystem {

@@ -433,8 +433,12 @@ extern void convert_sampler_info(struct gs_sampler_state *sampler,
 				 const struct gs_sampler_info *info);
 
 /*
- uniform sampler2D  texture1
- sampler2D采样器的状态
+ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, sampler->min_filter);
+ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, sampler->mag_filter);
+ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, sampler->address_u);
+ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, sampler->address_v);
+ glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, sampler->border_color.ptr);
+ 这个结构体是 CPU 端保存 GPU状态的抽象描述。
  */
 struct gs_sampler_state {
 	gs_device_t *device;
@@ -488,7 +492,10 @@ static inline void samplerstate_release(gs_samplerstate_t *ss)
 struct gs_timer {
 	GLuint queries[2];
 };
-
+/*
+ uniform mat4x4 ViewProj;
+ uniform sampler2D image;
+ */
 struct gs_shader_param {
 	enum gs_shader_param_type type;
 
@@ -516,12 +523,138 @@ enum attrib_type {
 	ATTRIB_TARGET    //
 };
 ///顶点属性  VAO
+/*
+ in vec4 _input_attrib0;
+ in vec2 _input_attrib1;
+ */
 struct shader_attrib {
 	char *name;
 	size_t index;
 	enum attrib_type type;
 };
-///着色器 
+/*
+ default.effect
+ ======vertex=======
+ #version 330
+ const bool obs_glsl_compile = true;
+
+ vec4 obs_load_2d(sampler2D s, ivec3 p_lod)
+ {
+     int lod = p_lod.z;
+     vec2 size = textureSize(s, lod);
+     vec2 p = (vec2(p_lod.xy) + 0.5) / size;
+     vec4 color = textureLod(s, p, lod);
+     return color;
+ }
+
+ vec4 obs_load_3d(sampler3D s, ivec4 p_lod)
+ {
+     int lod = p_lod.w;
+     vec3 size = textureSize(s, lod);
+     vec3 p = (vec3(p_lod.xyz) + 0.5) / size;
+     vec4 color = textureLod(s, p, lod);
+     return color;
+ }
+
+ uniform mat4x4 ViewProj;
+
+ in vec4 _input_attrib0;
+ in vec2 _input_attrib1;
+
+ out vec2 _vertex_shader_attrib0;
+
+ out gl_PerVertex {
+     vec4 gl_Position;
+ };
+
+ struct VertInOut {
+     vec4 pos;
+     vec2 uv;
+ };
+
+ VertInOut VSDefault(VertInOut vert_in)
+ {
+     VertInOut vert_out;
+     vert_out.pos = ((vec4(vert_in.pos.xyz, 1.0)) * (ViewProj));
+     vert_out.uv  = vert_in.uv;
+     return vert_out;
+ }
+
+ VertInOut _main_wrap(VertInOut vert_in)
+ {
+     return VSDefault(vert_in);
+ }
+
+ void main(void)
+ {
+     VertInOut vert_in;
+     VertInOut outputval;
+
+     vert_in.pos = _input_attrib0;
+     vert_in.uv = _input_attrib1;
+
+     outputval = _main_wrap(vert_in);
+
+     gl_Position = outputval.pos;
+     _vertex_shader_attrib0 = outputval.uv;
+ }
+ 
+
+  ======fragment=======
+ debug: #version 330
+
+ const bool obs_glsl_compile = true;
+
+ vec4 obs_load_2d(sampler2D s, ivec3 p_lod)
+ {
+     int lod = p_lod.z;
+     vec2 size = textureSize(s, lod);
+     vec2 p = (vec2(p_lod.xy) + 0.5) / size;
+     vec4 color = textureLod(s, p, lod);
+     return color;
+ }
+
+ vec4 obs_load_3d(sampler3D s, ivec4 p_lod)
+ {
+     int lod = p_lod.w;
+     vec3 size = textureSize(s, lod);
+     vec3 p = (vec3(p_lod.xyz) + 0.5) / size;
+     vec4 color = textureLod(s, p, lod);
+     return color;
+ }
+
+ uniform sampler2D image;
+
+ in vec2 _vertex_shader_attrib0;
+
+ out vec4 _pixel_shader_attrib0;
+
+ struct VertInOut {
+     vec4 pos;
+     vec2 uv;
+ };
+
+ vec4 PSDrawBare(VertInOut vert_in)
+ {
+     return texture(image, vert_in.uv);
+ }
+
+ vec4 _main_wrap(VertInOut vert_in)
+ {
+     return PSDrawBare(vert_in);
+ }
+
+ void main(void)
+ {
+     VertInOut vert_in;
+     vert_in.pos = gl_FragCoord;
+     vert_in.uv = _vertex_shader_attrib0;
+
+     _pixel_shader_attrib0 = _main_wrap(vert_in);
+ }
+
+ */
+///着色器
 struct gs_shader {
 	gs_device_t *device;
 	enum gs_shader_type type;
@@ -562,6 +695,7 @@ struct gs_program {
 //创建着色器程序  （用于链接着色器）
 extern struct gs_program *gs_program_create(struct gs_device *device);
 extern void gs_program_destroy(struct gs_program *program);
+//把shader对象上的参数提交到program
 extern void program_update_params(struct gs_program *shader);
 
 ///OpenGL顶点相关的缓冲
@@ -622,6 +756,7 @@ struct gs_texture {
 	bool gen_mipmaps;
     ///当前的采样器
 	gs_samplerstate_t *cur_sampler;
+    //不是所有的纹理都会对应一个frame buffer   gs_set_render_target_with_color_space 此时就有frame buffer 
 	struct fbo_info *fbo;
 };
 
@@ -775,12 +910,9 @@ static inline void fbo_info_destroy(struct fbo_info *fbo)
  此对象全局只有一个
  当前设备会关联一个当前平台总的OpenGLContext
  总的OpenGLContext下会关联一个或多个子OpenGLContext
- 一个子OpenGLContext对应一个具体的widget 
+ 一个子OpenGLContext对应一个具体的widget
  
- 
- 先变换(平移、放缩、旋转)  ===》 viewCamera ===》 perspective ===》draw 
- 
- 
+ 先变换(平移、放缩、旋转)  ===》 viewCamera ===》 perspective ===》draw
  */
 struct gs_device {
     //当前平台总的OpenGLContext

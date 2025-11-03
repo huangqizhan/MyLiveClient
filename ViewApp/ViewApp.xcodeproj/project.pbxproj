@@ -927,6 +927,7 @@
 		90F6C58F2C880B35003483EC /* zh-CN.ini in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = 90F6C50E2C880A7E003483EC /* zh-CN.ini */; };
 		90F6C5902C880B35003483EC /* zh-TW.ini in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = 90F6C50F2C880A7E003483EC /* zh-TW.ini */; };
 		90F6C6692C8869DE003483EC /* container2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90F6C6682C8869DE003483EC /* container2.png */; };
+		F33F45592EB45FD4005ED68D /* effect_shader.txt in Resources */ = {isa = PBXBuildFile; fileRef = F33F45582EB45FD4005ED68D /* effect_shader.txt */; };
 		F353DD5E2E5446830036D0D4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C6572C78665900FD11BA /* AVFoundation.framework */; };
 		F353E0D72E618BED0036D0D4 /* obs-ffmpeg-mux.c in Sources */ = {isa = PBXBuildFile; fileRef = F353E0D42E618BD60036D0D4 /* obs-ffmpeg-mux.c */; };
 		F353E0DB2E61918A0036D0D4 /* obs-ffmpeg-mux in ExecConsule */ = {isa = PBXBuildFile; fileRef = F353E0C92E618AFF0036D0D4 /* obs-ffmpeg-mux */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -2579,6 +2580,7 @@
 		90F6C50E2C880A7E003483EC /* zh-CN.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "zh-CN.ini"; sourceTree = "<group>"; };
 		90F6C50F2C880A7E003483EC /* zh-TW.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "zh-TW.ini"; sourceTree = "<group>"; };
 		90F6C6682C8869DE003483EC /* container2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = container2.png; sourceTree = "<group>"; };
+		F33F45582EB45FD4005ED68D /* effect_shader.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = effect_shader.txt; sourceTree = "<group>"; };
 		F353E0C92E618AFF0036D0D4 /* obs-ffmpeg-mux */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "obs-ffmpeg-mux"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F353E0D42E618BD60036D0D4 /* obs-ffmpeg-mux.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "obs-ffmpeg-mux.c"; sourceTree = "<group>"; };
 		F353E0E42E6192B50036D0D4 /* obs-ffmpeg-mux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "obs-ffmpeg-mux.h"; sourceTree = "<group>"; };
@@ -3232,6 +3234,7 @@
 				9078C5522C785FEE00FD11BA /* vec2.h */,
 				9078C56C2C785FEE00FD11BA /* vec2.c */,
 				9078C56B2C785FEE00FD11BA /* math-defs.h */,
+				F33F45582EB45FD4005ED68D /* effect_shader.txt */,
 			);
 			path = graphics;
 			sourceTree = "<group>";
@@ -4438,6 +4441,7 @@
 				9078C52D2C785FD100FD11BA /* deinterlace_blend.effect in Resources */,
 				9078C52E2C785FD100FD11BA /* repeat.effect in Resources */,
 				9078C5312C785FD100FD11BA /* area.effect in Resources */,
+				F33F45592EB45FD4005ED68D /* effect_shader.txt in Resources */,
 				9078C5282C785FD100FD11BA /* deinterlace_discard_2x.effect in Resources */,
 				9054BB102C8B15790051AD7F /* libcore.plist in Resources */,
 				9078C5362C785FD100FD11BA /* color.effect in Resources */,

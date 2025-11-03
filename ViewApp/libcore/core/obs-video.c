@@ -255,7 +255,7 @@ static inline gs_texture_t *render_output_texture(struct obs_core_video_mix *mix
 	gs_eparam_t *bres_i =
 		gs_effect_get_param_by_name(effect, "base_dimension_i");
 	size_t passes, i;
-
+    //切换当前渲染的纹理目标及纹理对应的桢缓冲区
 	gs_set_render_target(target, NULL);
 	set_render_size(width, height);
 
