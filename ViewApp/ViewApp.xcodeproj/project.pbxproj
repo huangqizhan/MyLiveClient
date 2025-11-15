@@ -3013,8 +3013,9 @@
 			children = (
 				9078C3312C7859D300FD11BA /* simde */,
 				9078C32C2C7859D300FD11BA /* apple */,
-				9078C32B2C7859D300FD11BA /* cf-lexer.h */,
+				9078C35A2C7859D300FD11BA /* curl */,
 				9078C32E2C7859D300FD11BA /* dstr.c */,
+				9078C32B2C7859D300FD11BA /* cf-lexer.h */,
 				9078C32F2C7859D300FD11BA /* text-lookup.c */,
 				9078C3302C7859D300FD11BA /* bitstream.c */,
 				9078C3432C7859D300FD11BA /* dstr.hpp */,
@@ -3040,7 +3041,6 @@
 				9078C3572C7859D300FD11BA /* array-serializer.c */,
 				9078C3582C7859D300FD11BA /* task.c */,
 				9078C3592C7859D300FD11BA /* platform-cocoa.m */,
-				9078C35A2C7859D300FD11BA /* curl */,
 				9078C35C2C7859D300FD11BA /* serializer.h */,
 				9078C35D2C7859D300FD11BA /* text-lookup.h */,
 				9078C35E2C7859D300FD11BA /* darray.h */,

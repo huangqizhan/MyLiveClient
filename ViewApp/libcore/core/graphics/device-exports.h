@@ -172,6 +172,7 @@ EXPORT void device_stencil_op(gs_device_t *device, enum gs_stencil_side side,
 			      enum gs_stencil_op_type fail,
 			      enum gs_stencil_op_type zfail,
 			      enum gs_stencil_op_type zpass);
+//glViewport 把NDC坐标映射到实际画布上的区域  (也就是在画布上显示的区域)
 EXPORT void device_set_viewport(gs_device_t *device, int x, int y, int width,
 				int height);
 EXPORT void device_get_viewport(const gs_device_t *device,

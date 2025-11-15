@@ -246,13 +246,14 @@ static bool load_vb_buffer(struct shader_attrib *attrib,
 
 	if (!gl_bind_buffer(GL_ARRAY_BUFFER, 0))
 		success = false;
+    
 //    GLfloat granularity;
 //    glGetFloatv(GL_LINE_WIDTH_GRANULARITY, &granularity);
 //    GLfloat lineWidthRange[20] = {0};
 //    glGetFloatv(GL_LINE_WIDTH_RANGE, lineWidthRange);
-//    GLfloat linew = 0;;
+//    GLfloat linew = 10;;
 //    glGetFloatv(GL_LINE_WIDTH, &linew);
-//
+
 //    glLineWidth(lineWidthRange[1] + granularity);
 //    if (!gl_success("glEnableVertexAttribArray"))
 //        success = false;

@@ -133,8 +133,7 @@ void ObsWindow::DrawBackdrop(float cx, float cy)
     gs_load_vertexbuffer(nullptr);
 }
 ///绘制边框上的各个顶点
-static void DrawSquareAtPos(float x, float y)
-{
+static void DrawSquareAtPos(float x, float y){
     struct vec3 pos;
     vec3_set(&pos, x, y, 0.0f);
 
@@ -158,23 +157,20 @@ static void DrawSquareAtPos(float x, float y)
     gs_matrix_pop();
 }
 
-static inline bool crop_enabled(const obs_sceneitem_crop *crop)
-{
+static inline bool crop_enabled(const obs_sceneitem_crop *crop){
     return crop->left > 0 ||
         crop->top > 0 ||
         crop->right > 0 ||
         crop->bottom > 0;
 }
 
-static bool SceneItemHasVideo(obs_sceneitem_t *item)
-{
+static bool SceneItemHasVideo(obs_sceneitem_t *item){
     obs_source_t *source = obs_sceneitem_get_source(item);
     uint32_t flags = obs_source_get_output_flags(source);
     return (flags & OBS_SOURCE_VIDEO) != 0;
 }
 
-static bool CloseFloat(float a, float b, float epsilon = 0.01)
-{
+static bool CloseFloat(float a, float b, float epsilon = 0.01){
     using std::abs;
     return abs(a - b) <= epsilon;
 }
@@ -204,17 +200,16 @@ bool DrawSelectedItem(obs_scene_t *scene, obs_sceneitem_t *item, void *param) {
     matrix4 invBoxTransform;
     obs_sceneitem_get_box_transform(item, &boxTransform);
     matrix4_inv(&invBoxTransform, &boxTransform);
-    ///顶点数组
+    //顶点数组
     vec3 bounds[] = {
         { { { 0.f, 0.f, 0.f } } },
         { { { 1.f, 0.f, 0.f } } },
         { { { 0.f, 1.f, 0.f } } },
         { { { 1.f, 1.f, 0.f } } },
     };
-    ///是否出界
+    //是否出界
     bool visible = std::all_of(std::begin(bounds), std::end(bounds),
-        [&](const vec3 &b)
-    {
+        [&](const vec3 &b){
         vec3 pos;
         vec3_transform(&pos, &b, &boxTransform);        ///先变换
         vec3_transform(&pos, &pos, &invBoxTransform);   ///再逆变换
@@ -226,13 +221,13 @@ bool DrawSelectedItem(obs_scene_t *scene, obs_sceneitem_t *item, void *param) {
 
     obs_transform_info info;
     obs_sceneitem_get_info(item, &info);
-
+//
     ObsWindow* window = (ObsWindow*)param;
     gs_load_vertexbuffer(window->box);
-    //上一个矩阵 变换到box的坐标系
+//    //上一个矩阵 变换到box的坐标系
     gs_matrix_push();
     gs_matrix_mul(&boxTransform);
-
+//
     ///画八个小正方形
     DrawSquareAtPos(0.0f, 0.0f);
     DrawSquareAtPos(0.0f, 1.0f);
@@ -250,7 +245,6 @@ bool DrawSelectedItem(obs_scene_t *scene, obs_sceneitem_t *item, void *param) {
         vec4 color;
         gs_effect_t *eff = gs_get_effect();
         gs_eparam_t *param = gs_effect_get_param_by_name(eff, "color");
-
 #define DRAW_SIDE(side, vb) \
         if (crop.side > 0) \
             vec4_set(&color, 0.0f, 1.0f, 0.0f, 1.0f); \
@@ -265,10 +259,8 @@ bool DrawSelectedItem(obs_scene_t *scene, obs_sceneitem_t *item, void *param) {
         DRAW_SIDE(right, boxRight);
         DRAW_SIDE(bottom, boxBottom);
 #undef DRAW_SIDE
-    }
-    else {
-        gs_load_vertexbuffer(window->box);
-        gs_draw(GS_LINESTRIP, 0, 0);
+    }else {
+        gs_draw(GS_LINESTRIP, 0, 0); //划线
     }
 
     gs_matrix_pop();
@@ -278,10 +270,16 @@ bool DrawSelectedItem(obs_scene_t *scene, obs_sceneitem_t *item, void *param) {
     return true;
 }
 ///=== 绘制当前的scene下选中的所有的item的边框
-void ObsWindow::DrawSceneEditing()
-{
+void ObsWindow::DrawSceneEditing(){
     if (m_locked)
         return;
+    
+    ObsSize size = GetClientSize();
+    float right = float(size.width) - m_previewX;
+    float bottom = float(size.height) - m_previewY;
+    gs_ortho(-m_previewX, right, -m_previewY, bottom, -100.0f, 100.0f);
+    gs_set_viewport(0, 0, size.width, size.height);
+    
     ///边框effect
     gs_effect_t    *solid = obs_get_base_effect(OBS_EFFECT_SOLID);
     gs_technique_t *tech = gs_effect_get_technique(solid, "Solid");
@@ -297,7 +295,7 @@ void ObsWindow::DrawSceneEditing()
     OBSScene scene = ObsMain::Instance()->GetCurrentScene();
     if (scene) {
         gs_matrix_push();
-        gs_matrix_scale3f(m_previewScale, m_previewScale, 1.0f);
+        gs_matrix_scale3f(m_previewScale, m_previewScale, 1.0f); //此处要缩小 是因为最终的边框是绘制在1280x720的投影空间中
         obs_scene_enum_items(scene, DrawSelectedItem, this);
         gs_matrix_pop();
     }
@@ -331,26 +329,27 @@ void ObsWindow::RenderWindow(uint32_t cx, uint32_t cy)
     gs_viewport_push();
     ///给proj_stack栈 添加一个新的透视矩阵
     gs_projection_push();
-
-    ///给新的透视矩阵设值
-    gs_ortho(0.0f, float(ovi.base_width), 0.0f, float(ovi.base_height), -100.0f, 100.0f);
-    ///给添加的新的viewport设值
-    gs_set_viewport(m_previewX, m_previewY, m_previewCX, m_previewCY);
-    ///绘制背景
-    DrawBackdrop(float(ovi.base_width), float(ovi.base_height));
-    //绘制缓冲区中的合成后的主纹理到屏幕上
-    obs_render_main_texture();
-    ///置空device的顶点缓冲区
-    gs_load_vertexbuffer(nullptr);
     
-    ///
-    ObsSize size = GetClientSize();
-    float right = float(size.width) - m_previewX;
-    float bottom = float(size.height) - m_previewY;
-    gs_ortho(-m_previewX, right, -m_previewY, bottom, -100.0f, 100.0f);
-    gs_reset_viewport();
-    ///绘制scene边框
-    DrawSceneEditing();
+    ///第一层  这里绘制的是主画布的内容
+    {
+        //设置平行投影的盒子大小 (输出的分辨率的实际大小)
+        gs_ortho(0.0f, float(ovi.base_width), 0.0f, float(ovi.base_height), -100.0f, 100.0f);
+        //放入到实际画布的有效区域中
+        gs_set_viewport(m_previewX, m_previewY, m_previewCX, m_previewCY);
+        ///绘制背景
+        DrawBackdrop(float(ovi.base_width), float(ovi.base_height));
+        //绘制缓冲区中的合成后的主纹理到屏幕上
+        obs_render_main_texture();
+        ///置空device的顶点缓冲区
+        gs_load_vertexbuffer(nullptr);
+    }
+    
+    ///第二层   绘制边框 (绘制边框是在画布空间中的) 所以 gs_set_viewport(0, 0, size.width, size.height);
+    {
+        ///绘制scene边框
+        DrawSceneEditing();
+    }
+
     ///退出新的透视矩阵
     gs_projection_pop();
     ///退出新的viewport
@@ -1295,8 +1294,7 @@ static inline vec2 GetOBSScreenSize()
 //    return clampOffset;
 //}
 ///拖动item 
-static bool move_items(obs_scene_t *scene, obs_sceneitem_t *item, void *param)
-{
+static bool move_items(obs_scene_t *scene, obs_sceneitem_t *item, void *param){
     if (obs_sceneitem_locked(item))
         return true;
 
@@ -1326,8 +1324,7 @@ static bool move_items(obs_scene_t *scene, obs_sceneitem_t *item, void *param)
     return true;
 }
 ///拖动item  pos是在base空间
-void ObsWindow::MoveItems(const vec2 &pos)
-{
+void ObsWindow::MoveItems(const vec2 &pos){
     OBSScene scene = ObsMain::Instance()->GetCurrentScene();
     ///按下鼠标时的坐标与当前的位置的差值
     vec2 offset;
@@ -1350,6 +1347,7 @@ void ObsWindow::OnMouseMoveEvent(ObsMouseEvent *event){
     if (mouseDown) {
         ///pos 在 base_width  base_height 坐标系中
         vec2 pos = GetMouseEventPos(event);
+        blog(LOG_INFO, "x=%f y=%f",pos.x,pos.y);
         if (!mouseMoved && !mouseOverItems &&  stretchHandle == ItemHandle::None) {
             ProcessClick(startPos);
             mouseOverItems = SelectedAtPos(startPos);
@@ -1382,8 +1380,7 @@ void ObsWindow::OnMouseMoveEvent(ObsMouseEvent *event){
         mouseMoved = true;
     }
 }
-void ObsWindow::OnMouseReleaseEvent(ObsMouseEvent *event)
-{
+void ObsWindow::OnMouseReleaseEvent(ObsMouseEvent *event){
     if (m_locked) {
         return;
     }
@@ -1391,12 +1388,10 @@ void ObsWindow::OnMouseReleaseEvent(ObsMouseEvent *event)
     if (mouseDown || rmouseDown) {
         vec2 pos = GetMouseEventPos(event);
 
-        if (!mouseMoved)
-        {
+        if (!mouseMoved){
             if(mouseDown)
                 DoSelect(pos);
-            else
-            {
+            else{
                 OBSSceneItem item = GetSelectItemAtPos(pos);
                 if (!item)
                 {

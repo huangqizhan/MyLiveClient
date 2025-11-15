@@ -11,6 +11,7 @@
 #include <api/ObsMain.h>
 #include <api/ObsApp.hpp>
 #include <util/darray.h>
+#include <graphics/graphics.h>
 
 
 @interface AppDelegate ()

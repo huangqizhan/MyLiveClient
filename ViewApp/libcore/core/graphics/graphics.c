@@ -340,8 +340,7 @@ void gs_matrix_push(void)
 	graphics->cur_matrix++;
 }
 
-void gs_matrix_pop(void)
-{
+void gs_matrix_pop(void){
 	graphics_t *graphics = thread_graphics;
 
 	if (!gs_valid("gs_matrix_pop"))
@@ -356,8 +355,7 @@ void gs_matrix_pop(void)
 	graphics->cur_matrix--;
 }
 
-void gs_matrix_identity(void)
-{
+void gs_matrix_identity(void){
 	struct matrix4 *top_mat;
 
 	if (!gs_valid("gs_matrix_identity"))
@@ -368,8 +366,7 @@ void gs_matrix_identity(void)
 		matrix4_identity(top_mat);
 }
 
-void gs_matrix_transpose(void)
-{
+void gs_matrix_transpose(void){
 	struct matrix4 *top_mat;
 
 	if (!gs_valid("gs_matrix_transpose"))
@@ -2211,7 +2208,7 @@ void gs_set_scissor_rect(const struct gs_rect *rect)
 
 	graphics->exports.device_set_scissor_rect(graphics->device, rect);
 }
-///设置一个正交投影矩阵
+///设置正交投影矩阵
 void gs_ortho(float left, float right, float top, float bottom, float znear,
 	      float zfar)
 {

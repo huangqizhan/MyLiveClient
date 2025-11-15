@@ -490,7 +490,18 @@ struct blend_state {
 };
 /*
  绘制主流程 obs_video thread 线程 遍历每个source 分别绘制到各自对应的纹理及桢缓冲区上  最终
- 当绘制所有的display 时 会切换到当前的屏幕缓冲区上 
+ 当绘制所有的display 时 会切换到当前的屏幕缓冲区上
+ 
+ 
+ effect中保存着色器中的所有参数数据
+ 当每一次绘制时更换需要的effect 再把数据提交到effect的参数中
+ 
+ 例如：
+ set_effect_data()
+ effct_begin()
+ draw()
+ effect_end()
+ 
 */
 ///此对象全局只有一个
 struct graphics_subsystem {
@@ -511,7 +522,7 @@ struct graphics_subsystem {
 	gs_vertbuffer_t *sprite_buffer;
     ///更新数据后是否立即绘制(更新数据后有时需要)
 	bool using_immediate;
-    //需要暂时缓存起来的顶点数据
+    //需要暂时缓存起来的顶点数据 （只是临时存储）
 	struct gs_vb_data *vbd;
 	gs_vertbuffer_t *immediate_vertbuffer;
 

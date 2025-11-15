@@ -1132,7 +1132,7 @@ struct obs_source {
     ///转场时的放缩平移矩阵
 	struct matrix4 transition_matrices[2];
 
-	/* color space */
+	/* color space 当source的color space 跟device color space 不同时 可通过color_space_texrender 进行转化*/
 	gs_texrender_t *color_space_texrender;
     
     //audio ply  source中可能会有音频 

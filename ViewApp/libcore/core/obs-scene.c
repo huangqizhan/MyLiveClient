@@ -577,8 +577,7 @@ static void render_item_texture(struct obs_scene_item *item,
 		if (type == OBS_SCALE_POINT) {
 			gs_eparam_t *image =
 				gs_effect_get_param_by_name(effect, "image");
-			gs_effect_set_next_sampler(image,
-						   obs->video.point_sampler);
+			gs_effect_set_next_sampler(image,obs->video.point_sampler);
 
 		} else if (!close_float(item->output_scale.x, 1.0f, EPSILON) ||
 			   !close_float(item->output_scale.y, 1.0f, EPSILON)) {

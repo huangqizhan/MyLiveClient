@@ -262,8 +262,7 @@ int device_create(gs_device_t **p_device, uint32_t adapter)
 	raw_load_info.address_w = GS_ADDRESS_BORDER;
 	raw_load_info.max_anisotropy = 1;
 	raw_load_info.border_color = 0;
-	device->raw_load_sampler =
-		device_samplerstate_create(device, &raw_load_info);
+	device->raw_load_sampler = device_samplerstate_create(device, &raw_load_info);
 
 	gl_clear_context(device);
 	device->cur_swap = NULL;
@@ -452,7 +451,7 @@ static inline void apply_swizzle(struct gs_texture *tex)
 		gl_tex_param_i(tex->gl_target, GL_TEXTURE_SWIZZLE_A, GL_RED);
 	}
 }
-///设置纹理参数
+///设置纹理寻址模式
 static bool load_texture_sampler(gs_texture_t *tex, gs_samplerstate_t *ss){
 	bool success = true;
 	GLint min_filter;
@@ -550,7 +549,7 @@ static void device_load_texture_internal(gs_device_t *device, gs_texture_t *tex,
 
 	if (!tex)
 		return;
-
+    //设置纹理的寻址模式
 	if (param->sampler_id != (size_t)-1)
 		sampler = device->cur_samplers[param->sampler_id];
 	else
@@ -1100,8 +1099,8 @@ static inline struct gs_program *get_shader_program(struct gs_device *device){
 void device_draw(gs_device_t *device, enum gs_draw_mode draw_mode,
 		 uint32_t start_vert, uint32_t num_verts)
 {
-	struct gs_vertex_buffer *vb = device->cur_vertex_buffer;
-	struct gs_index_buffer *ib = device->cur_index_buffer;
+	struct gs_vertex_buffer *vb = device->cur_vertex_buffer; // 顶点数据
+	struct gs_index_buffer *ib = device->cur_index_buffer;// 索引数据
 	GLenum topology = convert_gs_topology(draw_mode);
 	gs_effect_t *effect = gs_get_effect();
 	struct gs_program *program;

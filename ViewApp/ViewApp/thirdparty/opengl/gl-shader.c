@@ -243,33 +243,13 @@ static bool gl_shader_init(struct gs_shader *shader,
 	if (success)
 		gl_add_samplers(shader, glsp);
 
-#if DEBUG
-//    blog(LOG_DEBUG, "+++++++++++++++++++++++++++++++++++");
-//    blog(LOG_DEBUG, "  GL shader string for: %s", file);
-//    blog(LOG_DEBUG, "-----------------------------------");
-//    blog(LOG_INFO, "\n ======%s=======",shader->type == GS_SHADER_VERTEX ?"vertex":"fragment");
-//    blog(LOG_DEBUG, "%s", glsp->gl_string.array);
-//    blog(LOG_INFO, "===== shader param  ======");
-//    for (int i = 0; i < shader->params.num; i++) {
-//        struct gs_shader_param p = shader->params.array[i];
-//        blog(LOG_INFO, "%s",p.name);
-//    }
-//    
-//    blog(LOG_INFO, "===== shader attribs  ======");
-//    for (int i = 0; i < shader->attribs.num; i++) {
-//        struct shader_attrib p = shader->attribs.array[i];
-//        blog(LOG_INFO, "%s",p.name);
-//    }
-#endif
-    
 	return success;
 }
 
 static struct gs_shader *shader_create(gs_device_t *device,
 				       enum gs_shader_type type,
 				       const char *shader_str, const char *file,
-				       char **error_string)
-{
+				       char **error_string){
 	struct gs_shader *shader = bzalloc(sizeof(struct gs_shader));
 	struct gl_shader_parser glsp;
 	bool success = true;
@@ -287,7 +267,29 @@ static struct gs_shader *shader_create(gs_device_t *device,
 		gs_shader_destroy(shader);
 		shader = NULL;
 	}
-
+//#if DEBUG
+//    blog(LOG_INFO, "\n\n\n\n\n\n");
+//    blog(LOG_INFO, "\n ======%s=======",shader->type == GS_SHADER_VERTEX ?"vertex":"fragment");
+//    blog(LOG_INFO, "===== shader param  %zu ======",shader->params.num);
+//    blog(LOG_INFO, "effect.shader ----------- \n %s \n",shader_str);
+//    blog(LOG_INFO, "gl.shader ----------- \n %s \n",glsp.gl_string.array);
+//    for (int i = 0; i < shader->params.num; i++) {
+//        struct gs_shader_param p = shader->params.array[i];
+//        blog(LOG_INFO, "%s",p.name);
+//    }
+//
+//    blog(LOG_INFO, "===== shader attribs %zu ======",shader->attribs.num);
+//    for (int i = 0; i < shader->attribs.num; i++) {
+//        struct shader_attrib p = shader->attribs.array[i];
+//        blog(LOG_INFO, "%s",p.name);
+//    }
+//    blog(LOG_INFO, "===== shader samplers %zu ======",shader->samplers.num);
+//    
+//    blog(LOG_INFO, "\n\n\n\n\n\n");
+//#endif
+    
+    
+    
 	gl_shader_parser_free(&glsp);
 	return shader;
 }

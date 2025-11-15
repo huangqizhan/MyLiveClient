@@ -2750,13 +2750,11 @@ static void source_render(obs_source_t *source, gs_effect_t *effect)
 			break;
 		}
 	}
-
+    //目标color space 跟源color space 不同时进行转换 
 	if (convert_tech) {
 		if (source->color_space_texrender) {
-			if (gs_texrender_get_format(
-				    source->color_space_texrender) != format) {
-				gs_texrender_destroy(
-					source->color_space_texrender);
+			if (gs_texrender_get_format(source->color_space_texrender) != format) {
+				gs_texrender_destroy(source->color_space_texrender);
 				source->color_space_texrender = NULL;
 			}
 		}
@@ -2769,9 +2767,7 @@ static void source_render(obs_source_t *source, gs_effect_t *effect)
 		const int cx = get_base_width(source);
 		const int cy = get_base_height(source);
         ///把带有info.video_render的source绘制到color_space_texrender->target上
-		if (gs_texrender_begin_with_color_space(
-			    source->color_space_texrender, cx, cy,
-			    source_space)) {
+		if (gs_texrender_begin_with_color_space(source->color_space_texrender, cx, cy, source_space)) {
 			gs_enable_blending(false);
 
 			struct vec4 clear_color;
@@ -2781,8 +2777,7 @@ static void source_render(obs_source_t *source, gs_effect_t *effect)
 			source->info.video_render(data, effect);
 			gs_enable_blending(true);
 			gs_texrender_end(source->color_space_texrender);
-            
-            
+
             ///把color_space_texrender绘制的纹理再绘制到画不上
 			gs_effect_t *default_effect = obs->video.default_effect;
 			gs_technique_t *tech = gs_effect_get_technique(default_effect, convert_tech);

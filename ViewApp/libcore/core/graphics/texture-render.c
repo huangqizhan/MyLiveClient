@@ -22,7 +22,7 @@
 
 #include <assert.h>
 #include "graphics.h"
-///纹理渲染器 把渲染后的结果存储到target上
+//临时纹理渲染器  纹理渲染器 把渲染后的结果存储到target上
 struct gs_texture_render {
     ///target 存储渲染结果  prev_target存储上一的渲染结果
 	gs_texture_t *target, *prev_target;

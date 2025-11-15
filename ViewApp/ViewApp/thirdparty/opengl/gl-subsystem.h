@@ -665,9 +665,11 @@ struct gs_shader {
     ///世界矩阵 将2D坐标转换为3D坐标 (世界坐标)
 	struct gs_shader_param *world;
     
-    //VAO
+    //顶点属性
 	DARRAY(struct shader_attrib) attribs;
+    //参数 float matrix vec ...
 	DARRAY(struct gs_shader_param) params;
+    //fragment 纹理寻址模式
 	DARRAY(gs_samplerstate_t *) samplers;
 };
 ///着色器程序的参数
@@ -912,7 +914,10 @@ static inline void fbo_info_destroy(struct fbo_info *fbo)
  总的OpenGLContext下会关联一个或多个子OpenGLContext
  一个子OpenGLContext对应一个具体的widget
  
- 先变换(平移、放缩、旋转)  ===》 viewCamera ===》 perspective ===》draw
+ 此对象是一个大的状态机
+ 
+ 要绘制任何东西 绘制之前必须提交 顶点数据  索引数据  纹理绑定 （fbo）  （变换 view_patrix proj_matrix  viewport ）
+ 
  */
 struct gs_device {
     //当前平台总的OpenGLContext
@@ -947,9 +952,42 @@ struct gs_device {
 	enum gs_cull_mode cur_cull_mode;
 	struct gs_rect cur_viewport;
 
-    //透视
+    
+    /*
+     顶点着色器处理流程
+     gl_Position = projection * view * model * vec4(in_position, 1.0);
+     projection 透视矩阵
+     view   相机矩阵
+     model  模型矩阵
+     
+     假如一个小房间 是世界坐标   房间里有个箱子    最终绘制到一个屏幕上
+     模型空间 是箱子自身的空间坐标
+     世界空间 是房间的坐标
+     相机空间 是从一个特定的角度观察箱子  view_matrix
+     裁剪空间 是透视空间(正交 透视)  proj_matrix （正交是 前后左右上下组成一个盒子  , 透视是一个中心点在箱子上打光）
+     
+        ||
+        ||  接下来是交给OpenGL 通过gl_setViewPort()  把裁剪空间压缩到[-1,1]
+       \||/
+     
+     模型空间 (Model Space)  (顶点数据)
+        ↓ [模型矩阵 Model]
+     世界空间 (World Space)
+        ↓ [视图矩阵 View]
+     相机空间 (View Space)
+        ↓ [投影矩阵 Projection]
+     裁剪空间 (Clip Space)   (left,right,top,bottom,near,far)
+        ↓ [透视除法]
+     NDC（[-1,1]）
+        ↓ [glViewport]
+     屏幕空间 (Screen Space)
+     */
+
+    //透视矩阵 这里用的平行投影 (left,right,top,bottom,near,far) 组合一个盒子  （把想要看到的空间放入到其中）
 	struct matrix4 cur_proj;
+    //cur_view 相机矩阵  绘制的时候会从graphic->matrix_stack中拷贝第一个
 	struct matrix4 cur_view;
+    //生成视图-投影组合矩阵   将相机变换和投影合并为一个矩阵 cur_proj @ cur_view
 	struct matrix4 cur_viewproj;
     ///透视矩阵栈
 	DARRAY(struct matrix4) proj_stack;

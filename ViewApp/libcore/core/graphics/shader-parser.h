@@ -89,7 +89,13 @@ static inline void shader_var_free(struct shader_var *sv)
 }
 
 /* ------------------------------------------------------------------------- */
-
+/* effect 
+ sampler_state def_sampler {
+     Filter   = Linear;
+     AddressU = Clamp;
+     AddressV = Clamp;
+ };
+*/
 struct shader_sampler {
 	char *name;
 	DARRAY(char *) states;

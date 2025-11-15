@@ -1,9 +1,256 @@
 
-/default.effect (Vertex shader, technique Draw, pass 0)
-debug: -----------------------------------
+---------------------------default.effect----------------------------------
+
+
+
+#include "color.effect"
+
+uniform float4x4 ViewProj;
+uniform texture2d image;
+uniform float multiplier;
+
+sampler_state def_sampler {
+    Filter   = Linear;
+    AddressU = Clamp;
+    AddressV = Clamp;
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv  : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+float4 PSDrawBare(VertInOut vert_in) : TARGET
+{
+    return image.Sample(def_sampler, vert_in.uv);
+}
+
+float4 PSDrawAlphaDivide(VertInOut vert_in) : TARGET
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb *= max(1. / rgba.a, 0.);
+    return rgba;
+}
+
+float4 PSDrawNonlinearAlpha(VertInOut vert_in) : TARGET
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = srgb_linear_to_nonlinear(rgba.rgb);
+    rgba.rgb *= rgba.a;
+    rgba.rgb = srgb_nonlinear_to_linear(rgba.rgb);
+    return rgba;
+}
+
+float4 PSDrawNonlinearAlphaMultiply(VertInOut vert_in) : TARGET
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = srgb_linear_to_nonlinear(rgba.rgb);
+    rgba.rgb *= rgba.a;
+    rgba.rgb = srgb_nonlinear_to_linear(rgba.rgb);
+    rgba.rgb *= multiplier;
+    return rgba;
+}
+
+float4 PSDrawSrgbDecompress(VertInOut vert_in) : TARGET
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = srgb_nonlinear_to_linear(rgba.rgb);
+    return rgba;
+}
+
+float4 PSDrawSrgbDecompressMultiply(VertInOut vert_in) : TARGET
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = srgb_nonlinear_to_linear(rgba.rgb);
+    rgba.rgb *= multiplier;
+    return rgba;
+}
+
+float4 PSDrawMultiply(VertInOut vert_in) : TARGET
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb *= multiplier;
+    return rgba;
+}
+
+float4 PSDrawTonemap(VertInOut vert_in) : TARGET
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = rec709_to_rec2020(rgba.rgb);
+    rgba.rgb = reinhard(rgba.rgb);
+    rgba.rgb = rec2020_to_rec709(rgba.rgb);
+    return rgba;
+}
+
+float4 PSDrawMultiplyTonemap(VertInOut vert_in) : TARGET
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb *= multiplier;
+    rgba.rgb = rec709_to_rec2020(rgba.rgb);
+    rgba.rgb = reinhard(rgba.rgb);
+    rgba.rgb = rec2020_to_rec709(rgba.rgb);
+    return rgba;
+}
+
+float4 PSDrawPQ(VertInOut vert_in) : TARGET
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = st2084_to_linear(rgba.rgb) * multiplier;
+    rgba.rgb = rec2020_to_rec709(rgba.rgb);
+    return rgba;
+}
+
+float4 PSDrawTonemapPQ(VertInOut vert_in) : TARGET
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = st2084_to_linear(rgba.rgb) * multiplier;
+    rgba.rgb = reinhard(rgba.rgb);
+    rgba.rgb = rec2020_to_rec709(rgba.rgb);
+    return rgba;
+}
+
+technique Draw
+{
+    pass
+    {
+        vertex_shader = VSDefault(vert_in);
+        pixel_shader  = PSDrawBare(vert_in);
+    }
+}
+
+technique DrawAlphaDivide
+{
+    pass
+    {
+        vertex_shader = VSDefault(vert_in);
+        pixel_shader  = PSDrawAlphaDivide(vert_in);
+    }
+}
+
+technique DrawNonlinearAlpha
+{
+    pass
+    {
+        vertex_shader = VSDefault(vert_in);
+        pixel_shader  = PSDrawNonlinearAlpha(vert_in);
+    }
+}
+
+technique DrawNonlinearAlphaMultiply
+{
+    pass
+    {
+        vertex_shader = VSDefault(vert_in);
+        pixel_shader  = PSDrawNonlinearAlphaMultiply(vert_in);
+    }
+}
+
+technique DrawSrgbDecompress
+{
+    pass
+    {
+        vertex_shader = VSDefault(vert_in);
+        pixel_shader  = PSDrawSrgbDecompress(vert_in);
+    }
+}
+
+technique DrawSrgbDecompressMultiply
+{
+    pass
+    {
+        vertex_shader = VSDefault(vert_in);
+        pixel_shader  = PSDrawSrgbDecompressMultiply(vert_in);
+    }
+}
+
+technique DrawMultiply
+{
+    pass
+    {
+        vertex_shader = VSDefault(vert_in);
+        pixel_shader  = PSDrawMultiply(vert_in);
+    }
+}
+
+technique DrawTonemap
+{
+    pass
+    {
+        vertex_shader = VSDefault(vert_in);
+        pixel_shader  = PSDrawTonemap(vert_in);
+    }
+}
+
+technique DrawMultiplyTonemap
+{
+    pass
+    {
+        vertex_shader = VSDefault(vert_in);
+        pixel_shader  = PSDrawMultiplyTonemap(vert_in);
+    }
+}
+
+technique DrawPQ
+{
+    pass
+    {
+        vertex_shader = VSDefault(vert_in);
+        pixel_shader  = PSDrawPQ(vert_in);
+    }
+}
+
+technique DrawTonemapPQ
+{
+    pass
+    {
+        vertex_shader = VSDefault(vert_in);
+        pixel_shader  = PSDrawTonemapPQ(vert_in);
+    }
+}
+
+
+
+
+-------------------------------------------------------------------------
+
+
+
 info:
  ======vertex=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform float4x4 ViewProj;
+
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+VertInOut main(VertInOut vert_in)
+{
+    return VSDefault(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -67,18 +314,61 @@ void main(void)
     gl_Position = outputval.pos;
     _vertex_shader_attrib0 = outputval.uv;
 }
+ 
 
-info: ===== shader param  ======
 info: ViewProj
-info: ===== shader attribs  ======
+info: ===== shader attribs 2 ======
 info: _input_attrib0
 info: _input_attrib1
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Pixel shader, technique Draw, pass 0)
-debug: -----------------------------------
+info: ===== shader samplers 0 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======fragment=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform texture2d image;
+
+
+sampler_state def_sampler {
+    Filter = Linear;
+
+    AddressU = Clamp;
+
+    AddressV = Clamp;
+
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+float4 PSDrawBare(VertInOut vert_in)
+{
+    return image.Sample(def_sampler, vert_in.uv);
+}
+
+float4 main(VertInOut vert_in) : TARGET
+{
+    return PSDrawBare(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -129,16 +419,53 @@ void main(void)
 
     _pixel_shader_attrib0 = _main_wrap(vert_in);
 }
+ 
 
-info: ===== shader param  ======
 info: image
-info: ===== shader attribs  ======
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Vertex shader, technique DrawAlphaDivide, pass 0)
-debug: -----------------------------------
+info: ===== shader attribs 0 ======
+info: ===== shader samplers 1 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======vertex=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform float4x4 ViewProj;
+
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+VertInOut main(VertInOut vert_in)
+{
+    return VSDefault(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -202,18 +529,63 @@ void main(void)
     gl_Position = outputval.pos;
     _vertex_shader_attrib0 = outputval.uv;
 }
+ 
 
-info: ===== shader param  ======
 info: ViewProj
-info: ===== shader attribs  ======
+info: ===== shader attribs 2 ======
 info: _input_attrib0
 info: _input_attrib1
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Pixel shader, technique DrawAlphaDivide, pass 0)
-debug: -----------------------------------
+info: ===== shader samplers 0 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======fragment=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform texture2d image;
+
+
+sampler_state def_sampler {
+    Filter = Linear;
+
+    AddressU = Clamp;
+
+    AddressV = Clamp;
+
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+float4 PSDrawAlphaDivide(VertInOut vert_in)
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb *= max(1. / rgba.a, 0.);
+    return rgba;
+}
+
+float4 main(VertInOut vert_in) : TARGET
+{
+    return PSDrawAlphaDivide(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -266,16 +638,53 @@ void main(void)
 
     _pixel_shader_attrib0 = _main_wrap(vert_in);
 }
+ 
 
-info: ===== shader param  ======
 info: image
-info: ===== shader attribs  ======
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Vertex shader, technique DrawNonlinearAlpha, pass 0)
-debug: -----------------------------------
+info: ===== shader attribs 0 ======
+info: ===== shader samplers 1 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======vertex=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform float4x4 ViewProj;
+
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+VertInOut main(VertInOut vert_in)
+{
+    return VSDefault(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -339,18 +748,89 @@ void main(void)
     gl_Position = outputval.pos;
     _vertex_shader_attrib0 = outputval.uv;
 }
+ 
 
-info: ===== shader param  ======
 info: ViewProj
-info: ===== shader attribs  ======
+info: ===== shader attribs 2 ======
 info: _input_attrib0
 info: _input_attrib1
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Pixel shader, technique DrawNonlinearAlpha, pass 0)
-debug: -----------------------------------
+info: ===== shader samplers 0 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======fragment=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform texture2d image;
+
+
+sampler_state def_sampler {
+    Filter = Linear;
+
+    AddressU = Clamp;
+
+    AddressV = Clamp;
+
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+float srgb_linear_to_nonlinear_channel(float u)
+{
+    return (u <= 0.0031308) ? (12.92 * u) : ((1.055 * pow(u, 1. / 2.4)) - 0.055);
+}
+
+
+float3 srgb_linear_to_nonlinear(float3 v)
+{
+    return float3(srgb_linear_to_nonlinear_channel(v.r), srgb_linear_to_nonlinear_channel(v.g), srgb_linear_to_nonlinear_channel(v.b));
+}
+
+
+float srgb_nonlinear_to_linear_channel(float u)
+{
+    return (u <= 0.04045) ? (u / 12.92) : pow((u + 0.055) / 1.055, 2.4);
+}
+
+
+float3 srgb_nonlinear_to_linear(float3 v)
+{
+    return float3(srgb_nonlinear_to_linear_channel(v.r), srgb_nonlinear_to_linear_channel(v.g), srgb_nonlinear_to_linear_channel(v.b));
+}
+
+
+float4 PSDrawNonlinearAlpha(VertInOut vert_in)
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = srgb_linear_to_nonlinear(rgba.rgb);
+    rgba.rgb *= rgba.a;
+    rgba.rgb = srgb_nonlinear_to_linear(rgba.rgb);
+    return rgba;
+}
+
+float4 main(VertInOut vert_in) : TARGET
+{
+    return PSDrawNonlinearAlpha(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -425,16 +905,53 @@ void main(void)
 
     _pixel_shader_attrib0 = _main_wrap(vert_in);
 }
+ 
 
-info: ===== shader param  ======
 info: image
-info: ===== shader attribs  ======
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Vertex shader, technique DrawNonlinearAlphaMultiply, pass 0)
-debug: -----------------------------------
+info: ===== shader attribs 0 ======
+info: ===== shader samplers 1 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======vertex=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform float4x4 ViewProj;
+
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+VertInOut main(VertInOut vert_in)
+{
+    return VSDefault(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -498,18 +1015,91 @@ void main(void)
     gl_Position = outputval.pos;
     _vertex_shader_attrib0 = outputval.uv;
 }
+ 
 
-info: ===== shader param  ======
 info: ViewProj
-info: ===== shader attribs  ======
+info: ===== shader attribs 2 ======
 info: _input_attrib0
 info: _input_attrib1
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Pixel shader, technique DrawNonlinearAlphaMultiply, pass 0)
-debug: -----------------------------------
+info: ===== shader samplers 0 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======fragment=======
-debug: #version 330
+info: ===== shader param  2 ======
+info: effect.shader -----------
+ uniform texture2d image;
+uniform float multiplier;
+
+
+sampler_state def_sampler {
+    Filter = Linear;
+
+    AddressU = Clamp;
+
+    AddressV = Clamp;
+
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+float srgb_linear_to_nonlinear_channel(float u)
+{
+    return (u <= 0.0031308) ? (12.92 * u) : ((1.055 * pow(u, 1. / 2.4)) - 0.055);
+}
+
+
+float3 srgb_linear_to_nonlinear(float3 v)
+{
+    return float3(srgb_linear_to_nonlinear_channel(v.r), srgb_linear_to_nonlinear_channel(v.g), srgb_linear_to_nonlinear_channel(v.b));
+}
+
+
+float srgb_nonlinear_to_linear_channel(float u)
+{
+    return (u <= 0.04045) ? (u / 12.92) : pow((u + 0.055) / 1.055, 2.4);
+}
+
+
+float3 srgb_nonlinear_to_linear(float3 v)
+{
+    return float3(srgb_nonlinear_to_linear_channel(v.r), srgb_nonlinear_to_linear_channel(v.g), srgb_nonlinear_to_linear_channel(v.b));
+}
+
+
+float4 PSDrawNonlinearAlphaMultiply(VertInOut vert_in)
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = srgb_linear_to_nonlinear(rgba.rgb);
+    rgba.rgb *= rgba.a;
+    rgba.rgb = srgb_nonlinear_to_linear(rgba.rgb);
+    rgba.rgb *= multiplier;
+    return rgba;
+}
+
+float4 main(VertInOut vert_in) : TARGET
+{
+    return PSDrawNonlinearAlphaMultiply(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -586,17 +1176,54 @@ void main(void)
 
     _pixel_shader_attrib0 = _main_wrap(vert_in);
 }
+ 
 
-info: ===== shader param  ======
 info: image
 info: multiplier
-info: ===== shader attribs  ======
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Vertex shader, technique DrawSrgbDecompress, pass 0)
-debug: -----------------------------------
+info: ===== shader attribs 0 ======
+info: ===== shader samplers 1 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======vertex=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform float4x4 ViewProj;
+
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+VertInOut main(VertInOut vert_in)
+{
+    return VSDefault(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -660,18 +1287,75 @@ void main(void)
     gl_Position = outputval.pos;
     _vertex_shader_attrib0 = outputval.uv;
 }
+ 
 
-info: ===== shader param  ======
 info: ViewProj
-info: ===== shader attribs  ======
+info: ===== shader attribs 2 ======
 info: _input_attrib0
 info: _input_attrib1
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Pixel shader, technique DrawSrgbDecompress, pass 0)
-debug: -----------------------------------
+info: ===== shader samplers 0 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======fragment=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform texture2d image;
+
+
+sampler_state def_sampler {
+    Filter = Linear;
+
+    AddressU = Clamp;
+
+    AddressV = Clamp;
+
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+float srgb_nonlinear_to_linear_channel(float u)
+{
+    return (u <= 0.04045) ? (u / 12.92) : pow((u + 0.055) / 1.055, 2.4);
+}
+
+
+float3 srgb_nonlinear_to_linear(float3 v)
+{
+    return float3(srgb_nonlinear_to_linear_channel(v.r), srgb_nonlinear_to_linear_channel(v.g), srgb_nonlinear_to_linear_channel(v.b));
+}
+
+
+float4 PSDrawSrgbDecompress(VertInOut vert_in)
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = srgb_nonlinear_to_linear(rgba.rgb);
+    return rgba;
+}
+
+float4 main(VertInOut vert_in) : TARGET
+{
+    return PSDrawSrgbDecompress(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -734,16 +1418,53 @@ void main(void)
 
     _pixel_shader_attrib0 = _main_wrap(vert_in);
 }
+ 
 
-info: ===== shader param  ======
 info: image
-info: ===== shader attribs  ======
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Vertex shader, technique DrawSrgbDecompressMultiply, pass 0)
-debug: -----------------------------------
+info: ===== shader attribs 0 ======
+info: ===== shader samplers 1 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======vertex=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform float4x4 ViewProj;
+
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+VertInOut main(VertInOut vert_in)
+{
+    return VSDefault(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -807,18 +1528,77 @@ void main(void)
     gl_Position = outputval.pos;
     _vertex_shader_attrib0 = outputval.uv;
 }
+ 
 
-info: ===== shader param  ======
 info: ViewProj
-info: ===== shader attribs  ======
+info: ===== shader attribs 2 ======
 info: _input_attrib0
 info: _input_attrib1
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Pixel shader, technique DrawSrgbDecompressMultiply, pass 0)
-debug: -----------------------------------
+info: ===== shader samplers 0 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======fragment=======
-debug: #version 330
+info: ===== shader param  2 ======
+info: effect.shader -----------
+ uniform texture2d image;
+uniform float multiplier;
+
+
+sampler_state def_sampler {
+    Filter = Linear;
+
+    AddressU = Clamp;
+
+    AddressV = Clamp;
+
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+float srgb_nonlinear_to_linear_channel(float u)
+{
+    return (u <= 0.04045) ? (u / 12.92) : pow((u + 0.055) / 1.055, 2.4);
+}
+
+
+float3 srgb_nonlinear_to_linear(float3 v)
+{
+    return float3(srgb_nonlinear_to_linear_channel(v.r), srgb_nonlinear_to_linear_channel(v.g), srgb_nonlinear_to_linear_channel(v.b));
+}
+
+
+float4 PSDrawSrgbDecompressMultiply(VertInOut vert_in)
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = srgb_nonlinear_to_linear(rgba.rgb);
+    rgba.rgb *= multiplier;
+    return rgba;
+}
+
+float4 main(VertInOut vert_in) : TARGET
+{
+    return PSDrawSrgbDecompressMultiply(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -883,17 +1663,54 @@ void main(void)
 
     _pixel_shader_attrib0 = _main_wrap(vert_in);
 }
+ 
 
-info: ===== shader param  ======
 info: image
 info: multiplier
-info: ===== shader attribs  ======
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Vertex shader, technique DrawMultiply, pass 0)
-debug: -----------------------------------
+info: ===== shader attribs 0 ======
+info: ===== shader samplers 1 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======vertex=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform float4x4 ViewProj;
+
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+VertInOut main(VertInOut vert_in)
+{
+    return VSDefault(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -957,18 +1774,64 @@ void main(void)
     gl_Position = outputval.pos;
     _vertex_shader_attrib0 = outputval.uv;
 }
+ 
 
-info: ===== shader param  ======
 info: ViewProj
-info: ===== shader attribs  ======
+info: ===== shader attribs 2 ======
 info: _input_attrib0
 info: _input_attrib1
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Pixel shader, technique DrawMultiply, pass 0)
-debug: -----------------------------------
+info: ===== shader samplers 0 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======fragment=======
-debug: #version 330
+info: ===== shader param  2 ======
+info: effect.shader -----------
+ uniform texture2d image;
+uniform float multiplier;
+
+
+sampler_state def_sampler {
+    Filter = Linear;
+
+    AddressU = Clamp;
+
+    AddressV = Clamp;
+
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+float4 PSDrawMultiply(VertInOut vert_in)
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb *= multiplier;
+    return rgba;
+}
+
+float4 main(VertInOut vert_in) : TARGET
+{
+    return PSDrawMultiply(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -1022,17 +1885,54 @@ void main(void)
 
     _pixel_shader_attrib0 = _main_wrap(vert_in);
 }
+ 
 
-info: ===== shader param  ======
 info: image
 info: multiplier
-info: ===== shader attribs  ======
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Vertex shader, technique DrawTonemap, pass 0)
-debug: -----------------------------------
+info: ===== shader attribs 0 ======
+info: ===== shader samplers 1 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======vertex=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform float4x4 ViewProj;
+
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+VertInOut main(VertInOut vert_in)
+{
+    return VSDefault(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -1096,18 +1996,104 @@ void main(void)
     gl_Position = outputval.pos;
     _vertex_shader_attrib0 = outputval.uv;
 }
+ 
 
-info: ===== shader param  ======
 info: ViewProj
-info: ===== shader attribs  ======
+info: ===== shader attribs 2 ======
 info: _input_attrib0
 info: _input_attrib1
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Pixel shader, technique DrawTonemap, pass 0)
-debug: -----------------------------------
+info: ===== shader samplers 0 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======fragment=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform texture2d image;
+
+
+sampler_state def_sampler {
+    Filter = Linear;
+
+    AddressU = Clamp;
+
+    AddressV = Clamp;
+
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+float3 rec709_to_rec2020(float3 v)
+{
+    float r = dot(v, float3(0.62740389593469903, 0.32928303837788370, 0.043313065687417225));
+    float g = dot(v, float3(0.069097289358232075, 0.91954039507545871, 0.011362315566309178));
+    float b = dot(v, float3(0.016391438875150280, 0.088013307877225749, 0.89559525324762401));
+    return float3(r, g, b);
+}
+
+
+float srgb_nonlinear_to_linear_channel(float u)
+{
+    return (u <= 0.04045) ? (u / 12.92) : pow((u + 0.055) / 1.055, 2.4);
+}
+
+
+float3 srgb_nonlinear_to_linear(float3 v)
+{
+    return float3(srgb_nonlinear_to_linear_channel(v.r), srgb_nonlinear_to_linear_channel(v.g), srgb_nonlinear_to_linear_channel(v.b));
+}
+
+
+float3 reinhard(float3 rgb)
+{
+    rgb /= rgb + float3(1., 1., 1.);
+    rgb = pow(rgb, float3(1. / 2.4, 1. / 2.4, 1. / 2.4));
+    rgb = srgb_nonlinear_to_linear(rgb);
+    return rgb;
+}
+
+
+float3 rec2020_to_rec709(float3 v)
+{
+    float r = dot(v, float3(1.6604910021084345, -0.58764113878854951, -0.072849863319884883));
+    float g = dot(v, float3(-0.12455047452159074, 1.1328998971259603, -0.0083494226043694768));
+    float b = dot(v, float3(-0.018150763354905303, -0.10057889800800739, 1.1187296613629127));
+    return float3(r, g, b);
+}
+
+
+float4 PSDrawTonemap(VertInOut vert_in)
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = rec709_to_rec2020(rgba.rgb);
+    rgba.rgb = reinhard(rgba.rgb);
+    rgba.rgb = rec2020_to_rec709(rgba.rgb);
+    return rgba;
+}
+
+float4 main(VertInOut vert_in) : TARGET
+{
+    return PSDrawTonemap(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -1196,16 +2182,53 @@ void main(void)
 
     _pixel_shader_attrib0 = _main_wrap(vert_in);
 }
+ 
 
-info: ===== shader param  ======
 info: image
-info: ===== shader attribs  ======
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Vertex shader, technique DrawMultiplyTonemap, pass 0)
-debug: -----------------------------------
+info: ===== shader attribs 0 ======
+info: ===== shader samplers 1 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======vertex=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform float4x4 ViewProj;
+
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+VertInOut main(VertInOut vert_in)
+{
+    return VSDefault(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -1269,18 +2292,106 @@ void main(void)
     gl_Position = outputval.pos;
     _vertex_shader_attrib0 = outputval.uv;
 }
+ 
 
-info: ===== shader param  ======
 info: ViewProj
-info: ===== shader attribs  ======
+info: ===== shader attribs 2 ======
 info: _input_attrib0
 info: _input_attrib1
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Pixel shader, technique DrawMultiplyTonemap, pass 0)
-debug: -----------------------------------
+info: ===== shader samplers 0 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======fragment=======
-debug: #version 330
+info: ===== shader param  2 ======
+info: effect.shader -----------
+ uniform texture2d image;
+uniform float multiplier;
+
+
+sampler_state def_sampler {
+    Filter = Linear;
+
+    AddressU = Clamp;
+
+    AddressV = Clamp;
+
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+float3 rec709_to_rec2020(float3 v)
+{
+    float r = dot(v, float3(0.62740389593469903, 0.32928303837788370, 0.043313065687417225));
+    float g = dot(v, float3(0.069097289358232075, 0.91954039507545871, 0.011362315566309178));
+    float b = dot(v, float3(0.016391438875150280, 0.088013307877225749, 0.89559525324762401));
+    return float3(r, g, b);
+}
+
+
+float srgb_nonlinear_to_linear_channel(float u)
+{
+    return (u <= 0.04045) ? (u / 12.92) : pow((u + 0.055) / 1.055, 2.4);
+}
+
+
+float3 srgb_nonlinear_to_linear(float3 v)
+{
+    return float3(srgb_nonlinear_to_linear_channel(v.r), srgb_nonlinear_to_linear_channel(v.g), srgb_nonlinear_to_linear_channel(v.b));
+}
+
+
+float3 reinhard(float3 rgb)
+{
+    rgb /= rgb + float3(1., 1., 1.);
+    rgb = pow(rgb, float3(1. / 2.4, 1. / 2.4, 1. / 2.4));
+    rgb = srgb_nonlinear_to_linear(rgb);
+    return rgb;
+}
+
+
+float3 rec2020_to_rec709(float3 v)
+{
+    float r = dot(v, float3(1.6604910021084345, -0.58764113878854951, -0.072849863319884883));
+    float g = dot(v, float3(-0.12455047452159074, 1.1328998971259603, -0.0083494226043694768));
+    float b = dot(v, float3(-0.018150763354905303, -0.10057889800800739, 1.1187296613629127));
+    return float3(r, g, b);
+}
+
+
+float4 PSDrawMultiplyTonemap(VertInOut vert_in)
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb *= multiplier;
+    rgba.rgb = rec709_to_rec2020(rgba.rgb);
+    rgba.rgb = reinhard(rgba.rgb);
+    rgba.rgb = rec2020_to_rec709(rgba.rgb);
+    return rgba;
+}
+
+float4 main(VertInOut vert_in) : TARGET
+{
+    return PSDrawMultiplyTonemap(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -1371,17 +2482,54 @@ void main(void)
 
     _pixel_shader_attrib0 = _main_wrap(vert_in);
 }
+ 
 
-info: ===== shader param  ======
 info: image
 info: multiplier
-info: ===== shader attribs  ======
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Vertex shader, technique DrawPQ, pass 0)
-debug: -----------------------------------
+info: ===== shader attribs 0 ======
+info: ===== shader samplers 1 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======vertex=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform float4x4 ViewProj;
+
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+VertInOut main(VertInOut vert_in)
+{
+    return VSDefault(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -1445,18 +2593,87 @@ void main(void)
     gl_Position = outputval.pos;
     _vertex_shader_attrib0 = outputval.uv;
 }
+ 
 
-info: ===== shader param  ======
 info: ViewProj
-info: ===== shader attribs  ======
+info: ===== shader attribs 2 ======
 info: _input_attrib0
 info: _input_attrib1
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Pixel shader, technique DrawPQ, pass 0)
-debug: -----------------------------------
+info: ===== shader samplers 0 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======fragment=======
-debug: #version 330
+info: ===== shader param  2 ======
+info: effect.shader -----------
+ uniform texture2d image;
+uniform float multiplier;
+
+
+sampler_state def_sampler {
+    Filter = Linear;
+
+    AddressU = Clamp;
+
+    AddressV = Clamp;
+
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+float st2084_to_linear_channel(float u)
+{
+    float c = pow(abs(u), 1. / 78.84375);
+    return pow(abs(max(c - 0.8359375, 0.) / (18.8515625 - 18.6875 * c)), 1. / 0.1593017578);
+}
+
+
+float3 st2084_to_linear(float3 rgb)
+{
+    return float3(st2084_to_linear_channel(rgb.r), st2084_to_linear_channel(rgb.g), st2084_to_linear_channel(rgb.b));
+}
+
+
+float3 rec2020_to_rec709(float3 v)
+{
+    float r = dot(v, float3(1.6604910021084345, -0.58764113878854951, -0.072849863319884883));
+    float g = dot(v, float3(-0.12455047452159074, 1.1328998971259603, -0.0083494226043694768));
+    float b = dot(v, float3(-0.018150763354905303, -0.10057889800800739, 1.1187296613629127));
+    return float3(r, g, b);
+}
+
+
+float4 PSDrawPQ(VertInOut vert_in)
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = st2084_to_linear(rgba.rgb) * multiplier;
+    rgba.rgb = rec2020_to_rec709(rgba.rgb);
+    return rgba;
+}
+
+float4 main(VertInOut vert_in) : TARGET
+{
+    return PSDrawPQ(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -1530,17 +2747,54 @@ void main(void)
 
     _pixel_shader_attrib0 = _main_wrap(vert_in);
 }
+ 
 
-info: ===== shader param  ======
 info: image
 info: multiplier
-info: ===== shader attribs  ======
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Vertex shader, technique DrawTonemapPQ, pass 0)
-debug: -----------------------------------
+info: ===== shader attribs 0 ======
+info: ===== shader samplers 1 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======vertex=======
-debug: #version 330
+info: ===== shader param  1 ======
+info: effect.shader -----------
+ uniform float4x4 ViewProj;
+
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+VertInOut VSDefault(VertInOut vert_in)
+{
+    VertInOut vert_out;
+    vert_out.pos = mul(float4(vert_in.pos.xyz, 1.0), ViewProj);
+    vert_out.uv  = vert_in.uv;
+    return vert_out;
+}
+
+VertInOut main(VertInOut vert_in)
+{
+    return VSDefault(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -1604,18 +2858,109 @@ void main(void)
     gl_Position = outputval.pos;
     _vertex_shader_attrib0 = outputval.uv;
 }
+ 
 
-info: ===== shader param  ======
 info: ViewProj
-info: ===== shader attribs  ======
+info: ===== shader attribs 2 ======
 info: _input_attrib0
 info: _input_attrib1
-debug: +++++++++++++++++++++++++++++++++++
-debug:   GL shader string for: /default.effect (Pixel shader, technique DrawTonemapPQ, pass 0)
-debug: -----------------------------------
+info: ===== shader samplers 0 ======
+info:
+
+
+
+
+
+
+info:
+
+
+
+
+
+
 info:
  ======fragment=======
-debug: #version 330
+info: ===== shader param  2 ======
+info: effect.shader -----------
+ uniform texture2d image;
+uniform float multiplier;
+
+
+sampler_state def_sampler {
+    Filter = Linear;
+
+    AddressU = Clamp;
+
+    AddressV = Clamp;
+
+};
+
+struct VertInOut {
+    float4 pos : POSITION;
+    float2 uv : TEXCOORD0;
+};
+
+float st2084_to_linear_channel(float u)
+{
+    float c = pow(abs(u), 1. / 78.84375);
+    return pow(abs(max(c - 0.8359375, 0.) / (18.8515625 - 18.6875 * c)), 1. / 0.1593017578);
+}
+
+
+float3 st2084_to_linear(float3 rgb)
+{
+    return float3(st2084_to_linear_channel(rgb.r), st2084_to_linear_channel(rgb.g), st2084_to_linear_channel(rgb.b));
+}
+
+
+float srgb_nonlinear_to_linear_channel(float u)
+{
+    return (u <= 0.04045) ? (u / 12.92) : pow((u + 0.055) / 1.055, 2.4);
+}
+
+
+float3 srgb_nonlinear_to_linear(float3 v)
+{
+    return float3(srgb_nonlinear_to_linear_channel(v.r), srgb_nonlinear_to_linear_channel(v.g), srgb_nonlinear_to_linear_channel(v.b));
+}
+
+
+float3 reinhard(float3 rgb)
+{
+    rgb /= rgb + float3(1., 1., 1.);
+    rgb = pow(rgb, float3(1. / 2.4, 1. / 2.4, 1. / 2.4));
+    rgb = srgb_nonlinear_to_linear(rgb);
+    return rgb;
+}
+
+
+float3 rec2020_to_rec709(float3 v)
+{
+    float r = dot(v, float3(1.6604910021084345, -0.58764113878854951, -0.072849863319884883));
+    float g = dot(v, float3(-0.12455047452159074, 1.1328998971259603, -0.0083494226043694768));
+    float b = dot(v, float3(-0.018150763354905303, -0.10057889800800739, 1.1187296613629127));
+    return float3(r, g, b);
+}
+
+
+float4 PSDrawTonemapPQ(VertInOut vert_in)
+{
+    float4 rgba = image.Sample(def_sampler, vert_in.uv);
+    rgba.rgb = st2084_to_linear(rgba.rgb) * multiplier;
+    rgba.rgb = reinhard(rgba.rgb);
+    rgba.rgb = rec2020_to_rec709(rgba.rgb);
+    return rgba;
+}
+
+float4 main(VertInOut vert_in) : TARGET
+{
+    return PSDrawTonemapPQ(vert_in);
+}
+ 
+
+info: gl.shader -----------
+ #version 330
 
 const bool obs_glsl_compile = true;
 
@@ -1708,3 +3053,12 @@ void main(void)
 
     _pixel_shader_attrib0 = _main_wrap(vert_in);
 }
+ 
+
+info: image
+info: multiplier
+info: ===== shader attribs 0 ======
+info: ===== shader samplers 1 ======
+info:
+
+

@@ -173,16 +173,52 @@ enum gs_cube_sides {
 	GS_POSITIVE_Z,
 	GS_NEGATIVE_Z,
 };
-///纹理采样滤镜 glTextureParami
+/*
+ 纹理采样有三个维度：
+     •    Minification（MIN）：纹理缩小时
+     •    Magnification（MAG）：纹理放大时
+     •    Mipmapping（MIP）：使用哪个 mipmap 层 (1024x1024 GPU纹理中多层的mipmap 为了适配不同的效果)
+ */
+//以上三个的组合会有9中类型 片段着色器中 采样器  采样纹理滤镜格式 glTextureParami
 enum gs_sample_filter {
+    /*
+     所有 MIN / MAG / MIP 都使用 POINT
+     → 最粗糙、最快
+     */
 	GS_FILTER_POINT,
+    /*
+     所有 MIN / MAG / MIP 都使用 LINEAR
+     → 最平滑
+     */
 	GS_FILTER_LINEAR,
+    /*
+     各向异性过滤
+     → 用于斜角表面，高质量、最高开销
+     */
 	GS_FILTER_ANISOTROPIC,
+    /*
+     → 小/大图仍是像素化，但 mip 之间切换平滑
+     */
 	GS_FILTER_MIN_MAG_POINT_MIP_LINEAR,
+    /*
+     缩小时像素化，放大时平滑，mip 切换生硬
+     */
 	GS_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT,
+    /*
+     → 缩小时像素化，但放大和平滑过渡很顺滑
+     */
 	GS_FILTER_MIN_POINT_MAG_MIP_LINEAR,
+    /*
+     → 缩小时平滑，但放大像素化，mip 也是点采样
+     */
 	GS_FILTER_MIN_LINEAR_MAG_MIP_POINT,
+    /*
+     → 缩小时平滑、放大像素化、mip 平滑
+     */
 	GS_FILTER_MIN_LINEAR_MAG_POINT_MIP_LINEAR,
+    /*
+     → 缩放都平滑，但切换 mip 时生硬（可能出现跳变）
+     */
 	GS_FILTER_MIN_MAG_LINEAR_MIP_POINT,
 };
 //图形采样中的纹理寻址模式。这些寻址模式定义了当纹理坐标超出 [0, 1] 范围时如何处理纹理的边界
@@ -287,7 +323,14 @@ static inline void gs_vbdata_destroy(struct gs_vb_data *data)
 	bfree(data->tvarray);
 	bfree(data);
 }
-
+/*
+ effect 
+ sampler_state def_sampler {
+     Filter   = Linear;
+     AddressU = Clamp;
+     AddressV = Clamp;
+ };
+ */
 struct gs_sampler_info {
 	enum gs_sample_filter filter;
 	enum gs_address_mode address_u;
@@ -388,35 +431,30 @@ enum gs_shader_type {
 };
 #pragma mark ---  着色器相关
 EXPORT void gs_shader_destroy(gs_shader_t *shader);
-
-//着色器参数相关
-EXPORT int gs_shader_get_num_params(const gs_shader_t *shader);
-EXPORT gs_sparam_t *gs_shader_get_param_by_idx(gs_shader_t *shader,
-					       uint32_t param);
-EXPORT gs_sparam_t *gs_shader_get_param_by_name(gs_shader_t *shader,
-						const char *name);
-
 //view矩阵 world矩阵
 EXPORT gs_sparam_t *gs_shader_get_viewproj_matrix(const gs_shader_t *shader);
 EXPORT gs_sparam_t *gs_shader_get_world_matrix(const gs_shader_t *shader);
 
-EXPORT void gs_shader_get_param_info(const gs_sparam_t *param,
-				     struct gs_shader_param_info *info);
+
+#pragma mark -- 着色器参数相关
+EXPORT int gs_shader_get_num_params(const gs_shader_t *shader);
+EXPORT gs_sparam_t *gs_shader_get_param_by_idx(gs_shader_t *shader,uint32_t param);
+EXPORT gs_sparam_t *gs_shader_get_param_by_name(gs_shader_t *shader,const char *name);
+
+
+EXPORT void gs_shader_get_param_info(const gs_sparam_t *param,struct gs_shader_param_info *info);
 EXPORT void gs_shader_set_bool(gs_sparam_t *param, bool val);
 EXPORT void gs_shader_set_float(gs_sparam_t *param, float val);
 EXPORT void gs_shader_set_int(gs_sparam_t *param, int val);
-EXPORT void gs_shader_set_matrix3(gs_sparam_t *param,
-				  const struct matrix3 *val);
-EXPORT void gs_shader_set_matrix4(gs_sparam_t *param,
-				  const struct matrix4 *val);
+EXPORT void gs_shader_set_matrix3(gs_sparam_t *param,const struct matrix3 *val);
+EXPORT void gs_shader_set_matrix4(gs_sparam_t *param,const struct matrix4 *val);
 EXPORT void gs_shader_set_vec2(gs_sparam_t *param, const struct vec2 *val);
 EXPORT void gs_shader_set_vec3(gs_sparam_t *param, const struct vec3 *val);
 EXPORT void gs_shader_set_vec4(gs_sparam_t *param, const struct vec4 *val);
 EXPORT void gs_shader_set_texture(gs_sparam_t *param, gs_texture_t *val);
-EXPORT void gs_shader_set_val(gs_sparam_t *param, const void *val, size_t size);
+EXPORT void gs_shader_set_val(gs_sparam_t *param, const void *val, size_t size); //通用
 EXPORT void gs_shader_set_default(gs_sparam_t *param);
-EXPORT void gs_shader_set_next_sampler(gs_sparam_t *param,
-				       gs_samplerstate_t *sampler);
+EXPORT void gs_shader_set_next_sampler(gs_sparam_t *param,gs_samplerstate_t *sampler);
 
 #endif
 
@@ -447,61 +485,40 @@ struct gs_effect_param_info {
 
 
 #pragma mark --- effect 相关
-
 EXPORT void gs_effect_destroy(gs_effect_t *effect);
-EXPORT gs_technique_t *gs_effect_get_technique(const gs_effect_t *effect,
-					       const char *name);
-EXPORT gs_technique_t *
-gs_effect_get_current_technique(const gs_effect_t *effect);
+EXPORT gs_technique_t *gs_effect_get_technique(const gs_effect_t *effect,const char *name);
+EXPORT gs_technique_t *gs_effect_get_current_technique(const gs_effect_t *effect);
 ///切换当前的technique及effect 为technique和technique关联的effect
 EXPORT size_t gs_technique_begin(gs_technique_t *technique);
 ///结束当前的technique及effect 为technique和technique关联的effect
 EXPORT void gs_technique_end(gs_technique_t *technique);
-
 ///切换effect的当前pass级pass下对应的vs、fs
 EXPORT bool gs_technique_begin_pass(gs_technique_t *technique, size_t pass);
-EXPORT bool gs_technique_begin_pass_by_name(gs_technique_t *technique,
-                                            const char *name);
+EXPORT bool gs_technique_begin_pass_by_name(gs_technique_t *technique,const char *name);
 EXPORT void gs_technique_end_pass(gs_technique_t *technique);
-EXPORT gs_epass_t *gs_technique_get_pass_by_idx(const gs_technique_t *technique,
-                                                size_t pass);
-EXPORT gs_epass_t *gs_technique_get_pass_by_name(const gs_technique_t *technique,
-                                                 const char *name);
+EXPORT gs_epass_t *gs_technique_get_pass_by_idx(const gs_technique_t *technique,size_t pass);
+EXPORT gs_epass_t *gs_technique_get_pass_by_name(const gs_technique_t *technique,const char *name);
 //effect参数
 EXPORT size_t gs_effect_get_num_params(const gs_effect_t *effect);
-EXPORT gs_eparam_t *gs_effect_get_param_by_idx(const gs_effect_t *effect,
-                                               size_t param);
-EXPORT gs_eparam_t *gs_effect_get_param_by_name(const gs_effect_t *effect,
-                                                const char *name);
+EXPORT gs_eparam_t *gs_effect_get_param_by_idx(const gs_effect_t *effect,size_t param);
+EXPORT gs_eparam_t *gs_effect_get_param_by_name(const gs_effect_t *effect,const char *name);
 EXPORT size_t gs_param_get_num_annotations(const gs_eparam_t *param);
-EXPORT gs_eparam_t *gs_param_get_annotation_by_idx(const gs_eparam_t *param,
-                                                   size_t annotation);
-EXPORT gs_eparam_t *gs_param_get_annotation_by_name(const gs_eparam_t *param,
-                                                    const char *name);
-
+EXPORT gs_eparam_t *gs_param_get_annotation_by_idx(const gs_eparam_t *param,size_t annotation);
+EXPORT gs_eparam_t *gs_param_get_annotation_by_name(const gs_eparam_t *param,const char *name);
 //默认切换到effect当前的technique及pass
 EXPORT bool gs_effect_loop(gs_effect_t *effect, const char *name);
-
-/** 把effect的参数值提交到  shader的参数上*/
-EXPORT void gs_effect_update_params(gs_effect_t *effect);
-
 //view矩阵 world矩阵
 EXPORT gs_eparam_t *gs_effect_get_viewproj_matrix(const gs_effect_t *effect);
 EXPORT gs_eparam_t *gs_effect_get_world_matrix(const gs_effect_t *effect);
-
-
-
 #ifndef SWIG
-EXPORT void gs_effect_get_param_info(const gs_eparam_t *param,
-				     struct gs_effect_param_info *info);
+EXPORT void gs_effect_get_param_info(const gs_eparam_t *param,struct gs_effect_param_info *info);
 #endif
 
 //给effet 设置参数值
 EXPORT void gs_effect_set_bool(gs_eparam_t *param, bool val);
 EXPORT void gs_effect_set_float(gs_eparam_t *param, float val);
 EXPORT void gs_effect_set_int(gs_eparam_t *param, int val);
-EXPORT void gs_effect_set_matrix4(gs_eparam_t *param,
-                                  const struct matrix4 *val);
+EXPORT void gs_effect_set_matrix4(gs_eparam_t *param,const struct matrix4 *val);
 EXPORT void gs_effect_set_vec2(gs_eparam_t *param, const struct vec2 *val);
 EXPORT void gs_effect_set_vec3(gs_eparam_t *param, const struct vec3 *val);
 EXPORT void gs_effect_set_vec4(gs_eparam_t *param, const struct vec4 *val);
@@ -513,26 +530,17 @@ EXPORT size_t gs_effect_get_val_size(gs_eparam_t *param);
 EXPORT void *gs_effect_get_val(gs_eparam_t *param);
 EXPORT size_t gs_effect_get_default_val_size(gs_eparam_t *param);
 EXPORT void *gs_effect_get_default_val(gs_eparam_t *param);
-EXPORT void gs_effect_set_next_sampler(gs_eparam_t *param,
-				       gs_samplerstate_t *sampler);
+EXPORT void gs_effect_set_next_sampler(gs_eparam_t *param,gs_samplerstate_t *sampler);
 EXPORT void gs_effect_set_color(gs_eparam_t *param, uint32_t argb);
+/** 把effect的参数值提交到  shader的参数上*/
+EXPORT void gs_effect_update_params(gs_effect_t *effect);
 
-
-
-
-
-
-///纹理渲染
-EXPORT gs_texrender_t *gs_texrender_create(enum gs_color_format format,
-                                           enum gs_zstencil_format zsformat);
+///临时纹理渲染器
+EXPORT gs_texrender_t *gs_texrender_create(enum gs_color_format format, enum gs_zstencil_format zsformat);
 EXPORT void gs_texrender_destroy(gs_texrender_t *texrender);
-EXPORT bool gs_texrender_begin(gs_texrender_t *texrender, uint32_t cx,
-                               uint32_t cy);
-EXPORT bool gs_texrender_begin_with_color_space(gs_texrender_t *texrender,
-                                                uint32_t cx, uint32_t cy,
-                                                enum gs_color_space space);
+EXPORT bool gs_texrender_begin(gs_texrender_t *texrender, uint32_t cx, uint32_t cy);
+EXPORT bool gs_texrender_begin_with_color_space(gs_texrender_t *texrender, uint32_t cx, uint32_t cy, enum gs_color_space space);
 EXPORT void gs_texrender_end(gs_texrender_t *texrender);
-
 ///rendered置为false代表需下一次重新渲染 
 EXPORT void gs_texrender_reset(gs_texrender_t *texrender);
 EXPORT gs_texture_t *gs_texrender_get_texture(const gs_texrender_t *texrender);
@@ -593,22 +601,18 @@ EXPORT void gs_enum_adapters(bool (*callback)(void *param, const char *name,
 					      uint32_t id),
                              void *param);
 
+#pragma mark --- 全局 grahics
 ///创建 graphics_t 对象
-EXPORT int gs_create(graphics_t **graphics, const char *module,
-                     uint32_t adapter);
+EXPORT int gs_create(graphics_t **graphics, const char *module,uint32_t adapter);
 EXPORT void gs_destroy(graphics_t *graphics);
-
-
-
-///enter跟leave是成对出现的 为了保证数据的唯一性
+///enter跟leave是成对出现的  这样才能保证绘制的时候该线程是持有graphics 的  
 EXPORT void gs_enter_context(graphics_t *graphics);
 EXPORT void gs_leave_context(void);
-
-
 EXPORT graphics_t *gs_get_context(void);
 EXPORT void *gs_get_device_obj(void);
 
-//矩阵相关
+
+#pragma mark --- 全局 grahics  matrix_stack  在绘制时会拷贝到device->cur_view上 顶点坐标的变换  仅仅在世界坐标系的空间操作 view_matrix上 
 EXPORT void gs_matrix_push(void);
 EXPORT void gs_matrix_pop(void);
 EXPORT void gs_matrix_identity(void);
@@ -774,7 +778,7 @@ EXPORT gs_stagesurf_t *gs_stagesurface_create(uint32_t width, uint32_t height,
 EXPORT gs_samplerstate_t *gs_samplerstate_create(const struct gs_sampler_info *info);
 
 
-#pragma mark --- 创建着色器
+#pragma mark --- 创建着色器 （经过effect解析后的着色器程序 交给当前grphic device 再次解析 (float4x4 -->mat4x4/ texture2d -> sampler2D) effect->opengl）
 EXPORT gs_shader_t *gs_vertexshader_create(const char *shader, const char *file,
 					   char **error_string);
 EXPORT gs_shader_t *gs_pixelshader_create(const char *shader, const char *file,
@@ -932,13 +936,11 @@ EXPORT void gs_vertexbuffer_destroy(gs_vertbuffer_t *vertbuffer);
 
 #pragma mark ----顶点数据相关
 EXPORT void gs_vertexbuffer_flush(gs_vertbuffer_t *vertbuffer);
-EXPORT void gs_vertexbuffer_flush_direct(gs_vertbuffer_t *vertbuffer,
-                                         const struct gs_vb_data *data);
+EXPORT void gs_vertexbuffer_flush_direct(gs_vertbuffer_t *vertbuffer,const struct gs_vb_data *data);
 EXPORT struct gs_vb_data *gs_vertexbuffer_get_data(const gs_vertbuffer_t *vertbuffer);
 EXPORT void gs_indexbuffer_destroy(gs_indexbuffer_t *indexbuffer);
 EXPORT void gs_indexbuffer_flush(gs_indexbuffer_t *indexbuffer);
-EXPORT void gs_indexbuffer_flush_direct(gs_indexbuffer_t *indexbuffer,
-					const void *data);
+EXPORT void gs_indexbuffer_flush_direct(gs_indexbuffer_t *indexbuffer, const void *data);
 EXPORT void *gs_indexbuffer_get_data(const gs_indexbuffer_t *indexbuffer);
 EXPORT size_t gs_indexbuffer_get_num_indices(const gs_indexbuffer_t *indexbuffer);
 EXPORT enum gs_index_type gs_indexbuffer_get_type(const gs_indexbuffer_t *indexbuffer);
