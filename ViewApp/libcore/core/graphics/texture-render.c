@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,9 +22,8 @@
 
 #include <assert.h>
 #include "graphics.h"
-//临时纹理渲染器  纹理渲染器 把渲染后的结果存储到target上
+
 struct gs_texture_render {
-    ///target 存储渲染结果  prev_target存储上一的渲染结果
 	gs_texture_t *target, *prev_target;
 	gs_zstencil_t *zs, *prev_zs;
 	enum gs_color_space prev_space;
@@ -33,12 +32,11 @@ struct gs_texture_render {
 
 	enum gs_color_format format;
 	enum gs_zstencil_format zsformat;
-    ///保证当前帧只渲染一次 (每次的tick就是一帧)
+
 	bool rendered;
 };
 
-gs_texrender_t *gs_texrender_create(enum gs_color_format format,
-				    enum gs_zstencil_format zsformat)
+gs_texrender_t *gs_texrender_create(enum gs_color_format format, enum gs_zstencil_format zsformat)
 {
 	struct gs_texture_render *texrender;
 	texrender = bzalloc(sizeof(struct gs_texture_render));
@@ -57,8 +55,7 @@ void gs_texrender_destroy(gs_texrender_t *texrender)
 	}
 }
 
-static bool texrender_resetbuffer(gs_texrender_t *texrender, uint32_t cx,
-				  uint32_t cy)
+static bool texrender_resetbuffer(gs_texrender_t *texrender, uint32_t cx, uint32_t cy)
 {
 	if (!texrender)
 		return false;
@@ -71,8 +68,7 @@ static bool texrender_resetbuffer(gs_texrender_t *texrender, uint32_t cx,
 	texrender->cx = cx;
 	texrender->cy = cy;
 
-	texrender->target = gs_texture_create(cx, cy, texrender->format, 1,
-					      NULL, GS_RENDER_TARGET);
+	texrender->target = gs_texture_create(cx, cy, texrender->format, 1, NULL, GS_RENDER_TARGET);
 	if (!texrender->target)
 		return false;
 
@@ -91,12 +87,10 @@ static bool texrender_resetbuffer(gs_texrender_t *texrender, uint32_t cx,
 
 bool gs_texrender_begin(gs_texrender_t *texrender, uint32_t cx, uint32_t cy)
 {
-	return gs_texrender_begin_with_color_space(texrender, cx, cy,
-						   GS_CS_SRGB);
+	return gs_texrender_begin_with_color_space(texrender, cx, cy, GS_CS_SRGB);
 }
 
-bool gs_texrender_begin_with_color_space(gs_texrender_t *texrender, uint32_t cx,
-					 uint32_t cy, enum gs_color_space space)
+bool gs_texrender_begin_with_color_space(gs_texrender_t *texrender, uint32_t cx, uint32_t cy, enum gs_color_space space)
 {
 	if (!texrender || texrender->rendered)
 		return false;
@@ -119,8 +113,7 @@ bool gs_texrender_begin_with_color_space(gs_texrender_t *texrender, uint32_t cx,
 	texrender->prev_target = gs_get_render_target();
 	texrender->prev_zs = gs_get_zstencil_target();
 	texrender->prev_space = gs_get_color_space();
-	gs_set_render_target_with_color_space(texrender->target, texrender->zs,
-                                          space);
+	gs_set_render_target_with_color_space(texrender->target, texrender->zs, space);
 
 	gs_set_viewport(0, 0, texrender->cx, texrender->cy);
 
@@ -132,9 +125,7 @@ void gs_texrender_end(gs_texrender_t *texrender)
 	if (!texrender)
 		return;
 
-	gs_set_render_target_with_color_space(texrender->prev_target,
-					      texrender->prev_zs,
-					      texrender->prev_space);
+	gs_set_render_target_with_color_space(texrender->prev_target, texrender->prev_zs, texrender->prev_space);
 
 	gs_matrix_pop();
 	gs_projection_pop();

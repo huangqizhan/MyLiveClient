@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Hugh Bailey <obs.jim@gmail.com>
+ * Copyright (c) 2023 Lain Bailey <lain@obsproject.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -16,7 +16,7 @@
 
 #include "obsconfig.h"
 
-#if !defined(__APPLE__) && OBS_QT_VERSION == 6
+#if !defined(__APPLE__)
 #define _GNU_SOURCE
 #include <link.h>
 #include <stdlib.h>
@@ -74,8 +74,7 @@ void *os_dlopen(const char *path)
 
 	dstr_init_copy(&dylib_name, path);
 #ifdef __APPLE__
-	if (!dstr_find(&dylib_name, ".framework") &&
-	    !dstr_find(&dylib_name, ".plugin") &&
+	if (!dstr_find(&dylib_name, ".framework") && !dstr_find(&dylib_name, ".plugin") &&
 	    !dstr_find(&dylib_name, ".dylib") && !dstr_find(&dylib_name, ".so"))
 #else
 	if (!dstr_find(&dylib_name, ".so"))
@@ -83,13 +82,18 @@ void *os_dlopen(const char *path)
 		dstr_cat(&dylib_name, ".so");
 
 #ifdef __APPLE__
-	void *res = dlopen(dylib_name.array, RTLD_LAZY | RTLD_FIRST);
+	int dlopen_flags = RTLD_LAZY | RTLD_FIRST;
+	if (dstr_find(&dylib_name, "Python")) {
+		dlopen_flags = dlopen_flags | RTLD_GLOBAL;
+	} else {
+		dlopen_flags = dlopen_flags | RTLD_LOCAL;
+	}
+	void *res = dlopen(dylib_name.array, dlopen_flags);
 #else
 	void *res = dlopen(dylib_name.array, RTLD_LAZY);
 #endif
 	if (!res)
-		blog(LOG_ERROR, "os_dlopen(%s->%s): %s\n", path,
-		     dylib_name.array, dlerror());
+		blog(LOG_ERROR, "os_dlopen(%s->%s): %s\n", path, dylib_name.array, dlerror());
 
 	dstr_free(&dylib_name);
 	return res;
@@ -106,7 +110,7 @@ void os_dlclose(void *module)
 		dlclose(module);
 }
 
-#if !defined(__APPLE__) && OBS_QT_VERSION == 6
+#if !defined(__APPLE__)
 int module_has_qt5_check(const char *path)
 {
 	void *mod = os_dlopen(path);
@@ -130,6 +134,7 @@ bool has_qt5_dependency(const char *path)
 {
 	pid_t pid = fork();
 	if (pid == 0) {
+		base_set_log_handler(NULL, NULL);
 		_exit(module_has_qt5_check(path));
 	}
 	if (pid < 0) {
@@ -147,7 +152,7 @@ void get_plugin_info(const char *path, bool *is_obs_plugin, bool *can_load)
 {
 	*is_obs_plugin = true;
 	*can_load = true;
-#if !defined(__APPLE__) && OBS_QT_VERSION == 6
+#if !defined(__APPLE__)
 	*can_load = !has_qt5_dependency(path);
 #endif
 	UNUSED_PARAMETER(path);
@@ -190,13 +195,12 @@ double os_cpu_usage_info_query(os_cpu_usage_info_t *info)
 		return 0.0;
 
 	cur_cpu_time = times(&time_sample);
-	if (cur_cpu_time <= info->last_cpu_time ||
-	    time_sample.tms_stime < info->last_sys_time ||
+	if (cur_cpu_time <= info->last_cpu_time || time_sample.tms_stime < info->last_sys_time ||
 	    time_sample.tms_utime < info->last_user_time)
 		return 0.0;
 
-	percent = (double)(time_sample.tms_stime - info->last_sys_time +
-			   (time_sample.tms_utime - info->last_user_time));
+	percent =
+		(double)(time_sample.tms_stime - info->last_sys_time + (time_sample.tms_utime - info->last_user_time));
 	percent /= (double)(cur_cpu_time - info->last_cpu_time);
 	percent /= (double)info->core_count;
 
@@ -218,10 +222,9 @@ void os_cpu_usage_info_destroy(os_cpu_usage_info_t *info)
 bool os_sleepto_ns(uint64_t time_target)
 {
 	uint64_t current = os_gettime_ns();
-    
 	if (time_target < current)
 		return false;
-    ///time_target >= current 则sleep (time_target - current)时间
+
 	time_target -= current;
 
 	struct timespec req, remain;
@@ -269,11 +272,9 @@ uint64_t os_gettime_ns(void)
 	return ((uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec);
 }
 
-/* should return $HOME/.[name], or when using XDG,
- * should return $HOME/.config/[name] as default */
+/* should return $HOME/.config/[name] as default */
 int os_get_config_path(char *dst, size_t size, const char *name)
 {
-#ifdef USE_XDG
 	char *xdg_ptr = getenv("XDG_CONFIG_HOME");
 
 	// If XDG_CONFIG_HOME is unset,
@@ -286,8 +287,7 @@ int os_get_config_path(char *dst, size_t size, const char *name)
 		if (!name || !*name) {
 			return snprintf(dst, size, "%s/.config", home_ptr);
 		} else {
-			return snprintf(dst, size, "%s/.config/%s", home_ptr,
-					name);
+			return snprintf(dst, size, "%s/.config/%s", home_ptr, name);
 		}
 	} else {
 		if (!name || !*name)
@@ -295,23 +295,11 @@ int os_get_config_path(char *dst, size_t size, const char *name)
 		else
 			return snprintf(dst, size, "%s/%s", xdg_ptr, name);
 	}
-#else
-	char *path_ptr = getenv("HOME");
-	if (path_ptr == NULL)
-		bcrash("Could not get $HOME\n");
-
-	if (!name || !*name)
-		return snprintf(dst, size, "%s", path_ptr);
-	else
-		return snprintf(dst, size, "%s/.%s", path_ptr, name);
-#endif
 }
 
-/* should return $HOME/.[name], or when using XDG,
- * should return $HOME/.config/[name] as default */
+/* should return $HOME/.config/[name] as default */
 char *os_get_config_path_ptr(const char *name)
 {
-#ifdef USE_XDG
 	struct dstr path;
 	char *xdg_ptr = getenv("XDG_CONFIG_HOME");
 
@@ -331,17 +319,6 @@ char *os_get_config_path_ptr(const char *name)
 		dstr_cat(&path, name);
 	}
 	return path.array;
-#else
-	char *path_ptr = getenv("HOME");
-	if (path_ptr == NULL)
-		bcrash("Could not get $HOME\n");
-
-	struct dstr path;
-	dstr_init_copy(&path, path_ptr);
-	dstr_cat(&path, "/.");
-	dstr_cat(&path, name);
-	return path.array;
-#endif
 }
 
 int os_get_program_data_path(char *dst, size_t size, const char *name)
@@ -351,8 +328,7 @@ int os_get_program_data_path(char *dst, size_t size, const char *name)
 
 char *os_get_program_data_path_ptr(const char *name)
 {
-	size_t len =
-		snprintf(NULL, 0, "/usr/local/share/%s", !!name ? name : "");
+	size_t len = snprintf(NULL, 0, "/usr/local/share/%s", !!name ? name : "");
 	char *str = bmalloc(len + 1);
 	snprintf(str, len + 1, "/usr/local/share/%s", !!name ? name : "");
 	str[len] = 0;
@@ -422,10 +398,8 @@ char *os_get_executable_path_ptr(const char *name)
 	int sysctlname[4] = {CTL_KERN, KERN_PROC, KERN_PROC_PATHNAME, -1};
 	size_t pathlen = PATH_MAX;
 	ssize_t count;
-	if (sysctl(sysctlname, nitems(sysctlname), exe, &pathlen, NULL, 0) ==
-	    -1) {
-		blog(LOG_ERROR, "sysctl(KERN_PROC_PATHNAME) failed, errno %d",
-		     errno);
+	if (sysctl(sysctlname, nitems(sysctlname), exe, &pathlen, NULL, 0) == -1) {
+		blog(LOG_ERROR, "sysctl(KERN_PROC_PATHNAME) failed, errno %d", errno);
 		return NULL;
 	}
 	count = pathlen;
@@ -470,7 +444,7 @@ bool os_file_exists(const char *path)
 {
 	return access(path, F_OK) == 0;
 }
-///====获取真实的路径(../  ./  链接路径)
+
 size_t os_get_abs_path(const char *path, char *abspath, size_t size)
 {
 	size_t min_size = size < PATH_MAX ? size : PATH_MAX;
@@ -486,7 +460,7 @@ size_t os_get_abs_path(const char *path, char *abspath, size_t size)
 	ret = snprintf(abspath, min_size, "%s", newpath);
 	return ret >= 0 ? ret : 0;
 }
-///====获取真实的路径(../  ./  链接路径)
+
 char *os_get_abs_path_ptr(const char *path)
 {
 	char *ptr = bmalloc(512);
@@ -566,6 +540,7 @@ void os_closedir(os_dir_t *dir)
 	}
 }
 
+#ifndef __APPLE__
 int64_t os_get_free_space(const char *path)
 {
 	struct statvfs info;
@@ -576,6 +551,7 @@ int64_t os_get_free_space(const char *path)
 
 	return ret;
 }
+#endif
 
 struct posix_glob_info {
 	struct os_glob_info base;
@@ -716,13 +692,11 @@ struct dbus_sleep_info;
 struct portal_inhibit_info;
 
 extern struct dbus_sleep_info *dbus_sleep_info_create(void);
-extern void dbus_inhibit_sleep(struct dbus_sleep_info *dbus, const char *sleep,
-			       bool active);
+extern void dbus_inhibit_sleep(struct dbus_sleep_info *dbus, const char *sleep, bool active);
 extern void dbus_sleep_info_destroy(struct dbus_sleep_info *dbus);
 
 extern struct portal_inhibit_info *portal_inhibit_info_create(void);
-extern void portal_inhibit(struct portal_inhibit_info *portal,
-			   const char *reason, bool active);
+extern void portal_inhibit(struct portal_inhibit_info *portal, const char *reason, bool active);
 extern void portal_inhibit_info_destroy(struct portal_inhibit_info *portal);
 #endif
 
@@ -745,10 +719,21 @@ os_inhibit_t *os_inhibit_sleep_create(const char *reason)
 
 #if defined(GIO_FOUND)
 	info->portal = portal_inhibit_info_create();
-	if (!info->portal)
-		info->dbus = dbus_sleep_info_create();
-#endif
+	if (!info->portal) {
+		/* In a Flatpak, only the portal can be used for inhibition. */
+		if (access("/.flatpak-info", F_OK) == 0) {
+			bfree(info);
+			return NULL;
+		}
 
+		info->dbus = dbus_sleep_info_create();
+	}
+
+	if (info->portal || info->dbus) {
+		info->reason = bstrdup(reason);
+		return info;
+	}
+#endif
 	os_event_init(&info->stop_event, OS_EVENT_TYPE_AUTO);
 	posix_spawnattr_init(&info->attr);
 
@@ -756,8 +741,7 @@ os_inhibit_t *os_inhibit_sleep_create(const char *reason)
 	posix_spawnattr_setsigmask(&info->attr, &set);
 	sigaddset(&set, SIGPIPE);
 	posix_spawnattr_setsigdefault(&info->attr, &set);
-	posix_spawnattr_setflags(&info->attr, POSIX_SPAWN_SETSIGDEF |
-						      POSIX_SPAWN_SETSIGMASK);
+	posix_spawnattr_setflags(&info->attr, POSIX_SPAWN_SETSIGDEF | POSIX_SPAWN_SETSIGMASK);
 
 	info->reason = bstrdup(reason);
 	return info;
@@ -770,8 +754,7 @@ static void reset_screensaver(os_inhibit_t *info)
 	char *argv[3] = {(char *)"xdg-screensaver", (char *)"reset", NULL};
 	pid_t pid;
 
-	int err = posix_spawnp(&pid, "xdg-screensaver", NULL, &info->attr, argv,
-			       environ);
+	int err = posix_spawnp(&pid, "xdg-screensaver", NULL, &info->attr, argv, environ);
 	if (err == 0) {
 		int status;
 		while (waitpid(pid, &status, 0) == -1)
@@ -805,14 +788,17 @@ bool os_inhibit_sleep_set_active(os_inhibit_t *info, bool active)
 		portal_inhibit(info->portal, info->reason, active);
 	if (info->dbus)
 		dbus_inhibit_sleep(info->dbus, info->reason, active);
+	if (info->portal || info->dbus) {
+		info->active = active;
+		return true;
+	}
 #endif
 
 	if (!info->stop_event)
 		return true;
 
 	if (active) {
-		ret = pthread_create(&info->screensaver_thread, NULL,
-				     &screensaver_thread, info);
+		ret = pthread_create(&info->screensaver_thread, NULL, &screensaver_thread, info);
 		if (ret < 0) {
 			blog(LOG_ERROR, "Failed to create screensaver "
 					"inhibitor thread");
@@ -832,11 +818,19 @@ void os_inhibit_sleep_destroy(os_inhibit_t *info)
 	if (info) {
 		os_inhibit_sleep_set_active(info, false);
 #if defined(GIO_FOUND)
-		portal_inhibit_info_destroy(info->portal);
-		dbus_sleep_info_destroy(info->dbus);
-#endif
+		if (info->portal) {
+			portal_inhibit_info_destroy(info->portal);
+		} else if (info->dbus) {
+			dbus_sleep_info_destroy(info->dbus);
+		} else {
+			os_event_destroy(info->stop_event);
+			posix_spawnattr_destroy(&info->attr);
+		}
+#else
 		os_event_destroy(info->stop_event);
 		posix_spawnattr_destroy(&info->attr);
+#endif
+
 		bfree(info->reason);
 		bfree(info);
 	}
@@ -844,7 +838,12 @@ void os_inhibit_sleep_destroy(os_inhibit_t *info)
 
 #endif
 
-void os_breakpoint(void)
+void os_breakpoint()
+{
+	raise(SIGTRAP);
+}
+
+void os_oom()
 {
 	raise(SIGTRAP);
 }
@@ -899,8 +898,7 @@ static void os_get_cores_internal(void)
 				continue;
 
 			if (dstr_is_empty(&proc_phys_ids) ||
-			    (!dstr_is_empty(&proc_phys_ids) &&
-			     !dstr_find(&proc_phys_ids, proc_phys_id.array))) {
+			    (!dstr_is_empty(&proc_phys_ids) && !dstr_find(&proc_phys_ids, proc_phys_id.array))) {
 				dstr_cat_dstr(&proc_phys_ids, &proc_phys_id);
 				dstr_cat(&proc_phys_ids, " ");
 				core_count += atoi(start);
@@ -999,8 +997,7 @@ uint64_t os_get_sys_free_size(void)
 {
 	uint64_t mem_free = 0;
 	size_t length = sizeof(mem_free);
-	if (sysctlbyname("vm.stats.vm.v_free_count", &mem_free, &length, NULL,
-			 0) < 0)
+	if (sysctlbyname("vm.stats.vm.v_free_count", &mem_free, &length, NULL, 0) < 0)
 		return 0;
 	return mem_free;
 }
@@ -1009,8 +1006,7 @@ static inline bool os_get_proc_memory_usage_internal(struct kinfo_proc *kinfo)
 {
 	int mib[] = {CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()};
 	size_t length = sizeof(*kinfo);
-	if (sysctl(mib, sizeof(mib) / sizeof(mib[0]), kinfo, &length, NULL, 0) <
-	    0)
+	if (sysctl(mib, sizeof(mib) / sizeof(mib[0]), kinfo, &length, NULL, 0) < 0)
 		return false;
 	return true;
 }
@@ -1021,8 +1017,7 @@ bool os_get_proc_memory_usage(os_proc_memory_usage_t *usage)
 	if (!os_get_proc_memory_usage_internal(&kinfo))
 		return false;
 
-	usage->resident_size =
-		(uint64_t)kinfo.ki_rssize * sysconf(_SC_PAGESIZE);
+	usage->resident_size = (uint64_t)kinfo.ki_rssize * sysconf(_SC_PAGESIZE);
 	usage->virtual_size = (uint64_t)kinfo.ki_size;
 	return true;
 }
@@ -1043,11 +1038,6 @@ uint64_t os_get_proc_virtual_size(void)
 	return (uint64_t)kinfo.ki_size;
 }
 #else
-uint64_t os_get_sys_free_size(void)
-{
-	return 0;
-}
-
 typedef struct {
 	unsigned long virtual_size;
 	unsigned long resident_size;
@@ -1066,9 +1056,8 @@ static inline bool os_get_proc_memory_usage_internal(statm_t *statm)
 	if (!f)
 		return false;
 
-	if (fscanf(f, "%lu %lu %lu %lu %lu %lu %lu", &statm->virtual_size,
-		   &statm->resident_size, &statm->share_pages, &statm->text,
-		   &statm->library, &statm->data, &statm->dirty_pages) != 7) {
+	if (fscanf(f, "%lu %lu %lu %lu %lu %lu %lu", &statm->virtual_size, &statm->resident_size, &statm->share_pages,
+		   &statm->text, &statm->library, &statm->data, &statm->dirty_pages) != 7) {
 		fclose(f);
 		return false;
 	}
@@ -1083,8 +1072,7 @@ bool os_get_proc_memory_usage(os_proc_memory_usage_t *usage)
 	if (!os_get_proc_memory_usage_internal(&statm))
 		return false;
 
-	usage->resident_size =
-		(uint64_t)statm.resident_size * sysconf(_SC_PAGESIZE);
+	usage->resident_size = (uint64_t)statm.resident_size * sysconf(_SC_PAGESIZE);
 	usage->virtual_size = statm.virtual_size;
 	return true;
 }
@@ -1103,6 +1091,20 @@ uint64_t os_get_proc_virtual_size(void)
 	if (!os_get_proc_memory_usage_internal(&statm))
 		return 0;
 	return (uint64_t)statm.virtual_size;
+}
+
+uint64_t os_get_sys_free_size(void)
+{
+	uint64_t free_memory = 0;
+#ifndef __OpenBSD__
+	struct sysinfo info;
+	if (sysinfo(&info) < 0)
+		return 0;
+
+	free_memory = ((uint64_t)info.freeram + (uint64_t)info.bufferram) * info.mem_unit;
+#endif
+
+	return free_memory;
 }
 #endif
 
@@ -1129,8 +1131,10 @@ uint64_t os_get_sys_total_size(void)
 
 	return total_memory;
 }
+
 #endif
 
+#ifndef __APPLE__
 uint64_t os_get_free_disk_space(const char *dir)
 {
 	struct statvfs info;
@@ -1139,6 +1143,7 @@ uint64_t os_get_free_disk_space(const char *dir)
 
 	return (uint64_t)info.f_frsize * (uint64_t)info.f_bavail;
 }
+#endif
 
 char *os_generate_uuid(void)
 {

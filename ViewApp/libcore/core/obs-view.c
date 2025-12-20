@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2014 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #include "obs.h"
 #include "obs-internal.h"
 
-bool obs_view_init(struct obs_view *view)
+bool obs_view_init(struct obs_view *view, enum view_type type)
 {
 	if (!view)
 		return false;
@@ -30,6 +30,7 @@ bool obs_view_init(struct obs_view *view)
 		return false;
 	}
 
+	view->type = type;
 	return true;
 }
 
@@ -37,7 +38,7 @@ obs_view_t *obs_view_create(void)
 {
 	struct obs_view *view = bzalloc(sizeof(struct obs_view));
 
-	if (!obs_view_init(view)) {
+	if (!obs_view_init(view, AUX_VIEW)) {
 		bfree(view);
 		view = NULL;
 	}
@@ -53,7 +54,7 @@ void obs_view_free(struct obs_view *view)
 	for (size_t i = 0; i < MAX_CHANNELS; i++) {
 		struct obs_source *source = view->channels[i];
 		if (source) {
-			obs_source_deactivate(source, AUX_VIEW);
+			obs_source_deactivate(source, view->type);
 			obs_source_release(source);
 		}
 	}
@@ -87,8 +88,7 @@ obs_source_t *obs_view_get_source(obs_view_t *view, uint32_t channel)
 	return source;
 }
 
-void obs_view_set_source(obs_view_t *view, uint32_t channel,
-			 obs_source_t *source)
+void obs_view_set_source(obs_view_t *view, uint32_t channel, obs_source_t *source)
 {
 	struct obs_source *prev_source;
 
@@ -107,25 +107,26 @@ void obs_view_set_source(obs_view_t *view, uint32_t channel,
 	pthread_mutex_unlock(&view->channels_mutex);
 
 	if (source)
-		obs_source_activate(source, AUX_VIEW);
+		obs_source_activate(source, view->type);
 
 	if (prev_source) {
-		obs_source_deactivate(prev_source, AUX_VIEW);
+		obs_source_deactivate(prev_source, view->type);
 		obs_source_release(prev_source);
 	}
 }
-///====
-/*
- 绘制每个窗口内容
- main_view 目前就两个 桌面音频、当前选中的transition_source
- */
-void obs_view_render(obs_view_t *view){
+
+void obs_view_render(obs_view_t *view)
+{
 	if (!view)
 		return;
+
 	pthread_mutex_lock(&view->channels_mutex);
+
 	for (size_t i = 0; i < MAX_CHANNELS; i++) {
 		struct obs_source *source;
+
 		source = view->channels[i];
+
 		if (source) {
 			if (source->removed) {
 				obs_source_release(source);
@@ -135,30 +136,15 @@ void obs_view_render(obs_view_t *view){
 			}
 		}
 	}
+
 	pthread_mutex_unlock(&view->channels_mutex);
-}
-
-static inline size_t find_mix_for_view(obs_view_t *view){
-	for (size_t i = 0, num = obs->video.mixes.num; i < num; i++) {
-		if (obs->video.mixes.array[i]->view == view)
-			return i;
-	}
-	return DARRAY_INVALID;
-}
-
-static inline void set_main_mix(void){
-	size_t idx = find_mix_for_view(&obs->data.main_view);
-	struct obs_core_video_mix *mix = NULL;
-	if (idx != DARRAY_INVALID)
-		mix = obs->video.mixes.array[idx];
-	obs->video.main_mix = mix;
 }
 
 video_t *obs_view_add(obs_view_t *view)
 {
-	if (!obs->video.main_mix)
+	if (!obs->data.main_canvas->mix)
 		return NULL;
-	return obs_view_add2(view, &obs->video.main_mix->ovi);
+	return obs_view_add2(view, &obs->data.main_canvas->mix->ovi);
 }
 
 video_t *obs_view_add2(obs_view_t *view, struct obs_video_info *ovi)
@@ -174,7 +160,6 @@ video_t *obs_view_add2(obs_view_t *view, struct obs_video_info *ovi)
 
 	pthread_mutex_lock(&obs->video.mixes_mutex);
 	da_push_back(obs->video.mixes, &mix);
-	set_main_mix();
 	pthread_mutex_unlock(&obs->video.mixes_mutex);
 
 	return mix->video;
@@ -186,28 +171,24 @@ void obs_view_remove(obs_view_t *view)
 		return;
 
 	pthread_mutex_lock(&obs->video.mixes_mutex);
-	size_t idx = find_mix_for_view(view);
-	if (idx != DARRAY_INVALID)
-		obs->video.mixes.array[idx]->view = NULL;
-	set_main_mix();
+	for (size_t i = 0, num = obs->video.mixes.num; i < num; i++) {
+		if (obs->video.mixes.array[i]->view == view)
+			obs->video.mixes.array[i]->view = NULL;
+	}
 	pthread_mutex_unlock(&obs->video.mixes_mutex);
 }
 
-bool obs_view_get_video_info(obs_view_t *view, struct obs_video_info *ovi)
+void obs_view_enum_video_info(obs_view_t *view, bool (*enum_proc)(void *, struct obs_video_info *), void *param)
 {
-	if (!view)
-		return false;
-
 	pthread_mutex_lock(&obs->video.mixes_mutex);
 
-	size_t idx = find_mix_for_view(view);
-	if (idx != DARRAY_INVALID) {
-		*ovi = obs->video.mixes.array[idx]->ovi;
-		pthread_mutex_unlock(&obs->video.mixes_mutex);
-		return true;
+	for (size_t i = 0, num = obs->video.mixes.num; i < num; i++) {
+		struct obs_core_video_mix *mix = obs->video.mixes.array[i];
+		if (mix->view != view)
+			continue;
+		if (!enum_proc(param, &mix->ovi))
+			break;
 	}
 
 	pthread_mutex_unlock(&obs->video.mixes_mutex);
-
-	return false;
 }

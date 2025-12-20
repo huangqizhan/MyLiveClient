@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 
 #include "../util/threading.h"
 #include "../util/darray.h"
-#include "../util/circlebuf.h"
+#include "../util/deque.h"
 #include "../util/platform.h"
 #include "../util/profiler.h"
 #include "../util/util_uint64.h"
@@ -42,11 +42,11 @@ extern profiler_name_store_t *obs_get_profiler_name_store(void);
 	do {                     \
 		int invalid = 0; \
 	} while (0)
-///=====输入到编码器
+
 struct audio_input {
 	struct audio_convert_info conversion;
 	audio_resampler_t *resampler;
-    //输出到编码器
+
 	audio_output_callback_t callback;
 	void *param;
 };
@@ -57,16 +57,13 @@ static inline void audio_input_free(struct audio_input *input)
 }
 
 struct audio_mix {
-    ///输出操作
 	DARRAY(struct audio_input) inputs;
-    ///音频线程渲染 混音后的数据保存在这里
 	float buffer[MAX_AUDIO_CHANNELS][AUDIO_OUTPUT_FRAMES];
 	float buffer_unclamped[MAX_AUDIO_CHANNELS][AUDIO_OUTPUT_FRAMES];
 };
-///=====全局音频就一个输出
+
 struct audio_output {
 	struct audio_output_info info;
-    ///每一个平面 所对应的音频大小
 	size_t block_size;
 	size_t channels;
 	size_t planes;
@@ -75,21 +72,16 @@ struct audio_output {
 	os_event_t *stop_event;
 
 	bool initialized;
-    ///音频IO线程获取音频数据回调 
+
 	audio_input_callback_t input_cb;
 	void *input_param;
 	pthread_mutex_t input_mutex;
-    /**
-     录制文件时 音频轨可以有6个  每个轨代表一个mixer  每个轨可能包含多个channel
-    */
 	struct audio_mix mixes[MAX_AUDIO_MIXES];
-    
 };
 
 /* ------------------------------------------------------------------------- */
 
-static bool resample_audio_output(struct audio_input *input,
-				  struct audio_data *data)
+static bool resample_audio_output(struct audio_input *input, struct audio_data *data)
 {
 	bool success = true;
 
@@ -100,9 +92,8 @@ static bool resample_audio_output(struct audio_input *input,
 
 		memset(output, 0, sizeof(output));
 
-		success = audio_resampler_resample(
-			input->resampler, output, &frames, &offset,
-			(const uint8_t *const *)data->data, data->frames);
+		success = audio_resampler_resample(input->resampler, output, &frames, &offset,
+						   (const uint8_t *const *)data->data, data->frames);
 
 		for (size_t i = 0; i < MAX_AV_PLANES; i++)
 			data->data[i] = output[i];
@@ -112,9 +103,8 @@ static bool resample_audio_output(struct audio_input *input,
 
 	return success;
 }
-///=====输出到编码器
-static inline void do_audio_output(struct audio_output *audio, size_t mix_idx,
-				   uint64_t timestamp, uint32_t frames)
+
+static inline void do_audio_output(struct audio_output *audio, size_t mix_idx, uint64_t timestamp, uint32_t frames)
 {
 	struct audio_mix *mix = &audio->mixes[mix_idx];
 	struct audio_data data;
@@ -124,9 +114,8 @@ static inline void do_audio_output(struct audio_output *audio, size_t mix_idx,
 	for (size_t i = mix->inputs.num; i > 0; i--) {
 		struct audio_input *input = mix->inputs.array + (i - 1);
 
-		float(*buf)[AUDIO_OUTPUT_FRAMES] =
-			input->conversion.allow_clipping ? mix->buffer_unclamped
-							 : mix->buffer;
+		float(*buf)[AUDIO_OUTPUT_FRAMES] = input->conversion.allow_clipping ? mix->buffer_unclamped
+										    : mix->buffer;
 		for (size_t i = 0; i < audio->planes; i++)
 			data.data[i] = (uint8_t *)buf[i];
 
@@ -167,9 +156,8 @@ static inline void clamp_audio_output(struct audio_output *audio, size_t bytes)
 		}
 	}
 }
-///=====混音&&输出到编码器 audio_time当前tick的时间  prev_time上一次tick的时间
-static void input_and_output(struct audio_output *audio, uint64_t audio_time,
-			     uint64_t prev_time)
+
+static void input_and_output(struct audio_output *audio, uint64_t audio_time, uint64_t prev_time)
 {
 	size_t bytes = AUDIO_OUTPUT_FRAMES * audio->block_size;
 	struct audio_output_data data[MAX_AUDIO_MIXES];
@@ -180,8 +168,7 @@ static void input_and_output(struct audio_output *audio, uint64_t audio_time,
 	memset(data, 0, sizeof(data));
 
 #ifdef DEBUG_AUDIO
-	blog(LOG_DEBUG, "audio_time: %llu, prev_time: %llu, bytes: %lu",
-	     audio_time, prev_time, bytes);
+	blog(LOG_DEBUG, "audio_time: %llu, prev_time: %llu, bytes: %lu", audio_time, prev_time, bytes);
 #endif
 
 	/* get mixers */
@@ -202,13 +189,12 @@ static void input_and_output(struct audio_output *audio, uint64_t audio_time,
 			data[mix_idx].data[i] = mix->buffer[i];
 	}
 
-	/* get new audio data  音频IO线程获取音频数据回调   */
-	success = audio->input_cb(audio->input_param, prev_time, audio_time,
-				  &new_ts, active_mixes, data);
+	/* get new audio data */
+	success = audio->input_cb(audio->input_param, prev_time, audio_time, &new_ts, active_mixes, data);
 	if (!success)
 		return;
 
-	/* clamps(限制) audio data to -1.0..1.0 */
+	/* clamps audio data to -1.0..1.0 */
 	clamp_audio_output(audio, bytes);
 
 	/* output */
@@ -232,18 +218,16 @@ static void *audio_thread(void *param)
 	os_set_thread_name("audio-io: audio thread");
 
 	const char *audio_thread_name =
-		profile_store_name(obs_get_profiler_name_store(),
-				   "audio_thread(%s)", audio->info.name);
-    ///1024个采样处理一次 
+		profile_store_name(obs_get_profiler_name_store(), "audio_thread(%s)", audio->info.name);
+
 	while (os_event_try(audio->stop_event) == EAGAIN) {
 		samples += AUDIO_OUTPUT_FRAMES;
-		uint64_t audio_time =
-			start_time + audio_frames_to_ns(rate, samples);
+		uint64_t audio_time = start_time + audio_frames_to_ns(rate, samples);
 
 		os_sleepto_ns_fast(audio_time);
 
 		profile_start(audio_thread_name);
-        
+
 		input_and_output(audio, audio_time, prev_time);
 		prev_time = audio_time;
 
@@ -262,8 +246,7 @@ static void *audio_thread(void *param)
 
 /* ------------------------------------------------------------------------- */
 
-static size_t audio_get_input_idx(const audio_t *audio, size_t mix_idx,
-				  audio_output_callback_t callback, void *param)
+static size_t audio_get_input_idx(const audio_t *audio, size_t mix_idx, audio_output_callback_t callback, void *param)
 {
 	const struct audio_mix *mix = &audio->mixes[mix_idx];
 
@@ -277,21 +260,18 @@ static size_t audio_get_input_idx(const audio_t *audio, size_t mix_idx,
 	return DARRAY_INVALID;
 }
 
-static inline bool audio_input_init(struct audio_input *input,
-				    struct audio_output *audio)
+static inline bool audio_input_init(struct audio_input *input, struct audio_output *audio)
 {
 	if (input->conversion.format != audio->info.format ||
 	    input->conversion.samples_per_sec != audio->info.samples_per_sec ||
 	    input->conversion.speakers != audio->info.speakers) {
-		struct resample_info from = {
-			.format = audio->info.format,
-			.samples_per_sec = audio->info.samples_per_sec,
-			.speakers = audio->info.speakers};
+		struct resample_info from = {.format = audio->info.format,
+					     .samples_per_sec = audio->info.samples_per_sec,
+					     .speakers = audio->info.speakers};
 
-		struct resample_info to = {
-			.format = input->conversion.format,
-			.samples_per_sec = input->conversion.samples_per_sec,
-			.speakers = input->conversion.speakers};
+		struct resample_info to = {.format = input->conversion.format,
+					   .samples_per_sec = input->conversion.samples_per_sec,
+					   .speakers = input->conversion.speakers};
 
 		input->resampler = audio_resampler_create(&to, &from);
 		if (!input->resampler) {
@@ -305,9 +285,8 @@ static inline bool audio_input_init(struct audio_input *input,
 
 	return true;
 }
-///====添加向外输出的回调
-bool audio_output_connect(audio_t *audio, size_t mi,
-			  const struct audio_convert_info *conversion,
+
+bool audio_output_connect(audio_t *audio, size_t mi, const struct audio_convert_info *conversion,
 			  audio_output_callback_t callback, void *param)
 {
 	bool success = false;
@@ -319,17 +298,17 @@ bool audio_output_connect(audio_t *audio, size_t mi,
 
 	if (audio_get_input_idx(audio, mi, callback, param) == DARRAY_INVALID) {
 		struct audio_mix *mix = &audio->mixes[mi];
-		struct audio_input input;
-		input.callback = callback;
-		input.param = param;
-        
+		struct audio_input input = {
+			.callback = callback,
+			.param = param,
+		};
+
 		if (conversion) {
 			input.conversion = *conversion;
 		} else {
 			input.conversion.format = audio->info.format;
 			input.conversion.speakers = audio->info.speakers;
-			input.conversion.samples_per_sec =
-				audio->info.samples_per_sec;
+			input.conversion.samples_per_sec = audio->info.samples_per_sec;
 		}
 
 		if (input.conversion.format == AUDIO_FORMAT_UNKNOWN)
@@ -337,8 +316,7 @@ bool audio_output_connect(audio_t *audio, size_t mi,
 		if (input.conversion.speakers == SPEAKERS_UNKNOWN)
 			input.conversion.speakers = audio->info.speakers;
 		if (input.conversion.samples_per_sec == 0)
-			input.conversion.samples_per_sec =
-				audio->info.samples_per_sec;
+			input.conversion.samples_per_sec = audio->info.samples_per_sec;
 
 		success = audio_input_init(&input, audio);
 		if (success)
@@ -349,9 +327,8 @@ bool audio_output_connect(audio_t *audio, size_t mi,
 
 	return success;
 }
-///=====删除output输入
-void audio_output_disconnect(audio_t *audio, size_t mix_idx,
-			     audio_output_callback_t callback, void *param)
+
+void audio_output_disconnect(audio_t *audio, size_t mix_idx, audio_output_callback_t callback, void *param)
 {
 	if (!audio || mix_idx >= MAX_AUDIO_MIXES)
 		return;
@@ -370,10 +347,9 @@ void audio_output_disconnect(audio_t *audio, size_t mix_idx,
 
 static inline bool valid_audio_params(const struct audio_output_info *info)
 {
-	return info->format && info->name && info->samples_per_sec > 0 &&
-	       info->speakers > 0;
+	return info->format && info->name && info->samples_per_sec > 0 && info->speakers > 0;
 }
-///====初始化音频输出线程 
+
 int audio_output_open(audio_t **audio, struct audio_output_info *info)
 {
 	struct audio_output *out;
@@ -391,8 +367,7 @@ int audio_output_open(audio_t **audio, struct audio_output_info *info)
 	out->planes = planar ? out->channels : 1;
 	out->input_cb = info->input_callback;
 	out->input_param = info->input_param;
-	out->block_size = (planar ? 1 : out->channels) *
-			  get_audio_bytes_per_channel(info->format);
+	out->block_size = (planar ? 1 : out->channels) * get_audio_bytes_per_channel(info->format);
 
 	if (pthread_mutex_init_recursive(&out->input_mutex) != 0)
 		goto fail0;
@@ -461,20 +436,20 @@ bool audio_output_active(const audio_t *audio)
 
 size_t audio_output_get_block_size(const audio_t *audio)
 {
-	return audio ? audio->block_size : 0;
+	return audio->block_size;
 }
 
 size_t audio_output_get_planes(const audio_t *audio)
 {
-	return audio ? audio->planes : 0;
+	return audio->planes;
 }
 
 size_t audio_output_get_channels(const audio_t *audio)
 {
-	return audio ? audio->channels : 0;
+	return audio->channels;
 }
 
 uint32_t audio_output_get_sample_rate(const audio_t *audio)
 {
-	return audio ? audio->info.samples_per_sec : 0;
+	return audio->info.samples_per_sec;
 }

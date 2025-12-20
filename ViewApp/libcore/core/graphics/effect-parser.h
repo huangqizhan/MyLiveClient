@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,6 +28,9 @@ extern "C" {
 
 struct dstr;
 
+typedef DARRAY(struct ep_param) ep_param_array_t;
+typedef DARRAY(struct ep_var) ep_var_array_t;
+
 /*
  * The effect parser takes an effect file and converts it into individual
  * shaders for each technique's pass.  It automatically writes all dependent
@@ -38,13 +41,7 @@ struct dstr;
 /* ------------------------------------------------------------------------- */
 /* effect parser var data */
 
-enum ep_var_type {
-	EP_VAR_NONE,
-	EP_VAR_IN = EP_VAR_NONE,
-	EP_VAR_INOUT,
-	EP_VAR_OUT,
-	EP_VAR_UNIFORM
-};
+enum ep_var_type { EP_VAR_NONE, EP_VAR_IN = EP_VAR_NONE, EP_VAR_INOUT, EP_VAR_OUT, EP_VAR_UNIFORM };
 
 struct ep_var {
 	char *type, *name, *mapping;
@@ -65,12 +62,7 @@ static inline void ep_var_free(struct ep_var *epv)
 
 /* ------------------------------------------------------------------------- */
 /* effect parser param data */
-/*
- uniform float4x4 ViewProj;
- float4x4: uniform
- name: ViewProj
- is_uniform:true
-*/
+
 struct ep_param {
 	char *type, *name;
 	DARRAY(uint8_t) default_val;
@@ -78,13 +70,10 @@ struct ep_param {
 	struct gs_effect_param *param;
 	bool is_const, is_property, is_uniform, is_texture, written;
 	int writeorder, array_count;
-	DARRAY(struct ep_param) annotations;
+	ep_param_array_t annotations;
 };
 
-extern void ep_param_writevar(struct dstr *dst, struct darray *use_params);
-
-static inline void ep_param_init(struct ep_param *epp, char *type, char *name,
-				 bool is_property, bool is_const,
+static inline void ep_param_init(struct ep_param *epp, char *type, char *name, bool is_property, bool is_const,
 				 bool is_uniform)
 {
 	epp->type = type;
@@ -118,7 +107,7 @@ static inline void ep_param_free(struct ep_param *epp)
 
 struct ep_struct {
 	char *name;
-	DARRAY(struct ep_var) vars; /* struct ep_var */
+	ep_var_array_t vars; /* struct ep_var */
 	bool written;
 };
 
@@ -178,20 +167,10 @@ static inline void ep_sampler_free(struct ep_sampler *eps)
 /* ------------------------------------------------------------------------- */
 /* effect parser pass data */
 
-/*
- 
- pass name
- {
-     vertex_shader = VSDefault(vert_in);
-     pixel_shader  = PSDrawAlphaDivide(vert_in);
- }
- */
 struct ep_pass {
 	char *name;
-    //VSDefault(vert_in);顶点着色器函数
-	DARRAY(struct cf_token) vertex_program;
-    //PSDefault(vert_in);像素着色器函数
-	DARRAY(struct cf_token) fragment_program;
+	cf_token_array_t vertex_program;
+	cf_token_array_t fragment_program;
 	struct gs_effect_pass *pass;
 };
 
@@ -232,16 +211,15 @@ static inline void ep_technique_free(struct ep_technique *ept)
 }
 
 /* ------------------------------------------------------------------------- */
-/* effect parser function data 
- effect文件中的每一个函数 
- */
+/* effect parser function data */
+
 struct ep_func {
 	char *name, *ret_type, *mapping;
-	struct dstr contents;               //函数体
-	DARRAY(struct ep_var) param_vars;   //函数参数
-	DARRAY(char *) func_deps;           //依赖的函数(函数内调用其他的函数)
-	DARRAY(char *) struct_deps;         //依赖的结构体(自定义的结构体)
-	DARRAY(char *) param_deps;          //参数的依赖(自定义的参数类型)
+	struct dstr contents;
+	ep_var_array_t param_vars;
+	DARRAY(char *) func_deps;
+	DARRAY(char *) struct_deps;
+	DARRAY(char *) param_deps;
 	DARRAY(char *) sampler_deps;
 	bool written;
 };
@@ -275,25 +253,17 @@ static inline void ep_func_free(struct ep_func *epf)
 struct effect_parser {
 	gs_effect_t *effect;
 
-    ///每一个effect文件会有一下五部分组成（包括关联文件）
-    
-    //参数
-	DARRAY(struct ep_param) params;
-    //结构体
+	ep_param_array_t params;
 	DARRAY(struct ep_struct) structs;
-    //函数
 	DARRAY(struct ep_func) funcs;
-    //采样器
 	DARRAY(struct ep_sampler) samplers;
-    //不同的顶点着色器跟片段着色器的组合
 	DARRAY(struct ep_technique) techniques;
 
-    
 	/* internal vars */
-//	DARRAY(struct cf_lexer) files;
-//	DARRAY(struct cf_token) tokens;
+	DARRAY(struct cf_lexer) files;
+	cf_token_array_t tokens;
 	struct gs_effect_pass *cur_pass;
-    ///c语言解释器 
+
 	struct cf_parser cfp;
 };
 
@@ -304,8 +274,8 @@ static inline void ep_init(struct effect_parser *ep)
 	da_init(ep->funcs);
 	da_init(ep->samplers);
 	da_init(ep->techniques);
-//	da_init(ep->files);
-//	da_init(ep->tokens);
+	da_init(ep->files);
+	da_init(ep->tokens);
 
 	ep->cur_pass = NULL;
 	cf_parser_init(&ep->cfp);
@@ -313,8 +283,7 @@ static inline void ep_init(struct effect_parser *ep)
 
 extern void ep_free(struct effect_parser *ep);
 
-extern bool ep_parse(struct effect_parser *ep, gs_effect_t *effect,
-		     const char *effect_string, const char *file);
+extern bool ep_parse(struct effect_parser *ep, gs_effect_t *effect, const char *effect_string, const char *file);
 
 #ifdef __cplusplus
 }

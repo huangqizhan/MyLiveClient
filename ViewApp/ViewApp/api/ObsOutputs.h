@@ -16,6 +16,9 @@ class ObsBasic;
 #define SIMPLE_ENCODER_QSV                     "qsv"    // Intel
 #define SIMPLE_ENCODER_NVENC                   "nvenc"  // NVIDIA
 #define SIMPLE_ENCODER_AMD                     "amd"
+#define SIMPLE_ENCODER_APPLE_H264              "apple_h264"
+#define SIMPLE_ENCODER_APPLE_HEVC              "apple_hevc"
+
 
 struct BasicOutputHandler {
     ///文件输出

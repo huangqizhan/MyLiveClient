@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Hugh Bailey <obs.jim@gmail.com>
+ * Copyright (c) 2023 Lain Bailey <lain@obsproject.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -33,15 +33,9 @@
 #include "bmem.h"
 #include "threading.h"
 
-/*
- 当需要等待某个条件发生时
- 需要通知其他线程某个事件已经发生
- 比如：任务完成通知、状态变化通知等
- 用于线程间的通信
- */
 struct os_event_data {
-	pthread_mutex_t mutex;//可以被不同的线程使用
-	pthread_cond_t cond;  //可以被不同的线程使用
+	pthread_mutex_t mutex;
+	pthread_cond_t cond;
 	volatile bool signalled;
 	bool manual;
 };
@@ -103,7 +97,7 @@ static inline void add_ms_to_ts(struct timespec *ts, unsigned long milliseconds)
 {
 	ts->tv_sec += milliseconds / 1000;
 	ts->tv_nsec += (milliseconds % 1000) * 1000000;
-	if (ts->tv_nsec > 1000000000) {
+	if (ts->tv_nsec >= 1000000000) {
 		ts->tv_sec += 1;
 		ts->tv_nsec -= 1000000000;
 	}
@@ -174,15 +168,9 @@ void os_event_reset(os_event_t *event)
 }
 
 #ifdef __APPLE__
-/*
- 信号量值 <= 0 时才会阻塞
- 信号量值 > 0 表示还有可用资源
- 常用场景:
- 初始值=1: 用作互斥锁
- 初始值>1: 用于控制资源池(如线程池限制并发数)
- */
+
 struct os_sem_data {
-	semaphore_t sem;//可以被不同的线程使用
+	semaphore_t sem;
 	task_t task;
 };
 
@@ -210,14 +198,14 @@ void os_sem_destroy(os_sem_t *sem)
 		bfree(sem);
 	}
 }
-///+1
+
 int os_sem_post(os_sem_t *sem)
 {
 	if (!sem)
 		return -1;
 	return (semaphore_signal(sem->sem) == KERN_SUCCESS) ? 0 : -1;
 }
-///-1  wait前 <=0阻塞
+
 int os_sem_wait(os_sem_t *sem)
 {
 	if (!sem)

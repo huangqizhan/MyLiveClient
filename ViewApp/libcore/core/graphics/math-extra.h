@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,22 +33,15 @@ extern "C" {
 struct vec2;
 struct vec3;
 
-/*
- 二维极坐标：由半径 r 和角度 θ 组成 (r, θ)。
- 三维极坐标：也称为球坐标系，由半径 r、方位角 θ 和仰角 φ 组成 (r, θ, φ)。
- */
-///极坐标与笛卡尔坐标互转
 EXPORT void polar_to_cart(struct vec3 *dst, const struct vec3 *v);
 EXPORT void cart_to_polar(struct vec3 *dst, const struct vec3 *v);
+
 EXPORT void norm_to_polar(struct vec2 *dst, const struct vec3 *norm);
 EXPORT void polar_to_norm(struct vec3 *dst, const struct vec2 *polar);
 
+EXPORT float calc_torquef(float val1, float val2, float torque, float min_adjust, float t);
 
-//从 val1 到 val2 的平滑过渡方法
-EXPORT float calc_torquef(float val1, float val2, float torque,
-			  float min_adjust, float t);
-EXPORT void calc_torque(struct vec3 *dst, const struct vec3 *v1,
-			const struct vec3 *v2, float torque, float min_adjust,
+EXPORT void calc_torque(struct vec3 *dst, const struct vec3 *v1, const struct vec3 *v2, float torque, float min_adjust,
 			float t);
 
 static inline float get_percentage(float start, float end, float mid)

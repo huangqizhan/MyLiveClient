@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Hugh Bailey <obs.jim@gmail.com>
+ * Copyright (c) 2023 Lain Bailey <lain@obsproject.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -35,7 +35,7 @@ static inline long os_atomic_set_long(volatile long *ptr, long val)
 {
 	return __atomic_exchange_n(ptr, val, __ATOMIC_SEQ_CST);
 }
-///替换旧值 返回旧值
+
 static inline long os_atomic_exchange_long(volatile long *ptr, long val)
 {
 	return os_atomic_set_long(ptr, val);
@@ -46,32 +46,14 @@ static inline long os_atomic_load_long(const volatile long *ptr)
 	return __atomic_load_n(ptr, __ATOMIC_SEQ_CST);
 }
 
-static inline bool os_atomic_compare_swap_long(volatile long *val, long old_val,
-					       long new_val)
+static inline bool os_atomic_compare_swap_long(volatile long *val, long old_val, long new_val)
 {
-	return __atomic_compare_exchange_n(val, &old_val, new_val, false,
-					   __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
+	return __atomic_compare_exchange_n(val, &old_val, new_val, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
 }
-/*
- val:目标地址
- old_val:旧值
- new_val:新值
- 
- 工作流程：
- 比较 *val 和 *old_val
- 如果相等：
- 将 new_val 写入 *val
- 返回 true
- 如果不相等：
- 将 *val 的实际值写入 *old_val
- 返回 false
 
- */
-static inline bool os_atomic_compare_exchange_long(volatile long *val,
-						   long *old_val, long new_val)
+static inline bool os_atomic_compare_exchange_long(volatile long *val, long *old_val, long new_val)
 {
-	return __atomic_compare_exchange_n(val, old_val, new_val, false,
-					   __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
+	return __atomic_compare_exchange_n(val, old_val, new_val, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);
 }
 
 static inline void os_atomic_store_bool(volatile bool *ptr, bool val)

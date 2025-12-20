@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,10 +16,7 @@
 ******************************************************************************/
 
 #include "gl-subsystem.h"
-/*
- Stage Surface 是一种临时性的图像数据存储区域,位于渲染管线的中间环节。
- 它用于在渲染管线的不同阶段暂存和处理数据,而不是最终的渲染目标。
- */
+
 static bool create_pixel_pack_buffer(struct gs_stage_surface *surf)
 {
 	GLsizeiptr size;
@@ -45,8 +42,7 @@ static bool create_pixel_pack_buffer(struct gs_stage_surface *surf)
 	return success;
 }
 
-gs_stagesurf_t *device_stagesurface_create(gs_device_t *device, uint32_t width,
-					   uint32_t height,
+gs_stagesurf_t *device_stagesurface_create(gs_device_t *device, uint32_t width, uint32_t height,
 					   enum gs_color_format color_format)
 {
 	struct gs_stage_surface *surf;
@@ -114,9 +110,7 @@ static bool can_stage(struct gs_stage_surface *dst, struct gs_texture_2d *src)
 
 /* Apparently for mac, PBOs won't do an asynchronous transfer unless you use
  * FBOs along with glReadPixels, which is really dumb. */
-//把纹理数据存储到GL_PIXEL_PACK_BUFFER缓冲区
-void device_stage_texture(gs_device_t *device, gs_stagesurf_t *dst,
-			  gs_texture_t *src)
+void device_stage_texture(gs_device_t *device, gs_stagesurf_t *dst, gs_texture_t *src)
 {
 	struct gs_texture_2d *tex2d = (struct gs_texture_2d *)src;
 	struct fbo_info *fbo;
@@ -135,14 +129,12 @@ void device_stage_texture(gs_device_t *device, gs_stagesurf_t *dst,
 		goto failed_unbind_buffer;
 	if (!gl_bind_framebuffer(GL_READ_FRAMEBUFFER, fbo->fbo))
 		goto failed_unbind_buffer;
-    //将创建好的纹理附加到帧缓冲上
-	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + 0,
-			       src->gl_target, src->texture, 0);
+
+	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + 0, src->gl_target, src->texture, 0);
 	if (!gl_success("glFrameBufferTexture2D"))
 		goto failed_unbind_all;
-    //此时数据会拷贝到 GL_PIXEL_PACK_BUFFER
-	glReadPixels(0, 0, dst->width, dst->height, dst->gl_format,
-		     dst->gl_type, 0);
+
+	glReadPixels(0, 0, dst->width, dst->height, dst->gl_format, dst->gl_type, 0);
 	if (!gl_success("glReadPixels"))
 		goto failed_unbind_all;
 
@@ -163,8 +155,7 @@ failed:
 
 #else
 
-void device_stage_texture(gs_device_t *device, gs_stagesurf_t *dst,
-			  gs_texture_t *src)
+void device_stage_texture(gs_device_t *device, gs_stagesurf_t *dst, gs_texture_t *src)
 {
 	struct gs_texture_2d *tex2d = (struct gs_texture_2d *)src;
 	if (!can_stage(dst, tex2d))
@@ -203,18 +194,16 @@ uint32_t gs_stagesurface_get_height(const gs_stagesurf_t *stagesurf)
 	return stagesurf->height;
 }
 
-enum gs_color_format
-gs_stagesurface_get_color_format(const gs_stagesurf_t *stagesurf)
+enum gs_color_format gs_stagesurface_get_color_format(const gs_stagesurf_t *stagesurf)
 {
 	return stagesurf->format;
 }
-///GL_PIXEL_PACK_BUFFER 它在需要频繁读取像素数据的场景中非常有用。
-bool gs_stagesurface_map(gs_stagesurf_t *stagesurf, uint8_t **data,
-			 uint32_t *linesize)
+
+bool gs_stagesurface_map(gs_stagesurf_t *stagesurf, uint8_t **data, uint32_t *linesize)
 {
 	if (!gl_bind_buffer(GL_PIXEL_PACK_BUFFER, stagesurf->pack_buffer))
 		goto fail;
-    //像素包缓冲区映射到内存中
+
 	*data = glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY);
 	if (!gl_success("glMapBuffer"))
 		goto fail;

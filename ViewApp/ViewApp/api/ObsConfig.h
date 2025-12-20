@@ -10,7 +10,7 @@
 
 //Simple , Advanced
 #define DEFAULT_OUTPUT_MOD "Simple"
-#define DEFAULT_RECORD_FORMAT "flv"
+#define DEFAULT_RECORD_FORMAT "mp4"
 
 
 //า๔ฦตอจตภึต

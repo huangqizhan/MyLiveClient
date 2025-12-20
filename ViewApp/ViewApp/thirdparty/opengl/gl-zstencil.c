@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,16 +16,8 @@
 ******************************************************************************/
 
 #include "gl-subsystem.h"
-//创建渲染缓冲对象
-/*
- 渲染缓冲对象(Renderbuffer Object)是在纹理之后引入到OpenGL中，作为一个可用的帧缓冲附件类型的，所以在过去纹理是唯一可用的附件。和纹理图像一样，渲染缓冲对象是一个真正的缓冲，即一系列的字节、整数、像素等。渲染缓冲对象附加的好处是，它会将数据储存为OpenGL原生的渲染格式，它是为离屏渲染到帧缓冲优化过的。
- 渲染缓冲对象直接将所有的渲染数据储存到它的缓冲中，不会做任何针对纹理格式的转换，让它变为一个更快的可写储存介质。然而，渲染缓冲对象通常都是只写的，所以你不能读取它们（比如使用纹理访问）。当然你仍然还是能够使用glReadPixels来读取它，这会从当前绑定的帧缓冲，而不是附件本身，中返回特定区域的像素。
 
- 因为它的数据已经是原生的格式了，当写入或者复制它的数据到其它缓冲中时是非常快的。所以，交换缓冲这样的操作在使用渲染缓冲对象时会非常快。我们在每个渲染迭代最后使用的glfwSwapBuffers，也可以通过渲染缓冲对象实现：只需要写入一个渲染缓冲图像，并在最后交换到另外一个渲染缓冲就可以了。渲染缓冲对象对这种操作非常完美。
- 
- */
-static bool gl_init_zsbuffer(struct gs_zstencil_buffer *zs, uint32_t width,
-			     uint32_t height)
+static bool gl_init_zsbuffer(struct gs_zstencil_buffer *zs, uint32_t width, uint32_t height)
 {
 	glGenRenderbuffers(1, &zs->buffer);
 	if (!gl_success("glGenRenderbuffers"))
@@ -60,8 +52,7 @@ static inline GLenum get_attachment(enum gs_zstencil_format format)
 	return 0;
 }
 
-gs_zstencil_t *device_zstencil_create(gs_device_t *device, uint32_t width,
-				      uint32_t height,
+gs_zstencil_t *device_zstencil_create(gs_device_t *device, uint32_t width, uint32_t height,
 				      enum gs_zstencil_format format)
 {
 	struct gs_zstencil_buffer *zs;

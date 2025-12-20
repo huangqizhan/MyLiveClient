@@ -295,6 +295,12 @@ void SimpleOutput::LoadRecordingPreset(){
             LoadRecordingPreset_h264("amd_amf_h264");
         } else if (strcmp(encoder, SIMPLE_ENCODER_NVENC) == 0) {
             LoadRecordingPreset_h264("ffmpeg_nvenc");
+        } else if (strcmp(encoder, SIMPLE_ENCODER_APPLE_H264) == 0) {
+            LoadRecordingPreset_h264("com.apple.videotoolbox.videoencoder.ave.avc");
+    #ifdef ENABLE_HEVC
+        } else if (strcmp(encoder, SIMPLE_ENCODER_APPLE_HEVC) == 0) {
+//            return "com.apple.videotoolbox.videoencoder.ave.hevc";
+    #endif
         }
         usingRecordingPreset = true;
 
@@ -308,7 +314,9 @@ SimpleOutput::SimpleOutput(ObsBasic *main_) : BasicOutputHandler(main_)
 {
     const char *encoder = config_get_string(config(), "SimpleOutput",
             "StreamEncoder");
-    
+//#if DEBUG
+//    encoder = SIMPLE_ENCODER_APPLE_H264;
+//#endif
     ///h264
     if (strcmp(encoder, SIMPLE_ENCODER_QSV) == 0)
         LoadStreamingPreset_h264("obs_qsv11");
@@ -316,6 +324,8 @@ SimpleOutput::SimpleOutput(ObsBasic *main_) : BasicOutputHandler(main_)
         LoadStreamingPreset_h264("amd_amf_h264");
     else if (strcmp(encoder, SIMPLE_ENCODER_NVENC) == 0)
         LoadStreamingPreset_h264("ffmpeg_nvenc");
+    else if (strcmp(encoder, SIMPLE_ENCODER_APPLE_H264) == 0)
+        LoadStreamingPreset_h264("com.apple.videotoolbox.videoencoder.ave.avc");
     else
         LoadStreamingPreset_h264("obs_x264");
 
@@ -634,7 +644,7 @@ const char *FindAudioEncoderFromCodec(const char *type){
 bool SimpleOutput::StartStreaming(obs_service_t *service){
     if (!Active())
         SetupOutputs();
-    const char *type = obs_service_get_output_type(service);
+    const char *type = obs_service_get_preferred_output_type(service);
     if (!type)
         type = "rtmp_output";
 
@@ -703,13 +713,13 @@ bool SimpleOutput::StartStreaming(obs_service_t *service){
 
     bool reconnect = config_get_bool(config(), "Output",
             "Reconnect");
-    int retryDelay = config_get_uint(config(), "Output",
+    int retryDelay = (int)config_get_uint(config(), "Output",
             "RetryDelay");
-    int maxRetries = config_get_uint(config(), "Output",
+    int maxRetries = (int)config_get_uint(config(), "Output",
             "MaxRetries");
-    bool useDelay = config_get_bool(config(), "Output",
+    bool useDelay = (int)config_get_bool(config(), "Output",
             "DelayEnable");
-    int delaySec = config_get_int(config(), "Output",
+    int delaySec = (int)config_get_int(config(), "Output",
             "DelaySec");
     bool preserveDelay = config_get_bool(config(), "Output",
             "DelayPreserve");
@@ -731,7 +741,9 @@ bool SimpleOutput::StartStreaming(obs_service_t *service){
 
     if (!reconnect)
         maxRetries = 0;
-
+#if DEBUG
+    useDelay = 1;
+#endif
     obs_output_set_delay(streamOutput, useDelay ? delaySec : 0,
             preserveDelay ? OBS_OUTPUT_DELAY_PRESERVE : 0);
 
@@ -1385,7 +1397,7 @@ bool AdvancedOutput::StartStreaming(obs_service_t *service)
     int trackIndex = config_get_int(config(), "AdvOut",
             "TrackIndex");
 
-    const char *type = obs_service_get_output_type(service);
+    const char *type = obs_service_get_preferred_output_type(service);
     if (!type)
         type = "rtmp_output";
 

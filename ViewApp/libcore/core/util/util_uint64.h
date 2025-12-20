@@ -19,8 +19,7 @@
 #if defined(_MSC_VER) && defined(_M_X64)
 #include <intrin.h>
 #endif
-///它的作用是计算 (num * mul) / div 的结果。
-///优点是可以避免中间结果溢出,从而能够正确处理大数值
+
 static inline uint64_t util_mul_div64(uint64_t num, uint64_t mul, uint64_t div)
 {
 #if defined(_MSC_VER) && defined(_M_X64) && (_MSC_VER >= 1920)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Hugh Bailey <obs.jim@gmail.com>
+ * Copyright (c) 2023 Lain Bailey <lain@obsproject.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -17,56 +17,12 @@
 #pragma once
 
 #include "c99defs.h"
+
 /*
  * Generic ini-style config file functions
  *
  * NOTE: It is highly recommended to use the default value functions (bottom of
  * the file) before reading any variables from config files.
- .
- ├── basic
- │   ├── profiles
- │   │   └── 未命名
- │   │       ├── basic.ini
- │   │       ├── service.json
- │   │       ├── service.json.bak
- │   │       └── streamEncoder.json
- │   └── scenes
- │       ├── 未命名.json
- │       └── 未命名.json.bak
- ├── global.ini  //全局的项目配置   比如使用opengl/wake
- ├── logs
- │   ├── 2025-08-26 18-45-46.txt
- │   ├── 2025-08-27 17-04-29.txt
- │   ├── 2025-08-27 18-35-35.txt
- │   ├── 2025-08-29 16-35-06.txt
- │   ├── 2025-08-29 16-35-38.txt
- │   ├── 2025-08-29 16-35-53.txt
- │   ├── 2025-08-29 16-36-46.txt
- │   ├── 2025-08-29 16-38-39.txt
- │   ├── 2025-08-29 16-39-00.txt
- │   └── 2025-08-29 16-39-42.txt
- ├── plugin_config
- │   ├── obs-websocket
- │   │   └── config.json
- │   ├── rtmp-services
- │   │   ├── amazon_ivs_ingests.json
- │   │   ├── package.json
- │   │   ├── services.json
- │   │   └── twitch_ingests.json
- │   └── text-freetype2
- ├── profiler_data
- │   ├── 2025-08-26 18-43-18.csv.gz
- │   ├── 2025-08-26 18-45-03.csv.gz
- │   ├── 2025-08-26 18-45-46.csv.gz
- │   └── 2025-08-27 17-04-29.csv.gz
- ├── themes
- │   └── com.obsproject.Yami.Original.out
- ├── updates
- │   ├── branches.json
- │   └── whatsnew.json
- └── user.ini
- 
- 
  */
 
 #ifdef __cplusplus
@@ -86,43 +42,28 @@ enum config_open_type {
 };
 
 EXPORT config_t *config_create(const char *file);
-EXPORT int config_open(config_t **config, const char *file,
-		       enum config_open_type open_type);
+EXPORT int config_open(config_t **config, const char *file, enum config_open_type open_type);
 EXPORT int config_open_string(config_t **config, const char *str);
 EXPORT int config_save(config_t *config);
-///备份   临时文件的扩展名 backup_ext   temp_ext临时文件 
-EXPORT int config_save_safe(config_t *config, const char *temp_ext,
-			    const char *backup_ext);
+EXPORT int config_save_safe(config_t *config, const char *temp_ext, const char *backup_ext);
 EXPORT void config_close(config_t *config);
-EXPORT void config_iter(config_t *config);
 
 EXPORT size_t config_num_sections(config_t *config);
 EXPORT const char *config_get_section(config_t *config, size_t idx);
 
-EXPORT void config_set_string(config_t *config, const char *section,
-			      const char *name, const char *value);
-EXPORT void config_set_int(config_t *config, const char *section,
-			   const char *name, int64_t value);
-EXPORT void config_set_uint(config_t *config, const char *section,
-			    const char *name, uint64_t value);
-EXPORT void config_set_bool(config_t *config, const char *section,
-			    const char *name, bool value);
-EXPORT void config_set_double(config_t *config, const char *section,
-			      const char *name, double value);
+EXPORT void config_set_string(config_t *config, const char *section, const char *name, const char *value);
+EXPORT void config_set_int(config_t *config, const char *section, const char *name, int64_t value);
+EXPORT void config_set_uint(config_t *config, const char *section, const char *name, uint64_t value);
+EXPORT void config_set_bool(config_t *config, const char *section, const char *name, bool value);
+EXPORT void config_set_double(config_t *config, const char *section, const char *name, double value);
 
-EXPORT const char *config_get_string(config_t *config, const char *section,
-				     const char *name);
-EXPORT int64_t config_get_int(config_t *config, const char *section,
-			      const char *name);
-EXPORT uint64_t config_get_uint(config_t *config, const char *section,
-				const char *name);
-EXPORT bool config_get_bool(config_t *config, const char *section,
-			    const char *name);
-EXPORT double config_get_double(config_t *config, const char *section,
-				const char *name);
+EXPORT const char *config_get_string(config_t *config, const char *section, const char *name);
+EXPORT int64_t config_get_int(config_t *config, const char *section, const char *name);
+EXPORT uint64_t config_get_uint(config_t *config, const char *section, const char *name);
+EXPORT bool config_get_bool(config_t *config, const char *section, const char *name);
+EXPORT double config_get_double(config_t *config, const char *section, const char *name);
 
-EXPORT bool config_remove_value(config_t *config, const char *section,
-				const char *name);
+EXPORT bool config_remove_value(config_t *config, const char *section, const char *name);
 
 /*
  * DEFAULT VALUES
@@ -140,35 +81,22 @@ EXPORT bool config_remove_value(config_t *config, const char *section,
  */
 EXPORT int config_open_defaults(config_t *config, const char *file);
 
-EXPORT void config_set_default_string(config_t *config, const char *section,
-				      const char *name, const char *value);
-EXPORT void config_set_default_int(config_t *config, const char *section,
-				   const char *name, int64_t value);
-EXPORT void config_set_default_uint(config_t *config, const char *section,
-				    const char *name, uint64_t value);
-EXPORT void config_set_default_bool(config_t *config, const char *section,
-				    const char *name, bool value);
-EXPORT void config_set_default_double(config_t *config, const char *section,
-				      const char *name, double value);
+EXPORT void config_set_default_string(config_t *config, const char *section, const char *name, const char *value);
+EXPORT void config_set_default_int(config_t *config, const char *section, const char *name, int64_t value);
+EXPORT void config_set_default_uint(config_t *config, const char *section, const char *name, uint64_t value);
+EXPORT void config_set_default_bool(config_t *config, const char *section, const char *name, bool value);
+EXPORT void config_set_default_double(config_t *config, const char *section, const char *name, double value);
 
 /* These functions allow you to get the current default values rather than get
  * the actual values.  Probably almost never really needed */
-EXPORT const char *config_get_default_string(config_t *config,
-					     const char *section,
-					     const char *name);
-EXPORT int64_t config_get_default_int(config_t *config, const char *section,
-				      const char *name);
-EXPORT uint64_t config_get_default_uint(config_t *config, const char *section,
-					const char *name);
-EXPORT bool config_get_default_bool(config_t *config, const char *section,
-				    const char *name);
-EXPORT double config_get_default_double(config_t *config, const char *section,
-					const char *name);
+EXPORT const char *config_get_default_string(config_t *config, const char *section, const char *name);
+EXPORT int64_t config_get_default_int(config_t *config, const char *section, const char *name);
+EXPORT uint64_t config_get_default_uint(config_t *config, const char *section, const char *name);
+EXPORT bool config_get_default_bool(config_t *config, const char *section, const char *name);
+EXPORT double config_get_default_double(config_t *config, const char *section, const char *name);
 
-EXPORT bool config_has_user_value(config_t *config, const char *section,
-				  const char *name);
-EXPORT bool config_has_default_value(config_t *config, const char *section,
-				     const char *name);
+EXPORT bool config_has_user_value(config_t *config, const char *section, const char *name);
+EXPORT bool config_has_default_value(config_t *config, const char *section, const char *name);
 
 #ifdef __cplusplus
 }

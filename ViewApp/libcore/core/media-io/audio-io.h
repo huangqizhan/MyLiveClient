@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,11 +27,10 @@ extern "C" {
 
 #define MAX_AUDIO_MIXES 6
 #define MAX_AUDIO_CHANNELS 8
+#define MAX_DEVICE_INPUT_CHANNELS 64
 #define AUDIO_OUTPUT_FRAMES 1024
 
-#define TOTAL_AUDIO_SIZE                                              \
-	(MAX_AUDIO_MIXES * MAX_AUDIO_CHANNELS * AUDIO_OUTPUT_FRAMES * \
-	 sizeof(float))
+#define TOTAL_AUDIO_SIZE (MAX_AUDIO_MIXES * MAX_AUDIO_CHANNELS * AUDIO_OUTPUT_FRAMES * sizeof(float))
 
 /*
  * Base audio output component.  Use this to create an audio output track
@@ -74,10 +73,9 @@ enum speaker_layout {
 	SPEAKERS_5POINT1,     /**< Channels: FL, FR, FC, LFE, RL, RR */
 	SPEAKERS_7POINT1 = 8, /**< Channels: FL, FR, FC, LFE, RL, RR, SL, SR */
 };
-///每一个音频轨 (可能会有多个plane)
+
 struct audio_data {
 	uint8_t *data[MAX_AV_PLANES];
-    ///采样数
 	uint32_t frames;
 	uint64_t timestamp;
 };
@@ -86,10 +84,8 @@ struct audio_output_data {
 	float *data[MAX_AUDIO_CHANNELS];
 };
 
-typedef bool (*audio_input_callback_t)(void *param, uint64_t start_ts,
-				       uint64_t end_ts, uint64_t *new_ts,
-				       uint32_t active_mixers,
-				       struct audio_output_data *mixes);
+typedef bool (*audio_input_callback_t)(void *param, uint64_t start_ts, uint64_t end_ts, uint64_t *new_ts,
+				       uint32_t active_mixers, struct audio_output_data *mixes);
 
 struct audio_output_info {
 	const char *name;
@@ -97,7 +93,7 @@ struct audio_output_info {
 	uint32_t samples_per_sec;
 	enum audio_format format;
 	enum speaker_layout speakers;
-    //音频IO线程获取音频数据回调
+
 	audio_input_callback_t input_callback;
 	void *input_param;
 };
@@ -132,7 +128,7 @@ static inline uint32_t get_audio_channels(enum speaker_layout speakers)
 
 	return 0;
 }
-///采样大小
+
 static inline size_t get_audio_bytes_per_channel(enum audio_format format)
 {
 	switch (format) {
@@ -178,29 +174,22 @@ static inline bool is_audio_planar(enum audio_format format)
 
 	return false;
 }
-///=======
-static inline size_t get_audio_planes(enum audio_format format,
-				      enum speaker_layout speakers)
+
+static inline size_t get_audio_planes(enum audio_format format, enum speaker_layout speakers)
 {
 	return (is_audio_planar(format) ? get_audio_channels(speakers) : 1);
 }
-///每个channel frames个采样 的size
-static inline size_t get_audio_size(enum audio_format format,
-				    enum speaker_layout speakers,
-				    uint32_t frames)
+
+static inline size_t get_audio_size(enum audio_format format, enum speaker_layout speakers, uint32_t frames)
 {
 	bool planar = is_audio_planar(format);
 
-	return (planar ? 1 : get_audio_channels(speakers)) *
-	       get_audio_bytes_per_channel(format) * frames;
+	return (planar ? 1 : get_audio_channels(speakers)) * get_audio_bytes_per_channel(format) * frames;
 }
 
-static inline size_t get_total_audio_size(enum audio_format format,
-					  enum speaker_layout speakers,
-					  uint32_t frames)
+static inline size_t get_total_audio_size(enum audio_format format, enum speaker_layout speakers, uint32_t frames)
 {
-	return get_audio_channels(speakers) *
-	       get_audio_bytes_per_channel(format) * frames;
+	return get_audio_channels(speakers) * get_audio_bytes_per_channel(format) * frames;
 }
 
 static inline uint64_t audio_frames_to_ns(size_t sample_rate, uint64_t frames)
@@ -220,15 +209,11 @@ static inline uint64_t ns_to_audio_frames(size_t sample_rate, uint64_t frames)
 EXPORT int audio_output_open(audio_t **audio, struct audio_output_info *info);
 EXPORT void audio_output_close(audio_t *audio);
 
-typedef void (*audio_output_callback_t)(void *param, size_t mix_idx,
-					struct audio_data *data);
+typedef void (*audio_output_callback_t)(void *param, size_t mix_idx, struct audio_data *data);
 
-EXPORT bool audio_output_connect(audio_t *video, size_t mix_idx,
-				 const struct audio_convert_info *conversion,
+EXPORT bool audio_output_connect(audio_t *video, size_t mix_idx, const struct audio_convert_info *conversion,
 				 audio_output_callback_t callback, void *param);
-EXPORT void audio_output_disconnect(audio_t *video, size_t mix_idx,
-				    audio_output_callback_t callback,
-				    void *param);
+EXPORT void audio_output_disconnect(audio_t *video, size_t mix_idx, audio_output_callback_t callback, void *param);
 
 EXPORT bool audio_output_active(const audio_t *audio);
 
@@ -236,8 +221,7 @@ EXPORT size_t audio_output_get_block_size(const audio_t *audio);
 EXPORT size_t audio_output_get_planes(const audio_t *audio);
 EXPORT size_t audio_output_get_channels(const audio_t *audio);
 EXPORT uint32_t audio_output_get_sample_rate(const audio_t *audio);
-EXPORT const struct audio_output_info *
-audio_output_get_info(const audio_t *audio);
+EXPORT const struct audio_output_info *audio_output_get_info(const audio_t *audio);
 
 #ifdef __cplusplus
 }

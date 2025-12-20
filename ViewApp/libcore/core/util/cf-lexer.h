@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Hugh Bailey <obs.jim@gmail.com>
+ * Copyright (c) 2023 Lain Bailey <lain@obsproject.com>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -24,7 +24,7 @@ extern "C" {
 
 EXPORT char *cf_literal_to_str(const char *literal, size_t count);
 
-/* ----语族词法分析器中定义的不同类型的词法令牌--------------- */
+/* ------------------------------------------------------------------------- */
 /*
  * A C-family lexer token is defined as:
  *   1.) A generic 'name' token.  (abc123_def456)
@@ -51,19 +51,19 @@ struct cf_token {
 	enum cf_token_type type;
 };
 
+typedef DARRAY(struct cf_token) cf_token_array_t;
+
 static inline void cf_token_clear(struct cf_token *t)
 {
 	memset(t, 0, sizeof(struct cf_token));
 }
 
-static inline void cf_token_copy(struct cf_token *dst,
-				 const struct cf_token *src)
+static inline void cf_token_copy(struct cf_token *dst, const struct cf_token *src)
 {
 	memcpy(dst, src, sizeof(struct cf_token));
 }
 
-static inline void cf_token_add(struct cf_token *dst,
-				const struct cf_token *add)
+static inline void cf_token_add(struct cf_token *dst, const struct cf_token *add)
 {
 	strref_add(&dst->str, &add->str);
 	strref_add(&dst->unmerged_str, &add->unmerged_str);
@@ -81,12 +81,12 @@ static inline void cf_token_add(struct cf_token *dst,
  *     1.) Spliced lines (escaped newlines) are merged
  *     2.) All comments are converted to a single space
  */
-//这段注释描述了一个 C 语族的词法分析器
+
 struct cf_lexer {
 	char *file;
 	struct lexer base_lexer;
 	char *reformatted, *write_offset;
-	DARRAY(struct cf_token) tokens;
+	cf_token_array_t tokens;
 	bool unexpected_eof; /* unexpected multi-line comment eof */
 };
 
@@ -97,17 +97,16 @@ static inline struct cf_token *cf_lexer_get_tokens(struct cf_lexer *lex)
 {
 	return lex->tokens.array;
 }
-///C语言解释器解释 
-EXPORT bool cf_lexer_lex(struct cf_lexer *lex, const char *str,
-			 const char *file);
+
+EXPORT bool cf_lexer_lex(struct cf_lexer *lex, const char *str, const char *file);
 
 /* ------------------------------------------------------------------------- */
 /* c-family preprocessor definition */
 
 struct cf_def {
 	struct cf_token name;
-	DARRAY(struct cf_token) params;
-	DARRAY(struct cf_token) tokens;
+	cf_token_array_t params;
+	cf_token_array_t tokens;
 	bool macro;
 };
 
@@ -129,8 +128,7 @@ static inline void cf_def_addtoken(struct cf_def *cfd, struct cf_token *token)
 	da_push_back(cfd->tokens, token);
 }
 
-static inline struct cf_token *cf_def_getparam(const struct cf_def *cfd,
-					       size_t idx)
+static inline struct cf_token *cf_def_getparam(const struct cf_def *cfd, size_t idx)
 {
 	return cfd->params.array + idx;
 }
@@ -144,7 +142,7 @@ static inline void cf_def_free(struct cf_def *cfd)
 
 /* ------------------------------------------------------------------------- */
 /*
- * C-family preprocessor   C语言家族的预处理器
+ * C-family preprocessor
  *
  *   This preprocessor allows for standard c-style preprocessor directives
  * to be applied to source text, such as:
@@ -156,14 +154,13 @@ static inline void cf_def_free(struct cf_def *cfd)
  *   Still left to implement (TODO):
  *   + #if/#elif
  *   + "defined" preprocessor keyword
- *   + system includes 
+ *   + system includes
  *   + variadic macros
  *   + custom callbacks (for things like pragma)
  *   + option to exclude features such as #import, variadic macros, and other
  *     features for certain language implementations
  *   + macro parameter string operator #
  *   + macro parameter token concatenation operator ##
- *   + predefined macros
  *   + restricted macros
  */
 
@@ -173,33 +170,26 @@ struct cf_preprocessor {
 	DARRAY(struct cf_def) defines;
 	DARRAY(char *) sys_include_dirs;
 	DARRAY(struct cf_lexer) dependencies;
-	DARRAY(struct cf_token) tokens;
+	cf_token_array_t tokens;
 	bool ignore_state;
 };
 
 EXPORT void cf_preprocessor_init(struct cf_preprocessor *pp);
 EXPORT void cf_preprocessor_free(struct cf_preprocessor *pp);
 
-/// c语言预处理 
-EXPORT bool cf_preprocess(struct cf_preprocessor *pp, struct cf_lexer *lex,
-			  struct error_data *ed);
+EXPORT bool cf_preprocess(struct cf_preprocessor *pp, struct cf_lexer *lex, struct error_data *ed);
 
-static inline void
-cf_preprocessor_add_sys_include_dir(struct cf_preprocessor *pp,
-				    const char *include_dir)
+static inline void cf_preprocessor_add_sys_include_dir(struct cf_preprocessor *pp, const char *include_dir)
 {
 	char *str = bstrdup(include_dir);
 	if (include_dir)
 		da_push_back(pp->sys_include_dirs, &str);
 }
 
-EXPORT void cf_preprocessor_add_def(struct cf_preprocessor *pp,
-				    struct cf_def *def);
-EXPORT void cf_preprocessor_remove_def(struct cf_preprocessor *pp,
-				       const char *def_name);
+EXPORT void cf_preprocessor_add_def(struct cf_preprocessor *pp, struct cf_def *def);
+EXPORT void cf_preprocessor_remove_def(struct cf_preprocessor *pp, const char *def_name);
 
-static inline struct cf_token *
-cf_preprocessor_get_tokens(struct cf_preprocessor *pp)
+static inline struct cf_token *cf_preprocessor_get_tokens(struct cf_preprocessor *pp)
 {
 	return pp->tokens.array;
 }

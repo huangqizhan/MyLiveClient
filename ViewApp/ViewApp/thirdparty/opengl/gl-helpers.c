@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,11 +16,9 @@
 ******************************************************************************/
 
 #include "gl-subsystem.h"
-/// 初始化一个MipMap的纹理
-bool gl_init_face(GLenum target, GLenum type, uint32_t num_levels,
-		  GLenum format, GLint internal_format, bool compressed,
-		  uint32_t width, uint32_t height, uint32_t size,
-		  const uint8_t ***p_data)
+
+bool gl_init_face(GLenum target, GLenum type, uint32_t num_levels, GLenum format, GLint internal_format,
+		  bool compressed, uint32_t width, uint32_t height, uint32_t size, const uint8_t ***p_data)
 {
 	bool success = true;
 	const uint8_t **data = p_data ? *p_data : NULL;
@@ -28,15 +26,12 @@ bool gl_init_face(GLenum target, GLenum type, uint32_t num_levels,
 
 	for (i = 0; i < num_levels; i++) {
 		if (compressed) {
-			glCompressedTexImage2D(target, i, internal_format,
-					       width, height, 0, size,
-					       data ? *data : NULL);
+			glCompressedTexImage2D(target, i, internal_format, width, height, 0, size, data ? *data : NULL);
 			if (!gl_success("glCompressedTexImage2D"))
 				success = false;
 
 		} else {
-			glTexImage2D(target, i, internal_format, width, height,
-				     0, format, type, data ? *data : NULL);
+			glTexImage2D(target, i, internal_format, width, height, 0, format, type, data ? *data : NULL);
 			if (!gl_success("glTexImage2D"))
 				success = false;
 		}
@@ -56,9 +51,8 @@ bool gl_init_face(GLenum target, GLenum type, uint32_t num_levels,
 	return success;
 }
 
-static bool gl_copy_fbo(struct gs_texture *dst, uint32_t dst_x, uint32_t dst_y,
-			struct gs_texture *src, uint32_t src_x, uint32_t src_y,
-			uint32_t width, uint32_t height)
+static bool gl_copy_fbo(struct gs_texture *dst, uint32_t dst_x, uint32_t dst_y, struct gs_texture *src, uint32_t src_x,
+			uint32_t src_y, uint32_t width, uint32_t height)
 {
 	struct fbo_info *fbo = get_fbo(src, width, height);
 	GLint last_fbo;
@@ -73,18 +67,16 @@ static bool gl_copy_fbo(struct gs_texture *dst, uint32_t dst_x, uint32_t dst_y,
 		return false;
 	if (!gl_bind_texture(dst->gl_target, dst->texture))
 		goto fail;
-    //将纹理附加到帧缓冲上
-	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + 0,
-			       src->gl_target, src->texture, 0);
+
+	glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + 0, src->gl_target, src->texture, 0);
 	if (!gl_success("glFrameBufferTexture2D"))
 		goto fail;
-    //设置当前读取缓冲区为 GL_COLOR_ATTACHMENT0。
+
 	glReadBuffer(GL_COLOR_ATTACHMENT0 + 0);
 	if (!gl_success("glReadBuffer"))
 		goto fail;
-    //将当前绑定的帧缓冲区的颜色附件数据,复制到指定的纹理对象中。
-	glCopyTexSubImage2D(dst->gl_target, 0, dst_x, dst_y, src_x, src_y,
-			    width, height);
+
+	glCopyTexSubImage2D(dst->gl_target, 0, dst_x, dst_y, src_x, src_y, width, height);
 	if (!gl_success("glCopyTexSubImage2D"))
 		goto fail;
 
@@ -99,28 +91,23 @@ fail:
 	return success;
 }
 
-bool gl_copy_texture(struct gs_device *device, struct gs_texture *dst,
-		     uint32_t dst_x, uint32_t dst_y, struct gs_texture *src,
-		     uint32_t src_x, uint32_t src_y, uint32_t width,
-		     uint32_t height)
+bool gl_copy_texture(struct gs_device *device, struct gs_texture *dst, uint32_t dst_x, uint32_t dst_y,
+		     struct gs_texture *src, uint32_t src_x, uint32_t src_y, uint32_t width, uint32_t height)
 {
 	bool success = false;
 
 	if (device->copy_type == COPY_TYPE_ARB) {
-		glCopyImageSubData(src->texture, src->gl_target, 0, src_x,
-				   src_y, 0, dst->texture, dst->gl_target, 0,
+		glCopyImageSubData(src->texture, src->gl_target, 0, src_x, src_y, 0, dst->texture, dst->gl_target, 0,
 				   dst_x, dst_y, 0, width, height, 1);
 		success = gl_success("glCopyImageSubData");
 
 	} else if (device->copy_type == COPY_TYPE_NV) {
-		glCopyImageSubDataNV(src->texture, src->gl_target, 0, src_x,
-				     src_y, 0, dst->texture, dst->gl_target, 0,
+		glCopyImageSubDataNV(src->texture, src->gl_target, 0, src_x, src_y, 0, dst->texture, dst->gl_target, 0,
 				     dst_x, dst_y, 0, width, height, 1);
 		success = gl_success("glCopyImageSubDataNV");
 
 	} else if (device->copy_type == COPY_TYPE_FBO_BLIT) {
-		success = gl_copy_fbo(dst, dst_x, dst_y, src, src_x, src_y,
-				      width, height);
+		success = gl_copy_fbo(dst, dst_x, dst_y, src, src_x, src_y, width, height);
 		if (!success)
 			blog(LOG_ERROR, "gl_copy_texture failed");
 	}
@@ -128,8 +115,7 @@ bool gl_copy_texture(struct gs_device *device, struct gs_texture *dst,
 	return success;
 }
 
-bool gl_create_buffer(GLenum target, GLuint *buffer, GLsizeiptr size,
-		      const GLvoid *data, GLenum usage)
+bool gl_create_buffer(GLenum target, GLuint *buffer, GLsizeiptr size, const GLvoid *data, GLenum usage)
 {
 	bool success;
 	if (!gl_gen_buffers(1, buffer))
@@ -151,15 +137,10 @@ bool update_buffer(GLenum target, GLuint buffer, const void *data, size_t size)
 
 	if (!gl_bind_buffer(target, buffer))
 		return false;
-    /*
-     glBufferData 需要将整个缓冲区的数据一次性传输到显存中,而 glMapBufferRange 和 memcpy 可以仅更新部分数据,从而减少数据传输量。
-     对于频繁更新缓冲区数据的场景,glMapBufferRange 和 memcpy 的方式可能会更高效一些。
-     */
-    
+
 	/* glMapBufferRange with these flags will actually give far better
 	 * performance than a plain glMapBuffer call */
-	ptr = glMapBufferRange(target, 0, size,
-			       GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
+	ptr = glMapBufferRange(target, 0, size, GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
 	success = gl_success("glMapBufferRange");
 	if (success && ptr) {
 		memcpy(ptr, data, size);

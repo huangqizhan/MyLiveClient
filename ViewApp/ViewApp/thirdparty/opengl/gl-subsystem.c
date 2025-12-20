@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
     Copyright (C) 2014 by Zachary Lund <admin@computerquip.com>
 
     This program is free software: you can redistribute it and/or modify
@@ -31,8 +31,7 @@
 
 #ifdef _DEBUG
 
-static void APIENTRY gl_debug_proc(GLenum source, GLenum type, GLuint id,
-				   GLenum severity, GLsizei length,
+static void APIENTRY gl_debug_proc(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length,
 				   const GLchar *message, const GLvoid *data)
 {
 	UNUSED_PARAMETER(id);
@@ -43,8 +42,7 @@ static void APIENTRY gl_debug_proc(GLenum source, GLenum type, GLuint id,
 /* frames can get a bit too much spam with irrelevant/insignificant opengl
  * debug messages */
 #ifndef SHOW_ALL_GL_MESSAGES
-	if (type > GL_DEBUG_TYPE_PORTABILITY &&
-	    severity != GL_DEBUG_SEVERITY_HIGH) {
+	if (type > GL_DEBUG_TYPE_PORTABILITY && severity != GL_DEBUG_SEVERITY_HIGH) {
 		return;
 	}
 #endif
@@ -112,8 +110,7 @@ static void APIENTRY gl_debug_proc(GLenum source, GLenum type, GLuint id,
 		severity_str = "Unknown";
 	}
 
-	blog(LOG_DEBUG, "[%s][%s]{%s}: %.*s", source_str, type_str,
-	     severity_str, length, message);
+	blog(LOG_DEBUG, "[%s][%s]{%s}: %.*s", source_str, type_str, severity_str, length, message);
 }
 
 static void gl_enable_debug()
@@ -129,13 +126,13 @@ static void gl_enable_debug()
 	}
 }
 #else
-static void gl_enable_debug(void) {}
+static void gl_enable_debug() {}
 #endif
-///开启opengl的一些扩展
-static bool gl_init_extensions(struct gs_device *device){
+
+static bool gl_init_extensions(struct gs_device *device)
+{
 	if (!GLAD_GL_VERSION_3_3) {
-		blog(LOG_ERROR,
-		     "obs-studio1 requires OpenGL version 3.3 or higher.");
+		blog(LOG_ERROR, "obs-studio requires OpenGL version 3.3 or higher.");
 		return false;
 	}
 
@@ -146,7 +143,7 @@ static bool gl_init_extensions(struct gs_device *device){
 				"is required.");
 		return false;
 	}
-    //当使用立方体贴图时，每个面的纹理可能会在边缘处出现接缝，这可能会影响视觉效果
+
 	gl_enable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 
 	if (GLAD_GL_VERSION_4_3 || GLAD_GL_ARB_copy_image)
@@ -158,8 +155,9 @@ static bool gl_init_extensions(struct gs_device *device){
 
 	return true;
 }
-///解绑纹理绑定
-static void clear_textures(struct gs_device *device){
+
+static void clear_textures(struct gs_device *device)
+{
 	GLenum i;
 	for (i = 0; i < GS_MAX_TEXTURES; i++) {
 		if (device->cur_textures[i]) {
@@ -170,11 +168,10 @@ static void clear_textures(struct gs_device *device){
 	}
 }
 
-void convert_sampler_info(struct gs_sampler_state *sampler,
-			  const struct gs_sampler_info *info){
+void convert_sampler_info(struct gs_sampler_state *sampler, const struct gs_sampler_info *info)
+{
 	GLint max_anisotropy_max;
-	convert_filter(info->filter, &sampler->min_filter,
-		       &sampler->mag_filter);
+	convert_filter(info->filter, &sampler->min_filter, &sampler->mag_filter);
 	sampler->address_u = convert_address_mode(info->address_u);
 	sampler->address_v = convert_address_mode(info->address_v);
 	sampler->address_w = convert_address_mode(info->address_w);
@@ -182,13 +179,11 @@ void convert_sampler_info(struct gs_sampler_state *sampler,
 
 	max_anisotropy_max = 1;
 	if (GLAD_GL_EXT_texture_filter_anisotropic) {
-		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT,
-			      &max_anisotropy_max);
+		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_anisotropy_max);
 		gl_success("glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT)");
 	}
 
-	if (1 <= sampler->max_anisotropy &&
-	    sampler->max_anisotropy <= max_anisotropy_max)
+	if (1 <= sampler->max_anisotropy && sampler->max_anisotropy <= max_anisotropy_max)
 		return;
 
 	if (sampler->max_anisotropy < 1)
@@ -219,6 +214,52 @@ const char *device_preprocessor_name(void)
 	return "_OPENGL";
 }
 
+const char *gpu_get_driver_version(void)
+{
+	return ((const char *)glGetString(GL_VERSION));
+}
+
+const char *gpu_get_renderer(void)
+{
+	return ((const char *)glGetString(GL_RENDERER));
+}
+
+// Get the amount of dedicated GDDR memory, aka VRAM, in units of kilobytes.
+uint64_t gpu_get_dmem(void)
+{
+	GLint dmem = 0;
+	glGetIntegerv(GL_GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX, &dmem);
+
+	/* GLint is signed, however it makes little sense to have "negative" amounts of GPU memory. Check on this, clamp to
+	 * 0 if so, and cast to an unsigned value explicitly.
+	 */
+	if (dmem < 0) {
+		dmem = 0;
+	}
+
+	return (uint64_t)dmem;
+}
+
+// Get the amount of CPU memory shared by the GPU, in units of kilobytes.
+uint64_t gpu_get_smem(void)
+{
+	GLint dmem, total_mem = 0;
+	glGetIntegerv(GL_GPU_MEMORY_INFO_DEDICATED_VIDMEM_NVX, &dmem);
+	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &total_mem);
+
+	/* GLint is signed, however it makes little sense to have "negative" amounts of GPU memory. Check on this, clamp to
+	 * 0 if so, and cast to an unsigned value explicitly.
+	 */
+	if (dmem < 0) {
+		dmem = 0;
+	}
+	if (total_mem < 0) {
+		total_mem = 0;
+	}
+
+	return (uint64_t)total_mem - dmem;
+}
+
 int device_create(gs_device_t **p_device, uint32_t adapter)
 {
 	struct gs_device *device = bzalloc(sizeof(struct gs_device));
@@ -230,28 +271,25 @@ int device_create(gs_device_t **p_device, uint32_t adapter)
 	device->plat = gl_platform_create(device, adapter);
 	if (!device->plat)
 		goto fail;
-    ///opengl 供应商
+
 	const char *glVendor = (const char *)glGetString(GL_VENDOR);
-    ///OpenGL使用的显卡
 	const char *glRenderer = (const char *)glGetString(GL_RENDERER);
 
-	blog(LOG_INFO, "Loading up OpenGL on adapter %s %s", glVendor,
-	     glRenderer);
-    ///开启一些扩展
+	blog(LOG_INFO, "Loading up OpenGL on adapter %s %s", glVendor, glRenderer);
+
 	if (!gl_init_extensions(device)) {
 		errorcode = GS_ERROR_NOT_SUPPORTED;
 		goto fail;
 	}
 
 	const char *glVersion = (const char *)glGetString(GL_VERSION);
-	const char *glShadingLanguage =
-		(const char *)glGetString(GL_SHADING_LANGUAGE_VERSION);
+	const char *glShadingLanguage = (const char *)glGetString(GL_SHADING_LANGUAGE_VERSION);
 
 	blog(LOG_INFO,
 	     "OpenGL loaded successfully, version %s, shading "
 	     "language %s",
 	     glVersion, glShadingLanguage);
-    //面剔除是一种优化技术,它可以帮助提高渲染性能。当启用面剔除功能时,OpenGL 会根据设置的剔除模式,自动丢弃那些不需要渲染的面。这样可以减少渲染管线中不必要的计算,从而提高整体的渲染效率。
+
 	gl_enable(GL_CULL_FACE);
 	gl_gen_vertex_arrays(1, &device->empty_vao);
 
@@ -301,8 +339,7 @@ void device_destroy(gs_device_t *device)
 	}
 }
 
-gs_swapchain_t *device_swapchain_create(gs_device_t *device,
-					const struct gs_init_data *info)
+gs_swapchain_t *device_swapchain_create(gs_device_t *device, const struct gs_init_data *info)
 {
 	struct gs_swap_chain *swap = bzalloc(sizeof(struct gs_swap_chain));
 
@@ -380,9 +417,7 @@ uint32_t device_get_height(const gs_device_t *device)
 	}
 }
 
-gs_samplerstate_t *
-device_samplerstate_create(gs_device_t *device,
-			   const struct gs_sampler_info *info)
+gs_samplerstate_t *device_samplerstate_create(gs_device_t *device, const struct gs_sampler_info *info)
 {
 	struct gs_sampler_state *sampler;
 
@@ -451,8 +486,9 @@ static inline void apply_swizzle(struct gs_texture *tex)
 		gl_tex_param_i(tex->gl_target, GL_TEXTURE_SWIZZLE_A, GL_RED);
 	}
 }
-///设置纹理寻址模式
-static bool load_texture_sampler(gs_texture_t *tex, gs_samplerstate_t *ss){
+
+static bool load_texture_sampler(gs_texture_t *tex, gs_samplerstate_t *ss)
+{
 	bool success = true;
 	GLint min_filter;
 
@@ -473,8 +509,7 @@ static bool load_texture_sampler(gs_texture_t *tex, gs_samplerstate_t *ss){
 
 	if (!gl_tex_param_i(tex->gl_target, GL_TEXTURE_MIN_FILTER, min_filter))
 		success = false;
-	if (!gl_tex_param_i(tex->gl_target, GL_TEXTURE_MAG_FILTER,
-			    ss->mag_filter))
+	if (!gl_tex_param_i(tex->gl_target, GL_TEXTURE_MAG_FILTER, ss->mag_filter))
 		success = false;
 	if (!gl_tex_param_i(tex->gl_target, GL_TEXTURE_WRAP_S, ss->address_u))
 		success = false;
@@ -482,17 +517,13 @@ static bool load_texture_sampler(gs_texture_t *tex, gs_samplerstate_t *ss){
 		success = false;
 	if (!gl_tex_param_i(tex->gl_target, GL_TEXTURE_WRAP_R, ss->address_w))
 		success = false;
-	if (ss->address_u == GL_CLAMP_TO_BORDER ||
-	    ss->address_v == GL_CLAMP_TO_BORDER ||
+	if (ss->address_u == GL_CLAMP_TO_BORDER || ss->address_v == GL_CLAMP_TO_BORDER ||
 	    ss->address_w == GL_CLAMP_TO_BORDER) {
-		if (!gl_tex_param_fv(tex->gl_target, GL_TEXTURE_BORDER_COLOR,
-				     ss->border_color.ptr))
+		if (!gl_tex_param_fv(tex->gl_target, GL_TEXTURE_BORDER_COLOR, ss->border_color.ptr))
 			success = false;
 	}
 	if (GLAD_GL_EXT_texture_filter_anisotropic) {
-		if (!gl_tex_param_i(tex->gl_target,
-				    GL_TEXTURE_MAX_ANISOTROPY_EXT,
-				    ss->max_anisotropy))
+		if (!gl_tex_param_i(tex->gl_target, GL_TEXTURE_MAX_ANISOTROPY_EXT, ss->max_anisotropy))
 			success = false;
 	}
 
@@ -501,8 +532,7 @@ static bool load_texture_sampler(gs_texture_t *tex, gs_samplerstate_t *ss){
 	return success;
 }
 
-static inline struct gs_shader_param *get_texture_param(gs_device_t *device,
-							int unit)
+static inline struct gs_shader_param *get_texture_param(gs_device_t *device, int unit)
 {
 	struct gs_shader *shader = device->cur_pixel_shader;
 	size_t i;
@@ -518,8 +548,7 @@ static inline struct gs_shader_param *get_texture_param(gs_device_t *device,
 	return NULL;
 }
 
-static void device_load_texture_internal(gs_device_t *device, gs_texture_t *tex,
-					 int unit, GLint decode)
+static void device_load_texture_internal(gs_device_t *device, gs_texture_t *tex, int unit, GLint decode)
 {
 	struct gs_shader_param *param;
 	struct gs_sampler_state *sampler;
@@ -549,7 +578,7 @@ static void device_load_texture_internal(gs_device_t *device, gs_texture_t *tex,
 
 	if (!tex)
 		return;
-    //设置纹理的寻址模式
+
 	if (param->sampler_id != (size_t)-1)
 		sampler = device->cur_samplers[param->sampler_id];
 	else
@@ -580,8 +609,7 @@ void device_load_texture_srgb(gs_device_t *device, gs_texture_t *tex, int unit)
 	device_load_texture_internal(device, tex, unit, GL_DECODE_EXT);
 }
 
-static bool load_sampler_on_textures(gs_device_t *device, gs_samplerstate_t *ss,
-				     int sampler_unit)
+static bool load_sampler_on_textures(gs_device_t *device, gs_samplerstate_t *ss, int sampler_unit)
 {
 	struct gs_shader *shader = device->cur_pixel_shader;
 	size_t i;
@@ -589,8 +617,7 @@ static bool load_sampler_on_textures(gs_device_t *device, gs_samplerstate_t *ss,
 	for (i = 0; i < shader->params.num; i++) {
 		struct gs_shader_param *param = shader->params.array + i;
 
-		if (param->type == GS_SHADER_PARAM_TEXTURE &&
-		    param->sampler_id == (uint32_t)sampler_unit &&
+		if (param->type == GS_SHADER_PARAM_TEXTURE && param->sampler_id == (uint32_t)sampler_unit &&
 		    param->texture) {
 			if (!gl_active_texture(GL_TEXTURE0 + param->texture_id))
 				return false;
@@ -602,8 +629,7 @@ static bool load_sampler_on_textures(gs_device_t *device, gs_samplerstate_t *ss,
 	return true;
 }
 
-void device_load_samplerstate(gs_device_t *device, gs_samplerstate_t *ss,
-			      int unit)
+void device_load_samplerstate(gs_device_t *device, gs_samplerstate_t *ss, int unit)
 {
 	/* need a pixel shader to properly bind samplers */
 	if (!device->cur_pixel_shader)
@@ -637,8 +663,7 @@ void device_load_vertexshader(gs_device_t *device, gs_shader_t *vertshader)
 	device->cur_vertex_shader = vertshader;
 }
 
-static void load_default_pixelshader_samplers(struct gs_device *device,
-					      struct gs_shader *ps)
+static void load_default_pixelshader_samplers(struct gs_device *device, struct gs_shader *ps)
 {
 	size_t i;
 	if (!ps)
@@ -703,8 +728,7 @@ gs_zstencil_t *device_get_zstencil_target(const gs_device_t *device)
 	return device->cur_zstencil_buffer;
 }
 
-static bool get_tex_dimensions(gs_texture_t *tex, uint32_t *width,
-			       uint32_t *height)
+static bool get_tex_dimensions(gs_texture_t *tex, uint32_t *width, uint32_t *height)
 {
 	if (tex->type == GS_TEXTURE_2D) {
 		struct gs_texture_2d *tex2d = (struct gs_texture_2d *)tex;
@@ -727,10 +751,9 @@ static bool get_tex_dimensions(gs_texture_t *tex, uint32_t *width,
  * This automatically manages FBOs so that render targets are always given
  * an FBO that matches their width/height/format to maximize optimization
  */
-struct fbo_info *get_fbo(gs_texture_t *tex, uint32_t width, uint32_t height){
-    
-	if (tex->fbo && tex->fbo->width == width &&
-	    tex->fbo->height == height && tex->fbo->format == tex->format)
+struct fbo_info *get_fbo(gs_texture_t *tex, uint32_t width, uint32_t height)
+{
+	if (tex->fbo && tex->fbo->width == width && tex->fbo->height == height && tex->fbo->format == tex->format)
 		return tex->fbo;
 
 	GLuint fbo;
@@ -758,7 +781,7 @@ static inline struct fbo_info *get_fbo_by_tex(gs_texture_t *tex)
 
 	return get_fbo(tex, width, height);
 }
-//绑定当前的帧缓冲fbo  之后绘制的内容会存放到fbo上
+
 static bool set_current_fbo(gs_device_t *device, struct fbo_info *fbo)
 {
 	if (device->cur_fbo != fbo) {
@@ -775,9 +798,8 @@ static bool set_current_fbo(gs_device_t *device, struct fbo_info *fbo)
 	device->cur_fbo = fbo;
 	return true;
 }
-///给GL_DRAW_FRAMEBUFFER类型的 fbo附加纹理
-static bool attach_rendertarget(struct fbo_info *fbo, gs_texture_t *tex,
-				int side)
+
+static bool attach_rendertarget(struct fbo_info *fbo, gs_texture_t *tex, int side)
 {
 	if (fbo->cur_render_target == tex)
 		return true;
@@ -785,15 +807,10 @@ static bool attach_rendertarget(struct fbo_info *fbo, gs_texture_t *tex,
 	fbo->cur_render_target = tex;
 
 	if (tex->type == GS_TEXTURE_2D) {
-        //将创建好的纹理附加到帧缓冲上
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,
-				       GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
-				       tex->texture, 0);
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex->texture, 0);
 
 	} else if (tex->type == GS_TEXTURE_CUBE) {
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,
-				       GL_COLOR_ATTACHMENT0,
-				       GL_TEXTURE_CUBE_MAP_POSITIVE_X + side,
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + side,
 				       tex->texture, 0);
 
 	} else {
@@ -802,7 +819,7 @@ static bool attach_rendertarget(struct fbo_info *fbo, gs_texture_t *tex,
 
 	return gl_success("glFramebufferTexture2D");
 }
-///给GL_DRAW_FRAMEBUFFER类型的帧缓冲fbo 附加深度模版缓冲对象
+
 static bool attach_zstencil(struct fbo_info *fbo, gs_zstencil_t *zs)
 {
 	GLuint zsbuffer = 0;
@@ -817,22 +834,19 @@ static bool attach_zstencil(struct fbo_info *fbo, gs_zstencil_t *zs)
 		zsbuffer = zs->buffer;
 		zs_attachment = zs->attachment;
 	}
-    //用于将一个渲染缓冲对象(Renderbuffer Object)附加到一个帧缓冲对象(
-	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, zs_attachment,
-				  GL_RENDERBUFFER, zsbuffer);
+
+	glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, zs_attachment, GL_RENDERBUFFER, zsbuffer);
 	if (!gl_success("glFramebufferRenderbuffer"))
 		return false;
 
 	return true;
 }
-//设置device当前的帧缓冲对象 及帧缓冲对象对应的附加纹理和深度模版
-static bool set_target(gs_device_t *device, gs_texture_t *tex, int side,
-		       gs_zstencil_t *zs, enum gs_color_space space){
+
+static bool set_target(gs_device_t *device, gs_texture_t *tex, int side, gs_zstencil_t *zs, enum gs_color_space space)
+{
 	device->cur_color_space = space;
 
-	if (device->cur_render_target == tex &&
-	    device->cur_zstencil_buffer == zs &&
-	    device->cur_render_side == side)
+	if (device->cur_render_target == tex && device->cur_zstencil_buffer == zs && device->cur_render_side == side)
 		return true;
 
 	device->cur_render_target = tex;
@@ -856,8 +870,8 @@ static bool set_target(gs_device_t *device, gs_texture_t *tex, int side,
 	return true;
 }
 
-void device_set_render_target(gs_device_t *device, gs_texture_t *tex,
-			      gs_zstencil_t *zstencil){
+void device_set_render_target(gs_device_t *device, gs_texture_t *tex, gs_zstencil_t *zstencil)
+{
 	if (tex) {
 		if (tex->type != GS_TEXTURE_2D) {
 			blog(LOG_ERROR, "Texture is not a 2D texture");
@@ -879,10 +893,9 @@ fail:
 	blog(LOG_ERROR, "device_set_render_target (GL) failed");
 }
 
-void device_set_render_target_with_color_space(gs_device_t *device,
-					       gs_texture_t *tex,
-					       gs_zstencil_t *zstencil,
-					       enum gs_color_space space){
+void device_set_render_target_with_color_space(gs_device_t *device, gs_texture_t *tex, gs_zstencil_t *zstencil,
+					       enum gs_color_space space)
+{
 	if (tex) {
 		if (tex->type != GS_TEXTURE_2D) {
 			blog(LOG_ERROR, "Texture is not a 2D texture");
@@ -901,12 +914,11 @@ void device_set_render_target_with_color_space(gs_device_t *device,
 	return;
 
 fail:
-	blog(LOG_ERROR,
-	     "device_set_render_target_with_color_space (GL) failed");
+	blog(LOG_ERROR, "device_set_render_target_with_color_space (GL) failed");
 }
 
-void device_set_cube_render_target(gs_device_t *device, gs_texture_t *cubetex,
-				   int side, gs_zstencil_t *zstencil){
+void device_set_cube_render_target(gs_device_t *device, gs_texture_t *cubetex, int side, gs_zstencil_t *zstencil)
+{
 	if (cubetex) {
 		if (cubetex->type != GS_TEXTURE_CUBE) {
 			blog(LOG_ERROR, "Texture is not a cube texture");
@@ -927,13 +939,7 @@ void device_set_cube_render_target(gs_device_t *device, gs_texture_t *cubetex,
 fail:
 	blog(LOG_ERROR, "device_set_cube_render_target (GL) failed");
 }
-/*
- 颜色一致性: 如果你的应用程序使用了线性颜色空间来进行光照计算和颜色混合，使用 sRGB 渲染可以确保在最终显示时，颜色显得更自然和一致。
- 适用于纹理: 在使用 sRGB 纹理时，确保启用 GL_FRAMEBUFFER_SRGB 可以使得纹理的颜色在渲染到屏幕上时自动进行 gamma 校正。
- 
- 标准srgb的Gamma校正（人眼对亮度的感知是非线性的,也就是说人眼对亮度变化的响应并不是线性的。在低亮度下,人眼对亮度变化更敏感。
- Gamma校正的过程就是通过一个幂函数对亮度值进行非线性变换,以更好地匹配人眼和设备的非线性特性。
- */
+
 void device_enable_framebuffer_srgb(gs_device_t *device, bool enable)
 {
 	UNUSED_PARAMETER(device);
@@ -953,10 +959,8 @@ bool device_framebuffer_srgb_enabled(gs_device_t *device)
 	return enabled == GL_TRUE;
 }
 
-void device_copy_texture_region(gs_device_t *device, gs_texture_t *dst,
-				uint32_t dst_x, uint32_t dst_y,
-				gs_texture_t *src, uint32_t src_x,
-				uint32_t src_y, uint32_t src_w, uint32_t src_h)
+void device_copy_texture_region(gs_device_t *device, gs_texture_t *dst, uint32_t dst_x, uint32_t dst_y,
+				gs_texture_t *src, uint32_t src_x, uint32_t src_y, uint32_t src_w, uint32_t src_h)
 {
 	struct gs_texture_2d *src2d = (struct gs_texture_2d *)src;
 	struct gs_texture_2d *dst2d = (struct gs_texture_2d *)dst;
@@ -977,15 +981,13 @@ void device_copy_texture_region(gs_device_t *device, gs_texture_t *dst,
 		goto fail;
 	}
 
-	if (dst->format != src->format) {
+	if (gs_generalize_format(dst->format) != gs_generalize_format(src->format)) {
 		blog(LOG_ERROR, "Source and destination formats do not match");
 		goto fail;
 	}
 
-	uint32_t nw = (uint32_t)src_w ? (uint32_t)src_w
-				      : (src2d->width - src_x);
-	uint32_t nh = (uint32_t)src_h ? (uint32_t)src_h
-				      : (src2d->height - src_y);
+	uint32_t nw = (uint32_t)src_w ? (uint32_t)src_w : (src2d->width - src_x);
+	uint32_t nh = (uint32_t)src_h ? (uint32_t)src_h : (src2d->height - src_y);
 
 	if (dst2d->width - dst_x < nw || dst2d->height - dst_y < nh) {
 		blog(LOG_ERROR, "Destination texture region is not big "
@@ -993,8 +995,7 @@ void device_copy_texture_region(gs_device_t *device, gs_texture_t *dst,
 		goto fail;
 	}
 
-	if (!gl_copy_texture(device, dst, dst_x, dst_y, src, src_x, src_y, nw,
-			     nh))
+	if (!gl_copy_texture(device, dst, dst_x, dst_y, src, src_x, src_y, nw, nh))
 		goto fail;
 
 	return;
@@ -1003,8 +1004,7 @@ fail:
 	blog(LOG_ERROR, "device_copy_texture (GL) failed");
 }
 
-void device_copy_texture(gs_device_t *device, gs_texture_t *dst,
-			 gs_texture_t *src)
+void device_copy_texture(gs_device_t *device, gs_texture_t *dst, gs_texture_t *src)
 {
 	device_copy_texture_region(device, dst, 0, 0, src, 0, 0, 0, 0);
 }
@@ -1014,7 +1014,7 @@ void device_begin_frame(gs_device_t *device)
 	/* does nothing */
 	UNUSED_PARAMETER(device);
 }
-///解除纹理绑定
+
 void device_begin_scene(gs_device_t *device)
 {
 	clear_textures(device);
@@ -1063,11 +1063,12 @@ static void update_viewproj_matrix(struct gs_device *device)
 	} else {
 		glFrontFace(GL_CCW);
 	}
+
 	gl_success("glFrontFace");
 
 	matrix4_mul(&device->cur_viewproj, &device->cur_view, &cur_proj);
-    ///CPU跟opengl向量的方向不同
 	matrix4_transpose(&device->cur_viewproj, &device->cur_viewproj);
+
 	if (vs->viewproj)
 		gs_shader_set_matrix4(vs->viewproj, &device->cur_viewproj);
 }
@@ -1087,7 +1088,8 @@ static inline struct gs_program *find_program(const struct gs_device *device)
 	return NULL;
 }
 
-static inline struct gs_program *get_shader_program(struct gs_device *device){
+static inline struct gs_program *get_shader_program(struct gs_device *device)
+{
 	struct gs_program *program = find_program(device);
 
 	if (!program)
@@ -1096,11 +1098,10 @@ static inline struct gs_program *get_shader_program(struct gs_device *device){
 	return program;
 }
 
-void device_draw(gs_device_t *device, enum gs_draw_mode draw_mode,
-		 uint32_t start_vert, uint32_t num_verts)
+void device_draw(gs_device_t *device, enum gs_draw_mode draw_mode, uint32_t start_vert, uint32_t num_verts)
 {
-	struct gs_vertex_buffer *vb = device->cur_vertex_buffer; // 顶点数据
-	struct gs_index_buffer *ib = device->cur_index_buffer;// 索引数据
+	struct gs_vertex_buffer *vb = device->cur_vertex_buffer;
+	struct gs_index_buffer *ib = device->cur_index_buffer;
 	GLenum topology = convert_gs_topology(draw_mode);
 	gs_effect_t *effect = gs_get_effect();
 	struct gs_program *program;
@@ -1132,7 +1133,7 @@ void device_draw(gs_device_t *device, enum gs_draw_mode draw_mode,
 		if (!gl_success("glUseProgram"))
 			goto fail;
 	}
-    
+
 	update_viewproj_matrix(device);
 
 	program_update_params(program);
@@ -1140,8 +1141,7 @@ void device_draw(gs_device_t *device, enum gs_draw_mode draw_mode,
 	if (ib) {
 		if (num_verts == 0)
 			num_verts = (uint32_t)device->cur_index_buffer->num;
-		glDrawElements(topology, num_verts, ib->gl_type,
-			       (const GLvoid *)(start_vert * ib->width));
+		glDrawElements(topology, num_verts, ib->gl_type, (const GLvoid *)(start_vert * ib->width));
 		if (!gl_success("glDrawElements"))
 			goto fail;
 
@@ -1165,44 +1165,34 @@ void device_end_scene(gs_device_t *device)
 	UNUSED_PARAMETER(device);
 }
 
-void device_clear(gs_device_t *device, uint32_t clear_flags,
-		  const struct vec4 *color, float depth, uint8_t stencil)
+void device_clear(gs_device_t *device, uint32_t clear_flags, const struct vec4 *color, float depth, uint8_t stencil)
 {
 	GLbitfield gl_flags = 0;
 
 	if (clear_flags & GS_CLEAR_COLOR) {
-        //设置颜色缓冲区的清除颜色,参数为RGBA四个通道的值,取值范围为0.0到1.0。
-        //调用glClear(GL_COLOR_BUFFER_BIT);时颜色缓冲区会被清除为设置的该颜色
 		glClearColor(color->x, color->y, color->z, color->w);
 		gl_flags |= GL_COLOR_BUFFER_BIT;
 	}
 
 	if (clear_flags & GS_CLEAR_DEPTH) {
-        //设置深度缓冲区的清除深度值,参数为深度值,取值范围为0.0到1.0。
-        //当调用glClear(GL_DEPTH_BUFFER_BIT)时,深度缓冲区会被清除为设置的该深度值。
 		glClearDepth(depth);
 		gl_flags |= GL_DEPTH_BUFFER_BIT;
 	}
 
 	if (clear_flags & GS_CLEAR_STENCIL) {
-        //置模板缓冲区的清除值,参数为模板值。
-        //当调用glClear(GL_STENCIL_BUFFER_BIT)时,模板缓冲区会被清除为设置的该模板值。
 		glClearStencil(stencil);
 		gl_flags |= GL_STENCIL_BUFFER_BIT;
 	}
-    //同时执行上面的三种设置
+
 	glClear(gl_flags);
 	if (!gl_success("glClear"))
 		blog(LOG_ERROR, "device_clear (GL) failed");
 
 	UNUSED_PARAMETER(device);
 }
-/*
- 
- */
+
 void device_flush(gs_device_t *device)
 {
-    //在Cocoa中,缓冲区交换是由窗口系统管理的,而不是由OpenGL直接控制。
 #ifdef __APPLE__
 	if (!device->cur_swap)
 		glFlush();
@@ -1212,15 +1202,7 @@ void device_flush(gs_device_t *device)
 	UNUSED_PARAMETER(device);
 #endif
 }
-/*
- glCullFace 是 OpenGL 中的一个函数,用于控制背面剔除(backface culling)的行为。
 
- 背面剔除是一种优化技术,它可以通过忽略不可见的面来提高渲染性能。当启用背面剔除时,OpenGL 会自动删除那些面向相反方向的三角形,从而减少需要处理的几何体数量。
- glCullFace 函数用于指定要剔除的面的方向。它接受以下三个参数之一:
- GL_FRONT: 剔除正面(front-facing)的三角形。
- GL_BACK: 剔除背面(back-facing)的三角形。
- GL_FRONT_AND_BACK: 同时剔除正面和背面的三角形。
- */
 void device_set_cull_mode(gs_device_t *device, enum gs_cull_mode mode)
 {
 	if (device->cur_cull_mode == mode)
@@ -1243,9 +1225,7 @@ enum gs_cull_mode device_get_cull_mode(const gs_device_t *device)
 {
 	return device->cur_cull_mode;
 }
-/*
- gl_enable(GL_BLEND)是OpenGL渲染有多个透明度级别的图像，我们需要启用混合(Blending)。和OpenGL大多数的功能一样，我们可以启用GL_BLEND来启用混合：
- */
+
 void device_enable_blending(gs_device_t *device, bool enable)
 {
 	if (enable)
@@ -1255,18 +1235,7 @@ void device_enable_blending(gs_device_t *device, bool enable)
 
 	UNUSED_PARAMETER(device);
 }
-/*
- gl_enable(GL_DEPTH_TEST) 是 OpenGL 中用于启用深度测试(Depth Testing)功能的函数。
- 深度测试是 3D 图形渲染中的一个重要技术,它可以帮助解决遮挡关系,确保物体被正确地绘制在它们应该出现的位置上。
- 当深度测试功能被启用时,OpenGL 会在渲染每个像素之前,先检查该像素的深度值是否小于或等于已经存在于帧缓冲区中的深度值。只有当新的像素深度值小于等于现有的深度值,该像素才会被绘制,否则会被丢弃。
- 这样可以确保远处的物体被近处的物体遮挡住,从而产生正确的深度感和遮挡关系。
- 需要注意的是,在启用深度测试之前,还需要初始化深度缓冲区,通常可以通过以下步骤完成:
 
- 调用 glEnable(GL_DEPTH_TEST) 来启用深度测试功能。
- 调用 glDepthFunc(GL_LESS) 来指定深度测试的比较函数,这里使用 GL_LESS 表示只有新的深度值小于现有的深度值时,才会通过深度测试。
- 调用 glClearDepth(1.0) 来设置深度缓冲区的初始值为 1.0(最远)。
- 在每次渲染之前,调用 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) 来清除颜色缓冲区和深度缓冲区。
- */
 void device_enable_depth_test(gs_device_t *device, bool enable)
 {
 	if (enable)
@@ -1276,21 +1245,7 @@ void device_enable_depth_test(gs_device_t *device, bool enable)
 
 	UNUSED_PARAMETER(device);
 }
-/*
- gl_enable(GL_STENCIL_TEST) 是 OpenGL 中用于启用模板测试(Stencil Test)功能的函数。
 
- 模板测试是 OpenGL 中一种高级的渲染技术,它可以帮助开发者实现一些复杂的渲染效果,如:
-
- 实现空心效果(Outline)
- 实现镂空效果(Cutout)
- 实现阴影效果(Shadow Volumes)
- 实现反射效果(Reflections)
- 模板测试的工作原理如下:
-
- 在渲染之前,首先将模板缓冲区清零。
- 在渲染某些几何体时,更新模板缓冲区中的值。例如,可以将通过深度测试的像素的模板值设为1。
- 在后续的渲染过程中,对每个像素进行模板测试。只有当模板值满足某些条件时,该像素才会被渲染。
- */
 void device_enable_stencil_test(gs_device_t *device, bool enable)
 {
 	if (enable)
@@ -1310,44 +1265,28 @@ void device_enable_stencil_write(gs_device_t *device, bool enable)
 
 	UNUSED_PARAMETER(device);
 }
-/*
- glColorMask() 是 OpenGL 中用于控制颜色缓冲区写入掩码的函数。
- 颜色缓冲区是 OpenGL 中用于存储最终渲染结果的重要组件。通常情况下,OpenGL 会将渲染的每个像素的颜色值写入到颜色缓冲区中。
- 但在某些情况下,我们可能只需要更新缓冲区的部分颜色通道,而不是全部通道。这时就可以使用 glColorMask() 函数来控制颜色写入掩码。
- glColorMask() 函数接受4个布尔参数:
 
- red: 是否允许写入红色通道
- green: 是否允许写入绿色通道
- blue: 是否允许写入蓝色通道
- alpha: 是否允许写入alpha通道
- 通过组合这4个参数,可以实现各种不同的颜色写入控制。例如:
- */
-void device_enable_color(gs_device_t *device, bool red, bool green, bool blue,
-			 bool alpha)
+void device_enable_color(gs_device_t *device, bool red, bool green, bool blue, bool alpha)
 {
 	glColorMask(red, green, blue, alpha);
 
 	UNUSED_PARAMETER(device);
 }
-//开启混合模式
-void device_blend_function(gs_device_t *device, enum gs_blend_type src,
-			   enum gs_blend_type dest)
+
+void device_blend_function(gs_device_t *device, enum gs_blend_type src, enum gs_blend_type dest)
 {
 	GLenum gl_src = convert_gs_blend_type(src);
 	GLenum gl_dst = convert_gs_blend_type(dest);
-    //分别设置源、目标的混合因子
+
 	glBlendFunc(gl_src, gl_dst);
 	if (!gl_success("glBlendFunc"))
 		blog(LOG_ERROR, "device_blend_function (GL) failed");
 
 	UNUSED_PARAMETER(device);
 }
-//分别设置每个通道的混合模式
-void device_blend_function_separate(gs_device_t *device,
-				    enum gs_blend_type src_c,
-				    enum gs_blend_type dest_c,
-				    enum gs_blend_type src_a,
-				    enum gs_blend_type dest_a)
+
+void device_blend_function_separate(gs_device_t *device, enum gs_blend_type src_c, enum gs_blend_type dest_c,
+				    enum gs_blend_type src_a, enum gs_blend_type dest_a)
 {
 	GLenum gl_src_c = convert_gs_blend_type(src_c);
 	GLenum gl_dst_c = convert_gs_blend_type(dest_c);
@@ -1360,10 +1299,7 @@ void device_blend_function_separate(gs_device_t *device,
 
 	UNUSED_PARAMETER(device);
 }
-//OpenGL甚至给了我们更多的灵活性，允许我们改变方程中源和目标部分的运算符。当前源和目标是相加的，但如果愿意的话，我们也可以让它们相减。
-//GL_FUNC_ADD：默认选项，将两个分量相加：
-//GL_FUNC_SUBTRACT：将两个分量相减：
-//GL_FUNC_REVERSE_SUBTRACT：将两个分量相减，但顺序相反：
+
 void device_blend_op(gs_device_t *device, enum gs_blend_op_type op)
 {
 	GLenum gl_blend_op = convert_gs_blend_op_type(op);
@@ -1386,8 +1322,7 @@ void device_depth_function(gs_device_t *device, enum gs_depth_test test)
 	UNUSED_PARAMETER(device);
 }
 
-void device_stencil_function(gs_device_t *device, enum gs_stencil_side side,
-			     enum gs_depth_test test)
+void device_stencil_function(gs_device_t *device, enum gs_stencil_side side, enum gs_depth_test test)
 {
 	GLenum gl_side = convert_gs_stencil_side(side);
 	GLenum gl_test = convert_gs_depth_test(test);
@@ -1399,10 +1334,9 @@ void device_stencil_function(gs_device_t *device, enum gs_stencil_side side,
 	UNUSED_PARAMETER(device);
 }
 
-void device_stencil_op(gs_device_t *device, enum gs_stencil_side side,
-		       enum gs_stencil_op_type fail,
-		       enum gs_stencil_op_type zfail,
-		       enum gs_stencil_op_type zpass){
+void device_stencil_op(gs_device_t *device, enum gs_stencil_side side, enum gs_stencil_op_type fail,
+		       enum gs_stencil_op_type zfail, enum gs_stencil_op_type zpass)
+{
 	GLenum gl_side = convert_gs_stencil_side(side);
 	GLenum gl_fail = convert_gs_stencil_op(fail);
 	GLenum gl_zfail = convert_gs_stencil_op(zfail);
@@ -1426,8 +1360,7 @@ static inline uint32_t get_target_height(const struct gs_device *device)
 		return gs_cubetexture_get_size(device->cur_render_target);
 }
 
-void device_set_viewport(gs_device_t *device, int x, int y, int width,
-			 int height)
+void device_set_viewport(gs_device_t *device, int x, int y, int width, int height)
 {
 	uint32_t base_height = 0;
 
@@ -1457,7 +1390,7 @@ void device_get_viewport(const gs_device_t *device, struct gs_rect *rect)
 {
 	*rect = device->cur_viewport;
 }
-//裁剪
+
 void device_set_scissor_rect(gs_device_t *device, const struct gs_rect *rect)
 {
 	UNUSED_PARAMETER(device);
@@ -1473,9 +1406,8 @@ void device_set_scissor_rect(gs_device_t *device, const struct gs_rect *rect)
 
 	blog(LOG_ERROR, "device_set_scissor_rect (GL) failed");
 }
-///====设置透视矩阵 保证在绘制前所有的坐标都在[-1,1]空间内
-void device_ortho(gs_device_t *device, float left, float right, float top,
-		  float bottom, float near, float far)
+
+void device_ortho(gs_device_t *device, float left, float right, float top, float bottom, float near, float far)
 {
 	struct matrix4 *dst = &device->cur_proj;
 
@@ -1488,7 +1420,6 @@ void device_ortho(gs_device_t *device, float left, float right, float top,
 	vec4_zero(&dst->z);
 	vec4_zero(&dst->t);
 
-    ///[-1,1] ===> 2
 	dst->x.x = 2.0f / rml;
 	dst->t.x = (left + right) / -rml;
 
@@ -1500,9 +1431,8 @@ void device_ortho(gs_device_t *device, float left, float right, float top,
 
 	dst->t.w = 1.0f;
 }
-//设置透视投影
-void device_frustum(gs_device_t *device, float left, float right, float top,
-		    float bottom, float near, float far)
+
+void device_frustum(gs_device_t *device, float left, float right, float top, float bottom, float near, float far)
 {
 	struct matrix4 *dst = &device->cur_proj;
 
@@ -1544,21 +1474,23 @@ void device_projection_pop(gs_device_t *device)
 	da_pop_back(device->proj_stack);
 }
 
-void device_debug_marker_begin(gs_device_t *device, const char *markername,
-			       const float color[4]){
+void device_debug_marker_begin(gs_device_t *device, const char *markername, const float color[4])
+{
 	UNUSED_PARAMETER(device);
 	UNUSED_PARAMETER(color);
 
 	glPushDebugGroupKHR(GL_DEBUG_SOURCE_APPLICATION, 0, -1, markername);
 }
 
-void device_debug_marker_end(gs_device_t *device){
+void device_debug_marker_end(gs_device_t *device)
+{
 	UNUSED_PARAMETER(device);
 
 	glPopDebugGroupKHR();
 }
 
-void gs_swapchain_destroy(gs_swapchain_t *swapchain){
+void gs_swapchain_destroy(gs_swapchain_t *swapchain)
+{
 	if (!swapchain)
 		return;
 
@@ -1569,6 +1501,26 @@ void gs_swapchain_destroy(gs_swapchain_t *swapchain){
 
 	gl_windowinfo_destroy(swapchain->wi);
 	bfree(swapchain);
+}
+
+bool device_nv12_available(gs_device_t *device)
+{
+	UNUSED_PARAMETER(device);
+#ifdef _WIN32
+	return false;
+#else
+	return true; // always a split R8,R8G8 texture.
+#endif
+}
+
+bool device_p010_available(gs_device_t *device)
+{
+	UNUSED_PARAMETER(device);
+#ifdef _WIN32
+	return false;
+#else
+	return true; // always a split R16,R16G16 texture.
+#endif
 }
 
 uint32_t gs_voltexture_get_width(const gs_texture_t *voltex)
@@ -1599,14 +1551,14 @@ enum gs_color_format gs_voltexture_get_color_format(const gs_texture_t *voltex)
 	return GS_UNKNOWN;
 }
 
-void gs_samplerstate_destroy(gs_samplerstate_t *samplerstate){
+void gs_samplerstate_destroy(gs_samplerstate_t *samplerstate)
+{
 	if (!samplerstate)
 		return;
 
 	if (samplerstate->device)
 		for (int i = 0; i < GS_MAX_TEXTURES; i++)
-			if (samplerstate->device->cur_samplers[i] ==
-			    samplerstate)
+			if (samplerstate->device->cur_samplers[i] == samplerstate)
 				samplerstate->device->cur_samplers[i] = NULL;
 
 	samplerstate_release(samplerstate);
@@ -1625,7 +1577,6 @@ void gs_timer_destroy(gs_timer_t *timer)
 
 void gs_timer_begin(gs_timer_t *timer)
 {
-    //GL_TIMESTAMP,用于获取当前的时间戳。存储到timer->queries[0]对像中
 	glQueryCounter(timer->queries[0], GL_TIMESTAMP);
 	gl_success("glQueryCounter");
 }
@@ -1639,8 +1590,8 @@ void gs_timer_end(gs_timer_t *timer)
 bool gs_timer_get_data(gs_timer_t *timer, uint64_t *ticks)
 {
 	GLint available = 0;
-	glGetQueryObjectiv(timer->queries[1], GL_QUERY_RESULT_AVAILABLE,
-			   &available);
+	glGetQueryObjectiv(timer->queries[1], GL_QUERY_RESULT_AVAILABLE, &available);
+
 	GLuint64 begin, end;
 	glGetQueryObjectui64v(timer->queries[0], GL_QUERY_RESULT, &begin);
 	gl_success("glGetQueryObjectui64v");
@@ -1666,8 +1617,7 @@ void gs_timer_range_end(gs_timer_range_t *range)
 	UNUSED_PARAMETER(range);
 }
 
-bool gs_timer_range_get_data(gs_timer_range_t *range, bool *disjoint,
-			     uint64_t *frequency)
+bool gs_timer_range_get_data(gs_timer_range_t *range, bool *disjoint, uint64_t *frequency)
 {
 	UNUSED_PARAMETER(range);
 

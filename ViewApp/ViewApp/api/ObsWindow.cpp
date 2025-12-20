@@ -220,7 +220,7 @@ bool DrawSelectedItem(obs_scene_t *scene, obs_sceneitem_t *item, void *param) {
         return true;
 
     obs_transform_info info;
-    obs_sceneitem_get_info(item, &info);
+    obs_sceneitem_get_info2(item, &info);
 //
     ObsWindow* window = (ObsWindow*)param;
     gs_load_vertexbuffer(window->box);
@@ -1347,7 +1347,7 @@ void ObsWindow::OnMouseMoveEvent(ObsMouseEvent *event){
     if (mouseDown) {
         ///pos 在 base_width  base_height 坐标系中
         vec2 pos = GetMouseEventPos(event);
-        blog(LOG_INFO, "x=%f y=%f",pos.x,pos.y);
+//        blog(LOG_INFO, "x=%f y=%f",pos.x,pos.y);
         if (!mouseMoved && !mouseOverItems &&  stretchHandle == ItemHandle::None) {
             ProcessClick(startPos);
             mouseOverItems = SelectedAtPos(startPos);

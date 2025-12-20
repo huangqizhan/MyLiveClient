@@ -837,7 +837,7 @@ static bool CenterAlignSelectedItems(obs_scene_t *scene, obs_sceneitem_t *item, 
 
         uint32_t width = obs_source_get_width(source);
         uint32_t height = obs_source_get_height(source);
-        obs_sceneitem_get_info(item, &itemInfo);
+        obs_sceneitem_get_info2(item, &itemInfo);
         float ratio = (float)width / (float)height;
         if (ovi.base_width > ratio* ovi.base_height){
             //适配高度
@@ -851,7 +851,7 @@ static bool CenterAlignSelectedItems(obs_scene_t *scene, obs_sceneitem_t *item, 
             itemInfo.pos.x = 0;
             itemInfo.pos.y = (ovi.base_height - ovi.base_width/ratio) / 2.0;
         }
-        obs_sceneitem_set_info(item, &itemInfo);
+        obs_sceneitem_set_info2(item, &itemInfo);
     }
     UNUSED_PARAMETER(scene);
     return true;

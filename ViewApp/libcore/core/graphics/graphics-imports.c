@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,13 +36,16 @@
 	do {                                             \
 		exports->func = os_dlsym(module, #func); \
 	} while (false)
-///导入opengl模块的接口
-bool load_graphics_imports(struct gs_exports *exports, void *module,
-			   const char *module_name)
+
+bool load_graphics_imports(struct gs_exports *exports, void *module, const char *module_name)
 {
 	bool success = true;
 
 	GRAPHICS_IMPORT(device_get_name);
+	GRAPHICS_IMPORT_OPTIONAL(gpu_get_driver_version);
+	GRAPHICS_IMPORT_OPTIONAL(gpu_get_renderer);
+	GRAPHICS_IMPORT_OPTIONAL(gpu_get_dmem);
+	GRAPHICS_IMPORT_OPTIONAL(gpu_get_smem);
 	GRAPHICS_IMPORT(device_get_type);
 	GRAPHICS_IMPORT_OPTIONAL(device_enum_adapters);
 	GRAPHICS_IMPORT(device_preprocessor_name);
@@ -195,11 +198,15 @@ bool load_graphics_imports(struct gs_exports *exports, void *module,
 
 	GRAPHICS_IMPORT_OPTIONAL(device_nv12_available);
 	GRAPHICS_IMPORT_OPTIONAL(device_p010_available);
+	GRAPHICS_IMPORT_OPTIONAL(device_texture_create_nv12);
+	GRAPHICS_IMPORT_OPTIONAL(device_texture_create_p010);
 
 	GRAPHICS_IMPORT(device_is_monitor_hdr);
 
 	GRAPHICS_IMPORT(device_debug_marker_begin);
 	GRAPHICS_IMPORT(device_debug_marker_end);
+
+	GRAPHICS_IMPORT_OPTIONAL(gs_get_adapter_count);
 
 	/* OSX/Cocoa specific functions */
 #ifdef __APPLE__
@@ -220,7 +227,7 @@ bool load_graphics_imports(struct gs_exports *exports, void *module,
 	GRAPHICS_IMPORT_OPTIONAL(gs_duplicator_get_texture);
 	GRAPHICS_IMPORT_OPTIONAL(gs_duplicator_get_color_space);
 	GRAPHICS_IMPORT_OPTIONAL(gs_duplicator_get_sdr_white_level);
-	GRAPHICS_IMPORT_OPTIONAL(gs_get_adapter_count);
+	GRAPHICS_IMPORT_OPTIONAL(device_can_adapter_fast_clear);
 	GRAPHICS_IMPORT_OPTIONAL(device_texture_create_gdi);
 	GRAPHICS_IMPORT_OPTIONAL(gs_texture_get_dc);
 	GRAPHICS_IMPORT_OPTIONAL(gs_texture_release_dc);
@@ -230,8 +237,6 @@ bool load_graphics_imports(struct gs_exports *exports, void *module,
 	GRAPHICS_IMPORT_OPTIONAL(device_texture_wrap_obj);
 	GRAPHICS_IMPORT_OPTIONAL(device_texture_acquire_sync);
 	GRAPHICS_IMPORT_OPTIONAL(device_texture_release_sync);
-	GRAPHICS_IMPORT_OPTIONAL(device_texture_create_nv12);
-	GRAPHICS_IMPORT_OPTIONAL(device_texture_create_p010);
 	GRAPHICS_IMPORT_OPTIONAL(device_stagesurface_create_nv12);
 	GRAPHICS_IMPORT_OPTIONAL(device_stagesurface_create_p010);
 	GRAPHICS_IMPORT_OPTIONAL(device_register_loss_callbacks);
@@ -241,6 +246,13 @@ bool load_graphics_imports(struct gs_exports *exports, void *module,
 	GRAPHICS_IMPORT(device_query_dmabuf_capabilities);
 	GRAPHICS_IMPORT(device_query_dmabuf_modifiers_for_format);
 	GRAPHICS_IMPORT(device_texture_create_from_pixmap);
+	GRAPHICS_IMPORT(device_query_sync_capabilities);
+	GRAPHICS_IMPORT(device_sync_create);
+	GRAPHICS_IMPORT(device_sync_create_from_syncobj_timeline_point);
+	GRAPHICS_IMPORT(device_sync_destroy);
+	GRAPHICS_IMPORT(device_sync_export_syncobj_timeline_point);
+	GRAPHICS_IMPORT(device_sync_signal_syncobj_timeline_point);
+	GRAPHICS_IMPORT(device_sync_wait);
 #endif
 
 	return success;

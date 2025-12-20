@@ -18,8 +18,8 @@
 #include <string.h>
 #include <assert.h>
 
-#include "util/bmem.h"
-#include "util/c99defs.h"
+#include <util/bmem.h>
+#include <util/c99defs.h>
 
 #include "obs-internal.h"
 
@@ -33,8 +33,7 @@ struct obs_hotkey_name_map_item {
 	UT_hash_handle hh;
 };
 
-static void obs_hotkey_name_map_insert(obs_hotkey_name_map_item_t **hmap,
-				       const char *key, int v)
+static void obs_hotkey_name_map_insert(obs_hotkey_name_map_item_t **hmap, const char *key, int v)
 {
 	if (!hmap || !key)
 		return;
@@ -51,8 +50,7 @@ static void obs_hotkey_name_map_insert(obs_hotkey_name_map_item_t **hmap,
 	HASH_ADD_STR(*hmap, key, t);
 }
 
-static bool obs_hotkey_name_map_lookup(obs_hotkey_name_map_item_t *hmap,
-				       const char *key, int *v)
+static bool obs_hotkey_name_map_lookup(obs_hotkey_name_map_item_t *hmap, const char *key, int *v)
 {
 	if (!hmap || !key)
 		return false;

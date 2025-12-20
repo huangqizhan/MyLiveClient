@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -19,18 +19,14 @@
 #include "obs.h"
 #include "obs-internal.h"
 
-bool obs_display_init(struct obs_display *display,
-		      const struct gs_init_data *graphics_data)
+bool obs_display_init(struct obs_display *display, const struct gs_init_data *graphics_data)
 {
 	pthread_mutex_init_value(&display->draw_callbacks_mutex);
 	pthread_mutex_init_value(&display->draw_info_mutex);
 
 #if defined(_WIN32)
 	/* Conservative test for NVIDIA flickering in multi-GPU setups */
-	display->use_clear_workaround = gs_get_adapter_count() > 1;
-#elif defined(__APPLE__)
-	/* Apple Silicon GL driver doesn't seem to track SRGB clears correctly */
-	display->use_clear_workaround = true;
+	display->use_clear_workaround = gs_get_adapter_count() > 1 && !gs_can_adapter_fast_clear();
 #else
 	display->use_clear_workaround = false;
 #endif
@@ -64,8 +60,7 @@ bool obs_display_init(struct obs_display *display,
 	return true;
 }
 
-obs_display_t *obs_display_create(const struct gs_init_data *graphics_data,
-				  uint32_t background_color)
+obs_display_t *obs_display_create(const struct gs_init_data *graphics_data, uint32_t background_color)
 {
 	struct obs_display *display = bzalloc(sizeof(struct obs_display));
 
@@ -146,9 +141,7 @@ void obs_display_update_color_space(obs_display_t *display)
 	pthread_mutex_unlock(&display->draw_info_mutex);
 }
 
-void obs_display_add_draw_callback(obs_display_t *display,
-				   void (*draw)(void *param, uint32_t cx,
-						uint32_t cy),
+void obs_display_add_draw_callback(obs_display_t *display, void (*draw)(void *param, uint32_t cx, uint32_t cy),
 				   void *param)
 {
 	if (!display)
@@ -161,9 +154,7 @@ void obs_display_add_draw_callback(obs_display_t *display,
 	pthread_mutex_unlock(&display->draw_callbacks_mutex);
 }
 
-void obs_display_remove_draw_callback(obs_display_t *display,
-				      void (*draw)(void *param, uint32_t cx,
-						   uint32_t cy),
+void obs_display_remove_draw_callback(obs_display_t *display, void (*draw)(void *param, uint32_t cx, uint32_t cy),
 				      void *param)
 {
 	if (!display)
@@ -175,13 +166,11 @@ void obs_display_remove_draw_callback(obs_display_t *display,
 	da_erase_item(display->draw_callbacks, &data);
 	pthread_mutex_unlock(&display->draw_callbacks_mutex);
 }
-///此时会切换到当前的display的swap
-static inline bool render_display_begin(struct obs_display *display,
-					uint32_t cx, uint32_t cy,
-					bool update_color_space)
+
+static inline bool render_display_begin(struct obs_display *display, uint32_t cx, uint32_t cy, bool update_color_space)
 {
 	struct vec4 clear_color;
-    //此处支持多个渲染管线之间切换 （多个NSOpenglContext (一个视图对应一个)）
+
 	gs_load_swapchain(display->swap);
 
 	if ((display->cx != cx) || (display->cy != cy)) {
@@ -196,11 +185,23 @@ static inline bool render_display_begin(struct obs_display *display,
 	if (success) {
 		gs_begin_scene();
 
+		/*
+		 * In contrast to OpenGL or Direct3D 11, Metal and Direct3D 12 require the clear color to use linear gamma
+		 * as either the load command to clear the render target (Metal) or the explicit clear command seem to operate
+		 * on the render target in linear space.
+		 *
+		 * As OpenGL is implemented via Metal on Apple Silicon Macs and "glClear" has to be emulated via an explicit
+		 * render pass that returns the clear color for every fragment, the color becomes subject to automatic sRGB
+		 * gamma encoding if the render target uses an sRGB color format.
+		 */
+#if defined(__APPLE__) && defined(__aarch64__)
+		vec4_from_rgba_srgb(&clear_color, display->background_color);
+#else
 		if (gs_get_color_space() == GS_CS_SRGB)
 			vec4_from_rgba(&clear_color, display->background_color);
 		else
-			vec4_from_rgba_srgb(&clear_color,
-					    display->background_color);
+			vec4_from_rgba_srgb(&clear_color, display->background_color);
+#endif
 		clear_color.w = 1.0f;
 
 		const bool use_clear_workaround = display->use_clear_workaround;
@@ -218,11 +219,8 @@ static inline bool render_display_begin(struct obs_display *display,
 		gs_set_viewport(0, 0, cx, cy);
 
 		if (use_clear_workaround) {
-			gs_effect_t *const solid_effect =
-				obs->video.solid_effect;
-			gs_effect_set_vec4(gs_effect_get_param_by_name(
-						   solid_effect, "color"),
-					   &clear_color);
+			gs_effect_t *const solid_effect = obs->video.solid_effect;
+			gs_effect_set_vec4(gs_effect_get_param_by_name(solid_effect, "color"), &clear_color);
 			while (gs_effect_loop(solid_effect, "Solid"))
 				gs_draw_sprite(NULL, 0, cx, cy);
 		}
@@ -266,11 +264,16 @@ void render_display(struct obs_display *display)
 		for (size_t i = 0; i < display->draw_callbacks.num; i++) {
 			struct draw_callback *callback;
 			callback = display->draw_callbacks.array + i;
+
 			callback->draw(callback->param, cx, cy);
 		}
+
 		pthread_mutex_unlock(&display->draw_callbacks_mutex);
+
 		render_display_end();
+
 		GS_DEBUG_MARKER_END();
+
 		gs_present();
 	}
 }

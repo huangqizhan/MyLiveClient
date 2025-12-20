@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -54,8 +54,7 @@ struct gl_shader_parser {
 	DARRAY(struct gl_parser_attrib) attribs;
 };
 
-static inline void gl_shader_parser_init(struct gl_shader_parser *glsp,
-					 enum gs_shader_type type)
+static inline void gl_shader_parser_init(struct gl_shader_parser *glsp, enum gs_shader_type type)
 {
 	glsp->type = type;
 
@@ -85,6 +84,5 @@ static inline void gl_shader_parser_free(struct gl_shader_parser *glsp)
 	dstr_free(&glsp->gl_string);
 	shader_parser_free(&glsp->parser);
 }
-///在创建OpenGL着色器之前 需要解析着色器代码 并重构代码
-extern bool gl_shader_parse(struct gl_shader_parser *glsp,
-			    const char *shader_str, const char *file);
+
+extern bool gl_shader_parse(struct gl_shader_parser *glsp, const char *shader_str, const char *file);

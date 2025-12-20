@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2013 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,23 +30,6 @@
 struct gl_platform;
 struct gl_windowinfo;
 
-/*
- COPY_TYPE_ARB: GLAD_GL_ARB_copy_image:
- 这是一个 OpenGL 扩展名称,代表 "ARB Copy Image"。
- ARB 是 OpenGL Architecture Review Board 的缩写,它负责管理和维护 OpenGL 标准。
- 这个扩展提供了一种高效的方式来复制图像数据,而无需使用 glCopyTexImage2D 或 glReadPixels 等传统方法。
- 使用这个扩展,可以在不同的纹理对象之间直接进行快速复制,而无需经过 CPU 处理。
- 这个扩展通常在需要高性能图像复制的场景中使用,例如在游戏引擎或图形处理应用程序中。
- GLAD_GL_NV_copy_image:
-
- COPY_TYPE_NV: 这是另一个 OpenGL 扩展名称,代表 "NV Copy Image"。
- NV 是 NVIDIA 公司的缩写,这个扩展是由 NVIDIA 开发的。
- 这个扩展提供了与 GLAD_GL_ARB_copy_image 类似的功能,允许在不同的纹理对象之间进行高效的图像复制。
- 与 ARB 扩展不同,这个扩展是由 NVIDIA 公司开发的,可能只在 NVIDIA 显卡上可用。
- 如果硬件不支持 ARB 扩展,可以考虑使用 NV 扩展作为备用方案。
- 
- COPY_TYPE_FBO_BLIT: 通过cpu 拷贝
- */
 enum copy_type { COPY_TYPE_ARB, COPY_TYPE_NV, COPY_TYPE_FBO_BLIT };
 
 static inline GLenum convert_gs_format(enum gs_color_format format)
@@ -210,7 +193,7 @@ static inline GLenum get_gl_format_type(enum gs_color_format format)
 
 	return GL_UNSIGNED_BYTE;
 }
-///模版类型转换
+
 static inline GLenum convert_zstencil_format(enum gs_zstencil_format format)
 {
 	switch (format) {
@@ -228,7 +211,7 @@ static inline GLenum convert_zstencil_format(enum gs_zstencil_format format)
 
 	return 0;
 }
-///深度类型转换
+
 static inline GLenum convert_gs_depth_test(enum gs_depth_test test)
 {
 	switch (test) {
@@ -347,8 +330,7 @@ static inline GLenum convert_shader_type(enum gs_shader_type type)
 	return GL_VERTEX_SHADER;
 }
 
-static inline void convert_filter(enum gs_sample_filter filter,
-				  GLint *min_filter, GLint *mag_filter)
+static inline void convert_filter(enum gs_sample_filter filter, GLint *min_filter, GLint *mag_filter)
 {
 	switch (filter) {
 	case GS_FILTER_POINT:
@@ -392,7 +374,7 @@ static inline void convert_filter(enum gs_sample_filter filter,
 	*min_filter = GL_NEAREST_MIPMAP_NEAREST;
 	*mag_filter = GL_NEAREST;
 }
-///寻址模式
+
 static inline GLint convert_address_mode(enum gs_address_mode mode)
 {
 	switch (mode) {
@@ -429,52 +411,18 @@ static inline GLenum convert_gs_topology(enum gs_draw_mode mode)
 	return GL_POINTS;
 }
 
-extern void convert_sampler_info(struct gs_sampler_state *sampler,
-				 const struct gs_sampler_info *info);
+extern void convert_sampler_info(struct gs_sampler_state *sampler, const struct gs_sampler_info *info);
 
-/*
- glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, sampler->min_filter);
- glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, sampler->mag_filter);
- glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, sampler->address_u);
- glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, sampler->address_v);
- glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, sampler->border_color.ptr);
- 这个结构体是 CPU 端保存 GPU状态的抽象描述。
- */
 struct gs_sampler_state {
 	gs_device_t *device;
 	volatile long ref;
-    /*
-     当纹理被缩小时如何进行过滤。它可以是以下值之一:
-     GL_NEAREST
-     GL_LINEAR
-     GL_NEAREST_MIPMAP_NEAREST
-     GL_LINEAR_MIPMAP_NEAREST
-     GL_NEAREST_MIPMAP_LINEAR
-     GL_LINEAR_MIPMAP_LINEAR
-     */
+
 	GLint min_filter;
-    /*
-     当纹理被放大时如何进行过滤。它可以是 GL_NEAREST 或 GL_LINEAR。
-     */
 	GLint mag_filter;
-    /*
-     这些是纹理坐标的寻址模式,决定了当纹理坐标超出 [0, 1] 范围时如何处理。它们可以是以下值之一:
-     GL_REPEAT
-     GL_MIRRORED_REPEAT
-     GL_CLAMP_TO_EDGE
-     GL_CLAMP_TO_BORDER
-     */
 	GLint address_u;
 	GLint address_v;
 	GLint address_w;
-    
-    /*
-     用于在纹理被斜视时提高图像质量
-     */
 	GLint max_anisotropy;
-    /*
-     寻址模式设置为 GL_CLAMP_TO_BORDER 时使用的边框颜色
-     */
 	struct vec4 border_color;
 };
 
@@ -492,10 +440,7 @@ static inline void samplerstate_release(gs_samplerstate_t *ss)
 struct gs_timer {
 	GLuint queries[2];
 };
-/*
- uniform mat4x4 ViewProj;
- uniform sampler2D image;
- */
+
 struct gs_shader_param {
 	enum gs_shader_param_type type;
 
@@ -514,173 +459,32 @@ struct gs_shader_param {
 	bool changed;
 };
 
-enum attrib_type {
-	ATTRIB_POSITION, // 顶点的位置属性，通常用于定义3D空间中的顶点坐标
-	ATTRIB_NORMAL,   // 顶点的法线属性，通常用于光照计算。
-	ATTRIB_TANGENT,  // 顶点的切线属性，通常用于法线贴图（normal mapping）等高级渲染技术。
-	ATTRIB_COLOR,    //顶点的颜色属性，通常用于给顶点上色
-	ATTRIB_TEXCOORD, //顶点的纹理坐标属性，用于纹理映射
-	ATTRIB_TARGET    //
-};
-///顶点属性  VAO
-/*
- in vec4 _input_attrib0;
- in vec2 _input_attrib1;
- */
+enum attrib_type { ATTRIB_POSITION, ATTRIB_NORMAL, ATTRIB_TANGENT, ATTRIB_COLOR, ATTRIB_TEXCOORD, ATTRIB_TARGET };
+
 struct shader_attrib {
 	char *name;
 	size_t index;
 	enum attrib_type type;
 };
-/*
- default.effect
- ======vertex=======
- #version 330
- const bool obs_glsl_compile = true;
 
- vec4 obs_load_2d(sampler2D s, ivec3 p_lod)
- {
-     int lod = p_lod.z;
-     vec2 size = textureSize(s, lod);
-     vec2 p = (vec2(p_lod.xy) + 0.5) / size;
-     vec4 color = textureLod(s, p, lod);
-     return color;
- }
-
- vec4 obs_load_3d(sampler3D s, ivec4 p_lod)
- {
-     int lod = p_lod.w;
-     vec3 size = textureSize(s, lod);
-     vec3 p = (vec3(p_lod.xyz) + 0.5) / size;
-     vec4 color = textureLod(s, p, lod);
-     return color;
- }
-
- uniform mat4x4 ViewProj;
-
- in vec4 _input_attrib0;
- in vec2 _input_attrib1;
-
- out vec2 _vertex_shader_attrib0;
-
- out gl_PerVertex {
-     vec4 gl_Position;
- };
-
- struct VertInOut {
-     vec4 pos;
-     vec2 uv;
- };
-
- VertInOut VSDefault(VertInOut vert_in)
- {
-     VertInOut vert_out;
-     vert_out.pos = ((vec4(vert_in.pos.xyz, 1.0)) * (ViewProj));
-     vert_out.uv  = vert_in.uv;
-     return vert_out;
- }
-
- VertInOut _main_wrap(VertInOut vert_in)
- {
-     return VSDefault(vert_in);
- }
-
- void main(void)
- {
-     VertInOut vert_in;
-     VertInOut outputval;
-
-     vert_in.pos = _input_attrib0;
-     vert_in.uv = _input_attrib1;
-
-     outputval = _main_wrap(vert_in);
-
-     gl_Position = outputval.pos;
-     _vertex_shader_attrib0 = outputval.uv;
- }
- 
-
-  ======fragment=======
- debug: #version 330
-
- const bool obs_glsl_compile = true;
-
- vec4 obs_load_2d(sampler2D s, ivec3 p_lod)
- {
-     int lod = p_lod.z;
-     vec2 size = textureSize(s, lod);
-     vec2 p = (vec2(p_lod.xy) + 0.5) / size;
-     vec4 color = textureLod(s, p, lod);
-     return color;
- }
-
- vec4 obs_load_3d(sampler3D s, ivec4 p_lod)
- {
-     int lod = p_lod.w;
-     vec3 size = textureSize(s, lod);
-     vec3 p = (vec3(p_lod.xyz) + 0.5) / size;
-     vec4 color = textureLod(s, p, lod);
-     return color;
- }
-
- uniform sampler2D image;
-
- in vec2 _vertex_shader_attrib0;
-
- out vec4 _pixel_shader_attrib0;
-
- struct VertInOut {
-     vec4 pos;
-     vec2 uv;
- };
-
- vec4 PSDrawBare(VertInOut vert_in)
- {
-     return texture(image, vert_in.uv);
- }
-
- vec4 _main_wrap(VertInOut vert_in)
- {
-     return PSDrawBare(vert_in);
- }
-
- void main(void)
- {
-     VertInOut vert_in;
-     vert_in.pos = gl_FragCoord;
-     vert_in.uv = _vertex_shader_attrib0;
-
-     _pixel_shader_attrib0 = _main_wrap(vert_in);
- }
-
- */
-///着色器
 struct gs_shader {
 	gs_device_t *device;
 	enum gs_shader_type type;
 	GLuint obj;
-    
-    ///张相机矩阵 它将 3D 世界坐标系转换为观察者的视角坐标系
+
 	struct gs_shader_param *viewproj;
-    ///世界矩阵 将2D坐标转换为3D坐标 (世界坐标)
 	struct gs_shader_param *world;
-    
-    //顶点属性
+
 	DARRAY(struct shader_attrib) attribs;
-    //参数 float matrix vec ...
 	DARRAY(struct gs_shader_param) params;
-    //fragment 纹理寻址模式
 	DARRAY(gs_samplerstate_t *) samplers;
 };
-///着色器程序的参数
+
 struct program_param {
 	GLint obj;
 	struct gs_shader_param *param;
 };
-/*
- 可执行的着色器程序,由一个或多个着色器组成
- glCreateProgram();
- */
+
 struct gs_program {
 	gs_device_t *device;
 	GLuint obj;
@@ -694,38 +498,26 @@ struct gs_program {
 	struct gs_program *next;
 };
 
-//创建着色器程序  （用于链接着色器）
 extern struct gs_program *gs_program_create(struct gs_device *device);
 extern void gs_program_destroy(struct gs_program *program);
-//把shader对象上的参数提交到program
 extern void program_update_params(struct gs_program *shader);
 
-///OpenGL顶点相关的缓冲
 struct gs_vertex_buffer {
-    //VAO
 	GLuint vao;
-    
-    //VBO
-	GLuint vertex_buffer;           //顶点位置
-	GLuint normal_buffer;           //顶点法线
-	GLuint tangent_buffer;          //顶点切线
-	GLuint color_buffer;            //定点颜色
-	
-    DARRAY(GLuint) uv_buffers;      //顶点纹理坐标
-	DARRAY(size_t) uv_sizes;       //顶点纹理坐标的维度
+	GLuint vertex_buffer;
+	GLuint normal_buffer;
+	GLuint tangent_buffer;
+	GLuint color_buffer;
+	DARRAY(GLuint) uv_buffers;
+	DARRAY(size_t) uv_sizes;
 
 	gs_device_t *device;
-    
-    //坐标的数量
 	size_t num;
 	bool dynamic;
-    ///UV buffer 
 	struct gs_vb_data *data;
 };
 
-extern bool load_vb_buffers(struct gs_program *program,
-			    struct gs_vertex_buffer *vb,
-			    struct gs_index_buffer *ib);
+extern bool load_vb_buffers(struct gs_program *program, struct gs_vertex_buffer *vb, struct gs_index_buffer *ib);
 
 struct gs_index_buffer {
 	GLuint buffer;
@@ -745,7 +537,6 @@ struct gs_texture {
 	enum gs_texture_type type;
 	enum gs_color_format format;
 	GLenum gl_format;
-    //GL_TEXTURE_2D
 	GLenum gl_target;
 	GLenum gl_internal_format;
 	GLenum gl_type;
@@ -753,12 +544,10 @@ struct gs_texture {
 	uint32_t levels;
 	bool is_dynamic;
 	bool is_render_target;
-    ///虚拟纹理
 	bool is_dummy;
 	bool gen_mipmaps;
-    ///当前的采样器
+
 	gs_samplerstate_t *cur_sampler;
-    //不是所有的纹理都会对应一个frame buffer   gs_set_render_target_with_color_space 此时就有frame buffer 
 	struct fbo_info *fbo;
 };
 
@@ -786,7 +575,7 @@ struct gs_texture_cube {
 
 	uint32_t size;
 };
-///暂存帧缓冲的表面数据  它在需要频繁读取像素数据的场景中非常有用。
+
 struct gs_stage_surface {
 	gs_device_t *device;
 
@@ -800,94 +589,20 @@ struct gs_stage_surface {
 	GLenum gl_type;
 	GLuint pack_buffer;
 };
-///深度模版缓冲(跟帧缓冲的渲染缓冲相关)
+
 struct gs_zstencil_buffer {
 	gs_device_t *device;
-	GLuint buffer; ///渲染缓冲
-	GLuint attachment; ///渲染缓冲的附加类型
-	GLenum format;     ///深度类型 
+	GLuint buffer;
+	GLuint attachment;
+	GLenum format;
 };
-///一个display 持有一个swap 一个swap持有一个OpenGLContext 
+
 struct gs_swap_chain {
 	gs_device_t *device;
 	struct gl_windowinfo *wi;
 	struct gs_init_data info;
 };
-/*
- vao（vertice attribute objec）顶点数据属性
- vbo（vertice buffer objec）  顶点缓冲 GL_ARRAY_BUFFER
- ebo 顶点索引数据对象 GL_ELEMENT_ARRAY_BUFFER
- 
- fbo (frame buffer oject)
- 
- 颜色缓冲、深度缓冲以及模板缓冲，这些缓冲结合起来叫做帧缓冲(Framebuffer)，它被储存在GPU内存中的某处。OpenGL允许我们定义我们自己的帧缓冲，也就是说我们能够定义我们自己的颜色缓冲，甚至是深度缓冲和模板缓冲。
- 
- // 创建fbo
- unsigned int fbo;
- glGenFramebuffers(1, &fbo);
- 
- 
-   gl_bind_framebuffer(
- //绑定fbo 之后绘制的内容会存到fbo上
- glBindFramebuffer(GL_FRAMEBUFFER, fbo);
- GL_READ_FRAMEBUFFER: 将一个帧缓冲分别绑定到读取目标 绑定到GL_READ_FRAMEBUFFER的帧缓冲将会使用在所有像是glReadPixels的读取操作中，
- GL_DRAW_FRAMEBUFFER: 将一个帧缓冲分别绑定到写入目标  绑定到GL_DRAW_FRAMEBUFFER的帧缓冲将会被用作渲染、清除等写入操作的目标。
- GL_FRAMEBUFFER: 所有的读取和写入帧缓冲的操作 使用GL_FRAMEBUFFER，绑定到读写两个上
- 
- 一个完整的帧缓冲需要满足以下的条件：
-    附加至少一个缓冲（颜色、深度或模板缓冲）。
-    至少有一个颜色附件(Attachment)。
-    所有的附件都必须是完整的（保留了内存）。
-    每个缓冲都应该有相同的样本数(sample)。
- 
- ///附加纹理附件
- {
-     将创建好的纹理附加到帧缓冲上:
-     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
-     
-     glFrameBufferTexture2D有以下的参数：
 
-     target：帧缓冲的目标（绘制、读取或者两者皆有）
-     attachment：我们想要附加的附件类型。当前我们正在附加一个颜色附件。注意最后的0意味着我们可以附加多个颜色附件。我们将在之后的教程中提到。
-     textarget：你希望附加的纹理类型
-     texture：要附加的纹理本身
-     level：多级渐远纹理的级别。我们将它保留为0。
-     
-     
-     将深度缓冲附加到帧缓冲上:
-     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_DEPTH_COMPONENT, texture, 0);
-     
-     
-     将模版缓冲附加到帧缓冲上:
-     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_STENCIL_INDEX, texture, 0);
-     
-     也可以将深度缓冲和模板缓冲附加为一个单独的纹理。纹理的每32位数值将包含24位的深度信息和8位的模板信息。要将深度和模板缓冲附加为一个纹理的话，我们使用GL_DEPTH_STENCIL_ATTACHMENT类型，并配置纹理的格式，让它包含合并的深度和模板值。将一个深度和模板缓冲附加为一个纹理到帧缓冲的例子可以在下面找到：
-
-     glTexImage2D(
-       GL_TEXTURE_2D, 0, GL_DEPTH24_STENCIL8, 800, 600, 0,
-       GL_DEPTH_STENCIL, GL_UNSIGNED_INT_24_8, NULL
-     );
-     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, texture, 0);
-
- 
-    
- }
- //附加渲染缓冲对象附件
-  {
-    创建一个渲染缓冲对象：
-     unsigned int rbo;
-     glGenRenderbuffers(1, &rbo);
- 
-    绑定这个渲染缓冲对象：
-    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
- 
-    创建一个深度和模板渲染缓冲对象：
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600);
-    
-    附加这个渲染缓冲对象：
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-  }
- */
 struct fbo_info {
 	GLuint fbo;
 	uint32_t width;
@@ -908,41 +623,23 @@ static inline void fbo_info_destroy(struct fbo_info *fbo)
 		bfree(fbo);
 	}
 }
-/*
- 此对象全局只有一个
- 当前设备会关联一个当前平台总的OpenGLContext
- 总的OpenGLContext下会关联一个或多个子OpenGLContext
- 一个子OpenGLContext对应一个具体的widget
- 
- 此对象是一个大的状态机
- 
- 要绘制任何东西 绘制之前必须提交 顶点数据  索引数据  纹理绑定 （fbo）  （变换 view_patrix proj_matrix  viewport ）
- 
- */
+
 struct gs_device {
-    //当前平台总的OpenGLContext
 	struct gl_platform *plat;
 	enum copy_type copy_type;
 
 	GLuint empty_vao;
 	gs_samplerstate_t *raw_load_sampler;
-    //当前渲染结果的存储对象 
+
 	gs_texture_t *cur_render_target;
 	gs_zstencil_t *cur_zstencil_buffer;
 	int cur_render_side;
-    
 	gs_texture_t *cur_textures[GS_MAX_TEXTURES];
 	gs_samplerstate_t *cur_samplers[GS_MAX_TEXTURES];
-    
-    ///vbo (vetices buffer object)顶点缓冲区
 	gs_vertbuffer_t *cur_vertex_buffer;
-    ///ebo () 顶点索引缓冲区
 	gs_indexbuffer_t *cur_index_buffer;
-    ///当前的顶点着色器 (effect->technique->pass->vertex_shader)
 	gs_shader_t *cur_vertex_shader;
-    ///片段着色器 (effect->technique->pass->piel_shader)
 	gs_shader_t *cur_pixel_shader;
-    ///每一个display 会有一个gs_swapchain_t device会切换不同的swap 
 	gs_swapchain_t *cur_swap;
 	struct gs_program *cur_program;
 	enum gs_color_space cur_color_space;
@@ -952,64 +649,29 @@ struct gs_device {
 	enum gs_cull_mode cur_cull_mode;
 	struct gs_rect cur_viewport;
 
-    
-    /*
-     顶点着色器处理流程
-     gl_Position = projection * view * model * vec4(in_position, 1.0);
-     projection 透视矩阵
-     view   相机矩阵
-     model  模型矩阵
-     
-     假如一个小房间 是世界坐标   房间里有个箱子    最终绘制到一个屏幕上
-     模型空间 是箱子自身的空间坐标
-     世界空间 是房间的坐标
-     相机空间 是从一个特定的角度观察箱子  view_matrix
-     裁剪空间 是透视空间(正交 透视)  proj_matrix （正交是 前后左右上下组成一个盒子  , 透视是一个中心点在箱子上打光）
-     
-        ||
-        ||  接下来是交给OpenGL 通过gl_setViewPort()  把裁剪空间压缩到[-1,1]
-       \||/
-     
-     模型空间 (Model Space)  (顶点数据)
-        ↓ [模型矩阵 Model]
-     世界空间 (World Space)
-        ↓ [视图矩阵 View]
-     相机空间 (View Space)
-        ↓ [投影矩阵 Projection]
-     裁剪空间 (Clip Space)   (left,right,top,bottom,near,far)
-        ↓ [透视除法]
-     NDC（[-1,1]）
-        ↓ [glViewport]
-     屏幕空间 (Screen Space)
-     */
-
-    //透视矩阵 这里用的平行投影 (left,right,top,bottom,near,far) 组合一个盒子  （把想要看到的空间放入到其中）
 	struct matrix4 cur_proj;
-    //cur_view 相机矩阵  绘制的时候会从graphic->matrix_stack中拷贝第一个
 	struct matrix4 cur_view;
-    //生成视图-投影组合矩阵   将相机变换和投影合并为一个矩阵 cur_proj @ cur_view
 	struct matrix4 cur_viewproj;
-    ///透视矩阵栈
+
 	DARRAY(struct matrix4) proj_stack;
-    //device对应的当前fbo  （frame buffer object） 帧缓冲区
+
 	struct fbo_info *cur_fbo;
 };
 
-extern struct fbo_info *get_fbo(gs_texture_t *tex, uint32_t width,
-				uint32_t height);
+typedef void *gs_sync;
+
+extern struct fbo_info *get_fbo(gs_texture_t *tex, uint32_t width, uint32_t height);
 
 extern void gl_update(gs_device_t *device);
 extern void gl_clear_context(gs_device_t *device);
 
-
-///当前平台
-extern struct gl_platform *gl_platform_create(gs_device_t *device,uint32_t adapter);
+extern struct gl_platform *gl_platform_create(gs_device_t *device, uint32_t adapter);
 extern void gl_platform_destroy(struct gl_platform *platform);
 
-
-///当前平台 每一个画布  及每个画布对应的fbo
-extern struct gl_windowinfo *gl_windowinfo_create(const struct gs_init_data *info);
-extern void gl_windowinfo_destroy(struct gl_windowinfo *wi);
 extern bool gl_platform_init_swapchain(struct gs_swap_chain *swap);
 extern void gl_platform_cleanup_swapchain(struct gs_swap_chain *swap);
-extern void gl_getclientsize(const struct gs_swap_chain *swap, uint32_t *width,uint32_t *height);
+
+extern struct gl_windowinfo *gl_windowinfo_create(const struct gs_init_data *info);
+extern void gl_windowinfo_destroy(struct gl_windowinfo *wi);
+
+extern void gl_getclientsize(const struct gs_swap_chain *swap, uint32_t *width, uint32_t *height);

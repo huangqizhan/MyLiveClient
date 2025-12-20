@@ -61,6 +61,10 @@ bool enmuAudioDevice(void *data, const char *name, const char *id){
     blog(LOG_INFO, "audio device name %s %s",name,id);
     return true;
 }
+static bool enumEncodeer(void*, obs_encoder_t *encoder){
+    blog(LOG_INFO, "id = %s name %s",obs_encoder_get_id(encoder),obs_encoder_get_name(encoder));
+    return true;
+}
 bool ObsBasic::InitObs()
 {
     try {
@@ -127,6 +131,9 @@ bool ObsBasic::InitObs()
         
 #if DEBUG
         obs_enum_audio_monitoring_devices(enmuAudioDevice, this);
+                
+        obs_enum_encoders(enumEncodeer, NULL);
+        
 #endif
         
         
@@ -170,8 +177,11 @@ bool ObsBasic::ResetService()
     OBSData settings = obs_data_create();
     if (!settings)
         return false;
-
-    obs_data_release(settings);
+    if (!config_get_string(m_basicConfig, "Stream", "Url")) {
+        config_set_string(m_basicConfig, "Stream", "Url", "rtmp://lserver.com/live/");
+        config_set_string(m_basicConfig, "Stream", "Name", "stream1");
+        config_save_safe(m_basicConfig, "tmp", nullptr);
+    }
     obs_data_set_string(settings, "server", config_get_string(m_basicConfig, "Stream", "Url"));
     obs_data_set_string(settings, "key", config_get_string(m_basicConfig, "Stream", "Name"));
     obs_data_set_bool(settings, "use_auth", config_get_bool(m_basicConfig, "Stream", "Auth"));
@@ -180,6 +190,7 @@ bool ObsBasic::ResetService()
 
     m_service = obs_service_create("rtmp_common",
         "default_service", settings, NULL);
+    obs_data_release(settings);
     if (!m_service)
         return false;
     obs_service_release(m_service);
@@ -665,6 +676,10 @@ bool ObsBasic::InitBasicConfigDefaults()
 
     config_set_default_bool(m_basicConfig, "BasicWindow", "AddTray",true);
 
+#if DEBUG
+    config_save_safe(m_basicConfig, "tmp", nullptr);
+#endif
+    
     return true;
 }
 
@@ -1271,5 +1286,5 @@ void ObsBasic::testAction(){
 //    config_set_string(m_basicConfig, "SimpleOutput", "RecFormat", "mp4");
 //    config_set_string(m_basicConfig, "AdvOut", "RecFormat", "mp4");
     
-    obs_debug_action();
+//    obs_debug_action();
 }

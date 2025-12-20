@@ -1,4 +1,5 @@
 #include "obs-ffmpeg-mux.h"
+#include <obsversion.h>
 #include <obs-avc.h>
 #ifdef ENABLE_HEVC
 #include <obs-hevc.h>

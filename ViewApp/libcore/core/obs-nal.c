@@ -1,5 +1,5 @@
 /******************************************************************************
-    Copyright (C) 2022 by Hugh Bailey <obs.jim@gmail.com>
+    Copyright (C) 2023 by Lain Bailey <lain@obsproject.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,8 +20,7 @@
 /* NOTE: I noticed that FFmpeg does some unusual special handling of certain
  * scenarios that I was unaware of, so instead of just searching for {0, 0, 1}
  * we'll just use the code from FFmpeg - http://www.ffmpeg.org/ */
-static const uint8_t *ff_avc_find_startcode_internal(const uint8_t *p,
-						     const uint8_t *end)
+static const uint8_t *ff_avc_find_startcode_internal(const uint8_t *p, const uint8_t *end)
 {
 	const uint8_t *a = p + 4 - ((intptr_t)p & 3);
 

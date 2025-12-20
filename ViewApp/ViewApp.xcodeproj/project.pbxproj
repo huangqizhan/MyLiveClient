@@ -276,7 +276,6 @@
 		9078C4382C7859D300FD11BA /* threading.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C34A2C7859D300FD11BA /* threading.h */; };
 		9078C4392C7859D300FD11BA /* util_uint64.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C34B2C7859D300FD11BA /* util_uint64.h */; };
 		9078C43A2C7859D300FD11BA /* lexer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9078C34C2C7859D300FD11BA /* lexer.c */; };
-		9078C43B2C7859D300FD11BA /* threading-windows.c in Sources */ = {isa = PBXBuildFile; fileRef = 9078C34D2C7859D300FD11BA /* threading-windows.c */; };
 		9078C43C2C7859D300FD11BA /* file-serializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C34E2C7859D300FD11BA /* file-serializer.h */; };
 		9078C43D2C7859D300FD11BA /* sse-intrin.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C34F2C7859D300FD11BA /* sse-intrin.h */; };
 		9078C43E2C7859D300FD11BA /* threading-posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 9078C3502C7859D300FD11BA /* threading-posix.c */; };
@@ -301,8 +300,6 @@
 		9078C4512C7859D300FD11BA /* cf-parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 9078C3642C7859D300FD11BA /* cf-parser.c */; };
 		9078C4522C7859D300FD11BA /* lexer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C3652C7859D300FD11BA /* lexer.h */; };
 		9078C4532C7859D300FD11BA /* file-serializer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9078C3662C7859D300FD11BA /* file-serializer.c */; };
-		9078C4542C7859D300FD11BA /* threading-windows.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C3672C7859D300FD11BA /* threading-windows.h */; };
-		9078C4552C7859D300FD11BA /* platform-nix-portal.c in Sources */ = {isa = PBXBuildFile; fileRef = 9078C3682C7859D300FD11BA /* platform-nix-portal.c */; };
 		9078C4562C7859D300FD11BA /* util.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9078C3692C7859D300FD11BA /* util.hpp */; };
 		9078C4572C7859D300FD11BA /* pipe-posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 9078C36A2C7859D300FD11BA /* pipe-posix.c */; };
 		9078C4582C7859D300FD11BA /* bmem.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C36B2C7859D300FD11BA /* bmem.h */; };
@@ -312,7 +309,6 @@
 		9078C45C2C7859D300FD11BA /* config-file.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C36F2C7859D300FD11BA /* config-file.h */; };
 		9078C45D2C7859D300FD11BA /* array-serializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C3702C7859D300FD11BA /* array-serializer.h */; };
 		9078C45E2C7859D300FD11BA /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C3712C7859D300FD11BA /* platform.h */; };
-		9078C45F2C7859D300FD11BA /* pipe-windows.c in Sources */ = {isa = PBXBuildFile; fileRef = 9078C3722C7859D300FD11BA /* pipe-windows.c */; };
 		9078C4602C7859D300FD11BA /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C3732C7859D300FD11BA /* utf8.h */; };
 		9078C4612C7859D300FD11BA /* profiler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 9078C3742C7859D300FD11BA /* profiler.hpp */; };
 		9078C4622C7859D300FD11BA /* circlebuf.h in Headers */ = {isa = PBXBuildFile; fileRef = 9078C3752C7859D300FD11BA /* circlebuf.h */; };
@@ -928,6 +924,7 @@
 		90F6C5902C880B35003483EC /* zh-TW.ini in Copy Bundle Resources */ = {isa = PBXBuildFile; fileRef = 90F6C50F2C880A7E003483EC /* zh-TW.ini */; };
 		90F6C6692C8869DE003483EC /* container2.png in Resources */ = {isa = PBXBuildFile; fileRef = 90F6C6682C8869DE003483EC /* container2.png */; };
 		F33F45592EB45FD4005ED68D /* effect_shader.txt in Resources */ = {isa = PBXBuildFile; fileRef = F33F45582EB45FD4005ED68D /* effect_shader.txt */; };
+		F33F4D0F2EF6910A001147D9 /* obs-outputs.plugin in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = F36C31012EF3D0B300CC8ACE /* obs-outputs.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F353DD5E2E5446830036D0D4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C6572C78665900FD11BA /* AVFoundation.framework */; };
 		F353E0D72E618BED0036D0D4 /* obs-ffmpeg-mux.c in Sources */ = {isa = PBXBuildFile; fileRef = F353E0D42E618BD60036D0D4 /* obs-ffmpeg-mux.c */; };
 		F353E0DB2E61918A0036D0D4 /* obs-ffmpeg-mux in ExecConsule */ = {isa = PBXBuildFile; fileRef = F353E0C92E618AFF0036D0D4 /* obs-ffmpeg-mux */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -936,6 +933,325 @@
 		F353E0E12E6191E20036D0D4 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F38BB5872E4F0C0D003CC59E /* libavcodec.a */; };
 		F353E0E22E6191E20036D0D4 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F38BB5852E4F0C0D003CC59E /* libavformat.a */; };
 		F353E0E32E6191E20036D0D4 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F38BB5882E4F0C0E003CC59E /* libavutil.a */; };
+		F36C305A2EF3CAB400CC8ACE /* amazon-ivs.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C304D2EF3CAB400CC8ACE /* amazon-ivs.c */; };
+		F36C305B2EF3CAB400CC8ACE /* showroom.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C30552EF3CAB400CC8ACE /* showroom.c */; };
+		F36C305C2EF3CAB400CC8ACE /* rtmp-custom.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C30492EF3CAB400CC8ACE /* rtmp-custom.c */; };
+		F36C305D2EF3CAB400CC8ACE /* rtmp-common.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C30482EF3CAB400CC8ACE /* rtmp-common.c */; };
+		F36C305E2EF3CAB400CC8ACE /* rtmp-services-main.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C304B2EF3CAB400CC8ACE /* rtmp-services-main.c */; };
+		F36C305F2EF3CAB400CC8ACE /* service-ingest.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C30532EF3CAB400CC8ACE /* service-ingest.c */; };
+		F36C30602EF3CAB400CC8ACE /* nimotv.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C30512EF3CAB400CC8ACE /* nimotv.c */; };
+		F36C30612EF3CAB400CC8ACE /* twitch.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C30572EF3CAB400CC8ACE /* twitch.c */; };
+		F36C30622EF3CAB400CC8ACE /* dacast.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C304F2EF3CAB400CC8ACE /* dacast.c */; };
+		F36C30AB2EF3CBA500CC8ACE /* af-ZA.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FBB2EF3CA9000CC8ACE /* af-ZA.ini */; };
+		F36C30AC2EF3CBA500CC8ACE /* ar-SA.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FBC2EF3CA9000CC8ACE /* ar-SA.ini */; };
+		F36C30AD2EF3CBA500CC8ACE /* az-AZ.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FBD2EF3CA9000CC8ACE /* az-AZ.ini */; };
+		F36C30AE2EF3CBA500CC8ACE /* ba-RU.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FBE2EF3CA9000CC8ACE /* ba-RU.ini */; };
+		F36C30AF2EF3CBA500CC8ACE /* be-BY.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FBF2EF3CA9000CC8ACE /* be-BY.ini */; };
+		F36C30B02EF3CBA500CC8ACE /* bg-BG.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FC02EF3CA9000CC8ACE /* bg-BG.ini */; };
+		F36C30B12EF3CBA500CC8ACE /* bn-BD.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FC12EF3CA9000CC8ACE /* bn-BD.ini */; };
+		F36C30B22EF3CBA500CC8ACE /* ca-ES.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FC22EF3CA9000CC8ACE /* ca-ES.ini */; };
+		F36C30B32EF3CBA500CC8ACE /* cs-CZ.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FC32EF3CA9000CC8ACE /* cs-CZ.ini */; };
+		F36C30B42EF3CBA500CC8ACE /* da-DK.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FC42EF3CA9000CC8ACE /* da-DK.ini */; };
+		F36C30B52EF3CBA500CC8ACE /* de-DE.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FC52EF3CA9000CC8ACE /* de-DE.ini */; };
+		F36C30B62EF3CBA500CC8ACE /* el-GR.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FC62EF3CA9000CC8ACE /* el-GR.ini */; };
+		F36C30B72EF3CBA500CC8ACE /* en-GB.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FC72EF3CA9000CC8ACE /* en-GB.ini */; };
+		F36C30B82EF3CBA500CC8ACE /* en-US.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FC82EF3CA9000CC8ACE /* en-US.ini */; };
+		F36C30B92EF3CBA500CC8ACE /* es-ES.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FC92EF3CA9000CC8ACE /* es-ES.ini */; };
+		F36C30BA2EF3CBA500CC8ACE /* et-EE.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FCA2EF3CA9000CC8ACE /* et-EE.ini */; };
+		F36C30BB2EF3CBA500CC8ACE /* eu-ES.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FCB2EF3CA9000CC8ACE /* eu-ES.ini */; };
+		F36C30BC2EF3CBA500CC8ACE /* fa-IR.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FCC2EF3CA9000CC8ACE /* fa-IR.ini */; };
+		F36C30BD2EF3CBA500CC8ACE /* fi-FI.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FCD2EF3CA9000CC8ACE /* fi-FI.ini */; };
+		F36C30BE2EF3CBA500CC8ACE /* fil-PH.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FCE2EF3CA9000CC8ACE /* fil-PH.ini */; };
+		F36C30BF2EF3CBA500CC8ACE /* fr-FR.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FCF2EF3CA9000CC8ACE /* fr-FR.ini */; };
+		F36C30C02EF3CBA500CC8ACE /* gd-GB.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FD02EF3CA9000CC8ACE /* gd-GB.ini */; };
+		F36C30C12EF3CBA500CC8ACE /* gl-ES.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FD12EF3CA9000CC8ACE /* gl-ES.ini */; };
+		F36C30C22EF3CBA500CC8ACE /* he-IL.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FD22EF3CA9000CC8ACE /* he-IL.ini */; };
+		F36C30C32EF3CBA500CC8ACE /* hi-IN.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FD32EF3CA9000CC8ACE /* hi-IN.ini */; };
+		F36C30C42EF3CBA500CC8ACE /* hr-HR.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FD42EF3CA9000CC8ACE /* hr-HR.ini */; };
+		F36C30C52EF3CBA500CC8ACE /* hu-HU.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FD52EF3CA9000CC8ACE /* hu-HU.ini */; };
+		F36C30C62EF3CBA500CC8ACE /* hy-AM.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FD62EF3CA9000CC8ACE /* hy-AM.ini */; };
+		F36C30C72EF3CBA500CC8ACE /* id-ID.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FD72EF3CA9000CC8ACE /* id-ID.ini */; };
+		F36C30C82EF3CBA500CC8ACE /* it-IT.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FD82EF3CA9000CC8ACE /* it-IT.ini */; };
+		F36C30C92EF3CBA500CC8ACE /* ja-JP.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FD92EF3CA9000CC8ACE /* ja-JP.ini */; };
+		F36C30CA2EF3CBA500CC8ACE /* ka-GE.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FDA2EF3CA9000CC8ACE /* ka-GE.ini */; };
+		F36C30CB2EF3CBA500CC8ACE /* kaa.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FDB2EF3CA9000CC8ACE /* kaa.ini */; };
+		F36C30CC2EF3CBA500CC8ACE /* kab-KAB.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FDC2EF3CA9000CC8ACE /* kab-KAB.ini */; };
+		F36C30CD2EF3CBA500CC8ACE /* kmr-TR.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FDD2EF3CA9000CC8ACE /* kmr-TR.ini */; };
+		F36C30CE2EF3CBA500CC8ACE /* ko-KR.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FDE2EF3CA9000CC8ACE /* ko-KR.ini */; };
+		F36C30CF2EF3CBA500CC8ACE /* mn-MN.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FDF2EF3CA9000CC8ACE /* mn-MN.ini */; };
+		F36C30D02EF3CBA500CC8ACE /* ms-MY.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FE02EF3CA9000CC8ACE /* ms-MY.ini */; };
+		F36C30D12EF3CBA500CC8ACE /* nb-NO.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FE12EF3CA9000CC8ACE /* nb-NO.ini */; };
+		F36C30D22EF3CBA500CC8ACE /* nl-NL.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FE22EF3CA9000CC8ACE /* nl-NL.ini */; };
+		F36C30D32EF3CBA500CC8ACE /* nn-NO.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FE32EF3CA9000CC8ACE /* nn-NO.ini */; };
+		F36C30D42EF3CBA500CC8ACE /* pl-PL.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FE42EF3CA9000CC8ACE /* pl-PL.ini */; };
+		F36C30D52EF3CBA500CC8ACE /* pt-BR.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FE52EF3CA9000CC8ACE /* pt-BR.ini */; };
+		F36C30D62EF3CBA500CC8ACE /* pt-PT.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FE62EF3CA9000CC8ACE /* pt-PT.ini */; };
+		F36C30D72EF3CBA500CC8ACE /* ro-RO.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FE72EF3CA9000CC8ACE /* ro-RO.ini */; };
+		F36C30D82EF3CBA500CC8ACE /* ru-RU.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FE82EF3CA9000CC8ACE /* ru-RU.ini */; };
+		F36C30D92EF3CBA500CC8ACE /* si-LK.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FE92EF3CA9000CC8ACE /* si-LK.ini */; };
+		F36C30DA2EF3CBA500CC8ACE /* sk-SK.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FEA2EF3CA9000CC8ACE /* sk-SK.ini */; };
+		F36C30DB2EF3CBA500CC8ACE /* sl-SI.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FEB2EF3CA9000CC8ACE /* sl-SI.ini */; };
+		F36C30DC2EF3CBA500CC8ACE /* sq-AL.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FEC2EF3CA9000CC8ACE /* sq-AL.ini */; };
+		F36C30DD2EF3CBA500CC8ACE /* sr-CS.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FED2EF3CA9000CC8ACE /* sr-CS.ini */; };
+		F36C30DE2EF3CBA500CC8ACE /* sr-SP.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FEE2EF3CA9000CC8ACE /* sr-SP.ini */; };
+		F36C30DF2EF3CBA500CC8ACE /* sv-SE.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FEF2EF3CA9000CC8ACE /* sv-SE.ini */; };
+		F36C30E02EF3CBA500CC8ACE /* szl-PL.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FF02EF3CA9000CC8ACE /* szl-PL.ini */; };
+		F36C30E12EF3CBA500CC8ACE /* ta-IN.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FF12EF3CA9000CC8ACE /* ta-IN.ini */; };
+		F36C30E22EF3CBA500CC8ACE /* th-TH.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FF22EF3CA9000CC8ACE /* th-TH.ini */; };
+		F36C30E32EF3CBA500CC8ACE /* tl-PH.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FF32EF3CA9000CC8ACE /* tl-PH.ini */; };
+		F36C30E42EF3CBA500CC8ACE /* tr-TR.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FF42EF3CA9000CC8ACE /* tr-TR.ini */; };
+		F36C30E52EF3CBA500CC8ACE /* tt-RU.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FF52EF3CA9000CC8ACE /* tt-RU.ini */; };
+		F36C30E62EF3CBA500CC8ACE /* ug-CN.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FF62EF3CA9000CC8ACE /* ug-CN.ini */; };
+		F36C30E72EF3CBA500CC8ACE /* uk-UA.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FF72EF3CA9000CC8ACE /* uk-UA.ini */; };
+		F36C30E82EF3CBA500CC8ACE /* ur-PK.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FF82EF3CA9000CC8ACE /* ur-PK.ini */; };
+		F36C30E92EF3CBA500CC8ACE /* vi-VN.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FF92EF3CA9000CC8ACE /* vi-VN.ini */; };
+		F36C30EA2EF3CBA500CC8ACE /* zh-CN.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FFA2EF3CA9000CC8ACE /* zh-CN.ini */; };
+		F36C30EB2EF3CBA500CC8ACE /* zh-TW.ini in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FFB2EF3CA9000CC8ACE /* zh-TW.ini */; };
+		F36C30EC2EF3CBA500CC8ACE /* package.json in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FFD2EF3CA9000CC8ACE /* package.json */; };
+		F36C30ED2EF3CBA500CC8ACE /* package-schema.json in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FFE2EF3CA9000CC8ACE /* package-schema.json */; };
+		F36C30EE2EF3CBA500CC8ACE /* service-schema-v5.json in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C2FFF2EF3CA9000CC8ACE /* service-schema-v5.json */; };
+		F36C30EF2EF3CBA500CC8ACE /* services.json in Copy Files */ = {isa = PBXBuildFile; fileRef = F36C30012EF3CA9000CC8ACE /* services.json */; };
+		F36C30F02EF3CBC200CC8ACE /* libcore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C2F02C78591D00FD11BA /* libcore.framework */; };
+		F36C30F12EF3CC0100CC8ACE /* libcaption.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B88E492C7731D900A77D50 /* libcaption.a */; };
+		F36C30F22EF3CC0100CC8ACE /* libjansson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B88C372C77284B00A77D50 /* libjansson.a */; };
+		F36C30F52EF3CD0500CC8ACE /* file-updater.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C30F42EF3CD0500CC8ACE /* file-updater.c */; };
+		F36C30F72EF3CD6E00CC8ACE /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F36C30F62EF3CD6300CC8ACE /* libcurl.tbd */; };
+		F36C30F82EF3CE2600CC8ACE /* rtmp-service.plugin in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = F36C2FB62EF3C9EC00CC8ACE /* rtmp-service.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F36C31472EF3D0FA00CC8ACE /* ru-RU.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31332EF3D0FA00CC8ACE /* ru-RU.ini */; };
+		F36C31482EF3D0FA00CC8ACE /* ca-ES.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C310C2EF3D0FA00CC8ACE /* ca-ES.ini */; };
+		F36C31492EF3D0FA00CC8ACE /* cs-CZ.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C310D2EF3D0FA00CC8ACE /* cs-CZ.ini */; };
+		F36C314A2EF3D0FA00CC8ACE /* ko-KR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31292EF3D0FA00CC8ACE /* ko-KR.ini */; };
+		F36C314B2EF3D0FA00CC8ACE /* hi-IN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C311D2EF3D0FA00CC8ACE /* hi-IN.ini */; };
+		F36C314C2EF3D0FA00CC8ACE /* szl-PL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C313A2EF3D0FA00CC8ACE /* szl-PL.ini */; };
+		F36C314D2EF3D0FA00CC8ACE /* si-LK.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31342EF3D0FA00CC8ACE /* si-LK.ini */; };
+		F36C314E2EF3D0FA00CC8ACE /* it-IT.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31232EF3D0FA00CC8ACE /* it-IT.ini */; };
+		F36C314F2EF3D0FA00CC8ACE /* tl-PH.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C313D2EF3D0FA00CC8ACE /* tl-PH.ini */; };
+		F36C31502EF3D0FA00CC8ACE /* ka-GE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31252EF3D0FA00CC8ACE /* ka-GE.ini */; };
+		F36C31512EF3D0FA00CC8ACE /* pl-PL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C312F2EF3D0FA00CC8ACE /* pl-PL.ini */; };
+		F36C31522EF3D0FA00CC8ACE /* et-EE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31142EF3D0FA00CC8ACE /* et-EE.ini */; };
+		F36C31532EF3D0FA00CC8ACE /* ms-MY.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C312B2EF3D0FA00CC8ACE /* ms-MY.ini */; };
+		F36C31542EF3D0FA00CC8ACE /* de-DE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C310F2EF3D0FA00CC8ACE /* de-DE.ini */; };
+		F36C31552EF3D0FA00CC8ACE /* tt-RU.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C313F2EF3D0FA00CC8ACE /* tt-RU.ini */; };
+		F36C31562EF3D0FA00CC8ACE /* sr-SP.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31382EF3D0FA00CC8ACE /* sr-SP.ini */; };
+		F36C31572EF3D0FA00CC8ACE /* hy-AM.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31202EF3D0FA00CC8ACE /* hy-AM.ini */; };
+		F36C31582EF3D0FA00CC8ACE /* be-BY.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31092EF3D0FA00CC8ACE /* be-BY.ini */; };
+		F36C31592EF3D0FA00CC8ACE /* nb-NO.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C312C2EF3D0FA00CC8ACE /* nb-NO.ini */; };
+		F36C315A2EF3D0FA00CC8ACE /* fil-PH.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31182EF3D0FA00CC8ACE /* fil-PH.ini */; };
+		F36C315B2EF3D0FA00CC8ACE /* el-GR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31102EF3D0FA00CC8ACE /* el-GR.ini */; };
+		F36C315C2EF3D0FA00CC8ACE /* fa-IR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31162EF3D0FA00CC8ACE /* fa-IR.ini */; };
+		F36C315D2EF3D0FA00CC8ACE /* mn-MN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C312A2EF3D0FA00CC8ACE /* mn-MN.ini */; };
+		F36C315E2EF3D0FA00CC8ACE /* ug-CN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31402EF3D0FA00CC8ACE /* ug-CN.ini */; };
+		F36C315F2EF3D0FA00CC8ACE /* zh-CN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31442EF3D0FA00CC8ACE /* zh-CN.ini */; };
+		F36C31602EF3D0FA00CC8ACE /* id-ID.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31212EF3D0FA00CC8ACE /* id-ID.ini */; };
+		F36C31612EF3D0FA00CC8ACE /* zh-TW.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31452EF3D0FA00CC8ACE /* zh-TW.ini */; };
+		F36C31622EF3D0FA00CC8ACE /* eu-ES.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31152EF3D0FA00CC8ACE /* eu-ES.ini */; };
+		F36C31632EF3D0FA00CC8ACE /* fi-FI.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31172EF3D0FA00CC8ACE /* fi-FI.ini */; };
+		F36C31642EF3D0FA00CC8ACE /* sv-SE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31392EF3D0FA00CC8ACE /* sv-SE.ini */; };
+		F36C31652EF3D0FA00CC8ACE /* af-ZA.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31062EF3D0FA00CC8ACE /* af-ZA.ini */; };
+		F36C31662EF3D0FA00CC8ACE /* sl-SI.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31362EF3D0FA00CC8ACE /* sl-SI.ini */; };
+		F36C31672EF3D0FA00CC8ACE /* hr-HR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C311E2EF3D0FA00CC8ACE /* hr-HR.ini */; };
+		F36C31682EF3D0FA00CC8ACE /* vi-VN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31432EF3D0FA00CC8ACE /* vi-VN.ini */; };
+		F36C31692EF3D0FA00CC8ACE /* kab-KAB.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31272EF3D0FA00CC8ACE /* kab-KAB.ini */; };
+		F36C316A2EF3D0FA00CC8ACE /* en-US.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31122EF3D0FA00CC8ACE /* en-US.ini */; };
+		F36C316B2EF3D0FA00CC8ACE /* ar-SA.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31072EF3D0FA00CC8ACE /* ar-SA.ini */; };
+		F36C316C2EF3D0FA00CC8ACE /* kmr-TR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31282EF3D0FA00CC8ACE /* kmr-TR.ini */; };
+		F36C316D2EF3D0FA00CC8ACE /* nl-NL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C312D2EF3D0FA00CC8ACE /* nl-NL.ini */; };
+		F36C316E2EF3D0FA00CC8ACE /* bn-BD.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C310B2EF3D0FA00CC8ACE /* bn-BD.ini */; };
+		F36C316F2EF3D0FA00CC8ACE /* gd-GB.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C311A2EF3D0FA00CC8ACE /* gd-GB.ini */; };
+		F36C31702EF3D0FA00CC8ACE /* en-GB.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31112EF3D0FA00CC8ACE /* en-GB.ini */; };
+		F36C31712EF3D0FA00CC8ACE /* bg-BG.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C310A2EF3D0FA00CC8ACE /* bg-BG.ini */; };
+		F36C31722EF3D0FA00CC8ACE /* kaa.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31262EF3D0FA00CC8ACE /* kaa.ini */; };
+		F36C31732EF3D0FA00CC8ACE /* ja-JP.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31242EF3D0FA00CC8ACE /* ja-JP.ini */; };
+		F36C31742EF3D0FA00CC8ACE /* th-TH.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C313C2EF3D0FA00CC8ACE /* th-TH.ini */; };
+		F36C31752EF3D0FA00CC8ACE /* hu-HU.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C311F2EF3D0FA00CC8ACE /* hu-HU.ini */; };
+		F36C31762EF3D0FA00CC8ACE /* sr-CS.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31372EF3D0FA00CC8ACE /* sr-CS.ini */; };
+		F36C31772EF3D0FA00CC8ACE /* sk-SK.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31352EF3D0FA00CC8ACE /* sk-SK.ini */; };
+		F36C31782EF3D0FA00CC8ACE /* gl-ES.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C311B2EF3D0FA00CC8ACE /* gl-ES.ini */; };
+		F36C31792EF3D0FA00CC8ACE /* he-IL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C311C2EF3D0FA00CC8ACE /* he-IL.ini */; };
+		F36C317A2EF3D0FA00CC8ACE /* pt-BR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31302EF3D0FA00CC8ACE /* pt-BR.ini */; };
+		F36C317B2EF3D0FA00CC8ACE /* ur-PK.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31422EF3D0FA00CC8ACE /* ur-PK.ini */; };
+		F36C317C2EF3D0FA00CC8ACE /* ro-RO.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31322EF3D0FA00CC8ACE /* ro-RO.ini */; };
+		F36C317D2EF3D0FA00CC8ACE /* es-ES.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31132EF3D0FA00CC8ACE /* es-ES.ini */; };
+		F36C317E2EF3D0FA00CC8ACE /* pt-PT.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31312EF3D0FA00CC8ACE /* pt-PT.ini */; };
+		F36C317F2EF3D0FA00CC8ACE /* uk-UA.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31412EF3D0FA00CC8ACE /* uk-UA.ini */; };
+		F36C31802EF3D0FA00CC8ACE /* da-DK.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C310E2EF3D0FA00CC8ACE /* da-DK.ini */; };
+		F36C31812EF3D0FA00CC8ACE /* is-IS.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31222EF3D0FA00CC8ACE /* is-IS.ini */; };
+		F36C31822EF3D0FA00CC8ACE /* nn-NO.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C312E2EF3D0FA00CC8ACE /* nn-NO.ini */; };
+		F36C31832EF3D0FA00CC8ACE /* ba-RU.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31082EF3D0FA00CC8ACE /* ba-RU.ini */; };
+		F36C31842EF3D0FA00CC8ACE /* fr-FR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C31192EF3D0FA00CC8ACE /* fr-FR.ini */; };
+		F36C31852EF3D0FA00CC8ACE /* ta-IN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C313B2EF3D0FA00CC8ACE /* ta-IN.ini */; };
+		F36C31862EF3D0FA00CC8ACE /* tr-TR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C313E2EF3D0FA00CC8ACE /* tr-TR.ini */; };
+		F36C319C2EF3D13E00CC8ACE /* rtmp-av1.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31942EF3D13E00CC8ACE /* rtmp-av1.c */; };
+		F36C319D2EF3D13E00CC8ACE /* rtmp-hevc.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31972EF3D13E00CC8ACE /* rtmp-hevc.c */; };
+		F36C319F2EF3D13E00CC8ACE /* flv-output.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31892EF3D13E00CC8ACE /* flv-output.c */; };
+		F36C31A02EF3D13E00CC8ACE /* mp4-mux.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C318B2EF3D13E00CC8ACE /* mp4-mux.c */; };
+		F36C31A12EF3D13E00CC8ACE /* mp4-output.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C318D2EF3D13E00CC8ACE /* mp4-output.c */; };
+		F36C31A22EF3D13E00CC8ACE /* rtmp-stream.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31992EF3D13E00CC8ACE /* rtmp-stream.c */; };
+		F36C31A32EF3D13E00CC8ACE /* net-if.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C318F2EF3D13E00CC8ACE /* net-if.c */; };
+		F36C31A42EF3D13E00CC8ACE /* obs-outputs.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31922EF3D13E00CC8ACE /* obs-outputs.c */; };
+		F36C31A52EF3D13E00CC8ACE /* null-output.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31902EF3D13E00CC8ACE /* null-output.c */; };
+		F36C31A62EF3D13E00CC8ACE /* flv-mux.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31882EF3D13E00CC8ACE /* flv-mux.c */; };
+		F36C31D32EF3D1F300CC8ACE /* hashswf.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31C82EF3D1F300CC8ACE /* hashswf.c */; };
+		F36C31D42EF3D1F300CC8ACE /* amf.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31C22EF3D1F300CC8ACE /* amf.c */; };
+		F36C31D52EF3D1F300CC8ACE /* log.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31CB2EF3D1F300CC8ACE /* log.c */; };
+		F36C31D62EF3D1F300CC8ACE /* rtmp.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31D02EF3D1F300CC8ACE /* rtmp.c */; };
+		F36C31D72EF3D1F300CC8ACE /* cencode.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31C52EF3D1F300CC8ACE /* cencode.c */; };
+		F36C31D82EF3D1F300CC8ACE /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31CD2EF3D1F300CC8ACE /* md5.c */; };
+		F36C31D92EF3D1F300CC8ACE /* parseurl.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31CE2EF3D1F300CC8ACE /* parseurl.c */; };
+		F36C31DE2EF3D36600CC8ACE /* deque.h in Headers */ = {isa = PBXBuildFile; fileRef = F36C31DD2EF3D36600CC8ACE /* deque.h */; };
+		F36C31E12EF3D48700CC8ACE /* happy-eyeballs.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31E02EF3D48700CC8ACE /* happy-eyeballs.c */; };
+		F36C31E42EF3D4DC00CC8ACE /* buffered-file-serializer.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31E32EF3D4DC00CC8ACE /* buffered-file-serializer.c */; };
+		F36C31E52EF3D4DC00CC8ACE /* buffered-file-serializer.h in Headers */ = {isa = PBXBuildFile; fileRef = F36C31E22EF3D4DC00CC8ACE /* buffered-file-serializer.h */; };
+		F36C31E82EF3D6A200CC8ACE /* obs-av1.h in Headers */ = {isa = PBXBuildFile; fileRef = F36C31E62EF3D6A200CC8ACE /* obs-av1.h */; };
+		F36C31E92EF3D6A200CC8ACE /* obs-av1.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31E72EF3D6A200CC8ACE /* obs-av1.c */; };
+		F36C31EB2EF3ED7A00CC8ACE /* obs-canvas.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31EA2EF3ED7A00CC8ACE /* obs-canvas.c */; };
+		F36C31EF2EF3F69600CC8ACE /* source-profiler.h in Headers */ = {isa = PBXBuildFile; fileRef = F36C31ED2EF3F69600CC8ACE /* source-profiler.h */; };
+		F36C31F02EF3F69600CC8ACE /* pipe.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31EC2EF3F69600CC8ACE /* pipe.c */; };
+		F36C31F12EF3F69600CC8ACE /* source-profiler.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31EE2EF3F69600CC8ACE /* source-profiler.c */; };
+		F36C31F62EF3F92E00CC8ACE /* obsversion.h in Headers */ = {isa = PBXBuildFile; fileRef = F36C31F42EF3F92E00CC8ACE /* obsversion.h */; };
+		F36C31F72EF3F92E00CC8ACE /* obsversion.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C31F52EF3F92E00CC8ACE /* obsversion.c */; };
+		F36C32092EF40B3800CC8ACE /* bpm.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C32072EF40B3800CC8ACE /* bpm.c */; };
+		F36C320C2EF40B6D00CC8ACE /* opts-parser.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C320B2EF40B6D00CC8ACE /* opts-parser.c */; };
+		F36C32232EF4103D00CC8ACE /* libcore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C2F02C78591D00FD11BA /* libcore.framework */; };
+		F36C322A2EF4115B00CC8ACE /* libcaption.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B88E492C7731D900A77D50 /* libcaption.a */; };
+		F36C32352EF4DF1F00CC8ACE /* libmbedtls.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F36C32342EF4DF1F00CC8ACE /* libmbedtls.dylib */; };
+		F36C32392EF4DF2B00CC8ACE /* libmbedx509.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F36C32382EF4DF2A00CC8ACE /* libmbedx509.dylib */; };
+		F36C323C2EF4DF3200CC8ACE /* libmbedcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F36C323B2EF4DF3200CC8ACE /* libmbedcrypto.dylib */; };
+		F36C323E2EF4E03100CC8ACE /* libmbedtls.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F36C32342EF4DF1F00CC8ACE /* libmbedtls.dylib */; };
+		F36C323F2EF4E03100CC8ACE /* libmbedtls.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F36C32342EF4DF1F00CC8ACE /* libmbedtls.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F36C32402EF4E03400CC8ACE /* libmbedx509.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F36C32382EF4DF2A00CC8ACE /* libmbedx509.dylib */; };
+		F36C32412EF4E03400CC8ACE /* libmbedx509.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F36C32382EF4DF2A00CC8ACE /* libmbedx509.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F36C32422EF4E03700CC8ACE /* libmbedcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F36C323B2EF4DF3200CC8ACE /* libmbedcrypto.dylib */; };
+		F36C32432EF4E03700CC8ACE /* libmbedcrypto.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F36C323B2EF4DF3200CC8ACE /* libmbedcrypto.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F36C32912EF4E1FE00CC8ACE /* bn-BD.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32532EF4E1FE00CC8ACE /* bn-BD.ini */; };
+		F36C32922EF4E1FE00CC8ACE /* fa-IR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C325E2EF4E1FE00CC8ACE /* fa-IR.ini */; };
+		F36C32932EF4E1FE00CC8ACE /* ca-ES.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32542EF4E1FE00CC8ACE /* ca-ES.ini */; };
+		F36C32942EF4E1FE00CC8ACE /* ba-RU.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32502EF4E1FE00CC8ACE /* ba-RU.ini */; };
+		F36C32952EF4E1FE00CC8ACE /* zh-TW.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C328D2EF4E1FE00CC8ACE /* zh-TW.ini */; };
+		F36C32962EF4E1FE00CC8ACE /* hu-HU.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32672EF4E1FE00CC8ACE /* hu-HU.ini */; };
+		F36C32972EF4E1FE00CC8ACE /* he-IL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32642EF4E1FE00CC8ACE /* he-IL.ini */; };
+		F36C32982EF4E1FE00CC8ACE /* pt-BR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32782EF4E1FE00CC8ACE /* pt-BR.ini */; };
+		F36C32992EF4E1FE00CC8ACE /* sk-SK.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C327D2EF4E1FE00CC8ACE /* sk-SK.ini */; };
+		F36C329A2EF4E1FE00CC8ACE /* fil-PH.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32602EF4E1FE00CC8ACE /* fil-PH.ini */; };
+		F36C329B2EF4E1FE00CC8ACE /* nb-NO.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32732EF4E1FE00CC8ACE /* nb-NO.ini */; };
+		F36C329C2EF4E1FE00CC8ACE /* es-ES.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C325B2EF4E1FE00CC8ACE /* es-ES.ini */; };
+		F36C329D2EF4E1FE00CC8ACE /* ta-IN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32842EF4E1FE00CC8ACE /* ta-IN.ini */; };
+		F36C329E2EF4E1FE00CC8ACE /* sv-SE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32822EF4E1FE00CC8ACE /* sv-SE.ini */; };
+		F36C329F2EF4E1FE00CC8ACE /* de-DE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32572EF4E1FE00CC8ACE /* de-DE.ini */; };
+		F36C32A02EF4E1FE00CC8ACE /* da-DK.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32562EF4E1FE00CC8ACE /* da-DK.ini */; };
+		F36C32A12EF4E1FE00CC8ACE /* tl-PH.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32862EF4E1FE00CC8ACE /* tl-PH.ini */; };
+		F36C32A22EF4E1FE00CC8ACE /* it-IT.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C326A2EF4E1FE00CC8ACE /* it-IT.ini */; };
+		F36C32A32EF4E1FE00CC8ACE /* ko-KR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32702EF4E1FE00CC8ACE /* ko-KR.ini */; };
+		F36C32A42EF4E1FE00CC8ACE /* oc-FR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32762EF4E1FE00CC8ACE /* oc-FR.ini */; };
+		F36C32A52EF4E1FE00CC8ACE /* hy-AM.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32682EF4E1FE00CC8ACE /* hy-AM.ini */; };
+		F36C32A62EF4E1FE00CC8ACE /* ja-JP.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C326B2EF4E1FE00CC8ACE /* ja-JP.ini */; };
+		F36C32A72EF4E1FE00CC8ACE /* sr-CS.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32802EF4E1FE00CC8ACE /* sr-CS.ini */; };
+		F36C32A82EF4E1FE00CC8ACE /* nl-NL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32742EF4E1FE00CC8ACE /* nl-NL.ini */; };
+		F36C32A92EF4E1FE00CC8ACE /* kab-KAB.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C326E2EF4E1FE00CC8ACE /* kab-KAB.ini */; };
+		F36C32AA2EF4E1FE00CC8ACE /* sr-SP.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32812EF4E1FE00CC8ACE /* sr-SP.ini */; };
+		F36C32AB2EF4E1FE00CC8ACE /* fr-FR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32612EF4E1FE00CC8ACE /* fr-FR.ini */; };
+		F36C32AC2EF4E1FE00CC8ACE /* pt-PT.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32792EF4E1FE00CC8ACE /* pt-PT.ini */; };
+		F36C32AD2EF4E1FE00CC8ACE /* zh-CN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C328C2EF4E1FE00CC8ACE /* zh-CN.ini */; };
+		F36C32AE2EF4E1FE00CC8ACE /* nn-NO.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32752EF4E1FE00CC8ACE /* nn-NO.ini */; };
+		F36C32AF2EF4E1FE00CC8ACE /* az-AZ.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C324F2EF4E1FE00CC8ACE /* az-AZ.ini */; };
+		F36C32B02EF4E1FE00CC8ACE /* fi-FI.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C325F2EF4E1FE00CC8ACE /* fi-FI.ini */; };
+		F36C32B12EF4E1FE00CC8ACE /* cs-CZ.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32552EF4E1FE00CC8ACE /* cs-CZ.ini */; };
+		F36C32B22EF4E1FE00CC8ACE /* eu-ES.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C325D2EF4E1FE00CC8ACE /* eu-ES.ini */; };
+		F36C32B32EF4E1FE00CC8ACE /* pl-PL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32772EF4E1FE00CC8ACE /* pl-PL.ini */; };
+		F36C32B42EF4E1FE00CC8ACE /* lt-LT.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32712EF4E1FE00CC8ACE /* lt-LT.ini */; };
+		F36C32B52EF4E1FE00CC8ACE /* tr-TR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32872EF4E1FE00CC8ACE /* tr-TR.ini */; };
+		F36C32B62EF4E1FE00CC8ACE /* ar-SA.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C324E2EF4E1FE00CC8ACE /* ar-SA.ini */; };
+		F36C32B72EF4E1FE00CC8ACE /* en-US.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C325A2EF4E1FE00CC8ACE /* en-US.ini */; };
+		F36C32B82EF4E1FE00CC8ACE /* vi-VN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C328B2EF4E1FE00CC8ACE /* vi-VN.ini */; };
+		F36C32B92EF4E1FE00CC8ACE /* gl-ES.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32632EF4E1FE00CC8ACE /* gl-ES.ini */; };
+		F36C32BA2EF4E1FE00CC8ACE /* gd-GB.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32622EF4E1FE00CC8ACE /* gd-GB.ini */; };
+		F36C32BB2EF4E1FE00CC8ACE /* et-EE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C325C2EF4E1FE00CC8ACE /* et-EE.ini */; };
+		F36C32BC2EF4E1FE00CC8ACE /* kmr-TR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C326F2EF4E1FE00CC8ACE /* kmr-TR.ini */; };
+		F36C32BD2EF4E1FE00CC8ACE /* szl-PL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32832EF4E1FE00CC8ACE /* szl-PL.ini */; };
+		F36C32BE2EF4E1FE00CC8ACE /* af-ZA.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C324D2EF4E1FE00CC8ACE /* af-ZA.ini */; };
+		F36C32BF2EF4E1FE00CC8ACE /* ka-GE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C326C2EF4E1FE00CC8ACE /* ka-GE.ini */; };
+		F36C32C02EF4E1FE00CC8ACE /* hi-IN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32652EF4E1FE00CC8ACE /* hi-IN.ini */; };
+		F36C32C12EF4E1FE00CC8ACE /* id-ID.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32692EF4E1FE00CC8ACE /* id-ID.ini */; };
+		F36C32C22EF4E1FE00CC8ACE /* sl-SI.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C327E2EF4E1FE00CC8ACE /* sl-SI.ini */; };
+		F36C32C32EF4E1FE00CC8ACE /* bg-BG.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32522EF4E1FE00CC8ACE /* bg-BG.ini */; };
+		F36C32C42EF4E1FE00CC8ACE /* th-TH.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32852EF4E1FE00CC8ACE /* th-TH.ini */; };
+		F36C32C52EF4E1FE00CC8ACE /* ug-CN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32892EF4E1FE00CC8ACE /* ug-CN.ini */; };
+		F36C32C62EF4E1FE00CC8ACE /* tt-RU.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32882EF4E1FE00CC8ACE /* tt-RU.ini */; };
+		F36C32C72EF4E1FE00CC8ACE /* el-GR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32582EF4E1FE00CC8ACE /* el-GR.ini */; };
+		F36C32C82EF4E1FE00CC8ACE /* hr-HR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32662EF4E1FE00CC8ACE /* hr-HR.ini */; };
+		F36C32C92EF4E1FE00CC8ACE /* kaa.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C326D2EF4E1FE00CC8ACE /* kaa.ini */; };
+		F36C32CA2EF4E1FE00CC8ACE /* sq-AL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C327F2EF4E1FE00CC8ACE /* sq-AL.ini */; };
+		F36C32CB2EF4E1FE00CC8ACE /* ms-MY.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32722EF4E1FE00CC8ACE /* ms-MY.ini */; };
+		F36C32CC2EF4E1FE00CC8ACE /* en-GB.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32592EF4E1FE00CC8ACE /* en-GB.ini */; };
+		F36C32CD2EF4E1FE00CC8ACE /* be-BY.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32512EF4E1FE00CC8ACE /* be-BY.ini */; };
+		F36C32CE2EF4E1FE00CC8ACE /* ru-RU.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C327B2EF4E1FE00CC8ACE /* ru-RU.ini */; };
+		F36C32CF2EF4E1FE00CC8ACE /* uk-UA.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C328A2EF4E1FE00CC8ACE /* uk-UA.ini */; };
+		F36C32D02EF4E1FE00CC8ACE /* ro-RO.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C327A2EF4E1FE00CC8ACE /* ro-RO.ini */; };
+		F36C32D12EF4E1FE00CC8ACE /* si-LK.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C327C2EF4E1FE00CC8ACE /* si-LK.ini */; };
+		F36C32D22EF4E1FE00CC8ACE /* encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = F36C32902EF4E1FE00CC8ACE /* encoder.c */; };
+		F36C32D42EF4E23100CC8ACE /* libcore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C2F02C78591D00FD11BA /* libcore.framework */; };
+		F36C32D52EF4E23100CC8ACE /* libcore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C2F02C78591D00FD11BA /* libcore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F36C32D92EF4E27E00CC8ACE /* mac-videotoolbox.plugin in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = F36C32492EF4E1C000CC8ACE /* mac-videotoolbox.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F36C331E2EF4E61900CC8ACE /* whip-service.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F36C331C2EF4E61900CC8ACE /* whip-service.cpp */; };
+		F36C331F2EF4E61900CC8ACE /* whip-output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F36C331A2EF4E61900CC8ACE /* whip-output.cpp */; };
+		F36C33202EF4E61900CC8ACE /* obs-webrtc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F36C33182EF4E61900CC8ACE /* obs-webrtc.cpp */; };
+		F36C33212EF4E61900CC8ACE /* ug-CN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33112EF4E61900CC8ACE /* ug-CN.ini */; };
+		F36C33222EF4E61900CC8ACE /* cs-CZ.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32EA2EF4E61900CC8ACE /* cs-CZ.ini */; };
+		F36C33232EF4E61900CC8ACE /* et-EE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32F12EF4E61900CC8ACE /* et-EE.ini */; };
+		F36C33242EF4E61900CC8ACE /* ko-KR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33022EF4E61900CC8ACE /* ko-KR.ini */; };
+		F36C33252EF4E61900CC8ACE /* ro-RO.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33092EF4E61900CC8ACE /* ro-RO.ini */; };
+		F36C33262EF4E61900CC8ACE /* es-ES.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32F02EF4E61900CC8ACE /* es-ES.ini */; };
+		F36C33272EF4E61900CC8ACE /* bg-BG.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32E82EF4E61900CC8ACE /* bg-BG.ini */; };
+		F36C33282EF4E61900CC8ACE /* fa-IR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32F22EF4E61900CC8ACE /* fa-IR.ini */; };
+		F36C33292EF4E61900CC8ACE /* ru-RU.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C330A2EF4E61900CC8ACE /* ru-RU.ini */; };
+		F36C332A2EF4E61900CC8ACE /* pl-PL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33062EF4E61900CC8ACE /* pl-PL.ini */; };
+		F36C332B2EF4E61900CC8ACE /* fr-FR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32F52EF4E61900CC8ACE /* fr-FR.ini */; };
+		F36C332C2EF4E61900CC8ACE /* vi-VN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33132EF4E61900CC8ACE /* vi-VN.ini */; };
+		F36C332D2EF4E61900CC8ACE /* sl-SI.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C330D2EF4E61900CC8ACE /* sl-SI.ini */; };
+		F36C332E2EF4E61900CC8ACE /* zh-CN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33142EF4E61900CC8ACE /* zh-CN.ini */; };
+		F36C332F2EF4E61900CC8ACE /* ca-ES.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32E92EF4E61900CC8ACE /* ca-ES.ini */; };
+		F36C33302EF4E61900CC8ACE /* id-ID.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32FC2EF4E61900CC8ACE /* id-ID.ini */; };
+		F36C33312EF4E61900CC8ACE /* sk-SK.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C330C2EF4E61900CC8ACE /* sk-SK.ini */; };
+		F36C33322EF4E61900CC8ACE /* kmr-TR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33012EF4E61900CC8ACE /* kmr-TR.ini */; };
+		F36C33332EF4E61900CC8ACE /* th-TH.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C330F2EF4E61900CC8ACE /* th-TH.ini */; };
+		F36C33342EF4E61900CC8ACE /* hr-HR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32F92EF4E61900CC8ACE /* hr-HR.ini */; };
+		F36C33352EF4E61900CC8ACE /* ja-JP.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32FE2EF4E61900CC8ACE /* ja-JP.ini */; };
+		F36C33362EF4E61900CC8ACE /* si-LK.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C330B2EF4E61900CC8ACE /* si-LK.ini */; };
+		F36C33372EF4E61900CC8ACE /* af-ZA.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32E52EF4E61900CC8ACE /* af-ZA.ini */; };
+		F36C33382EF4E61900CC8ACE /* uk-UA.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33122EF4E61900CC8ACE /* uk-UA.ini */; };
+		F36C33392EF4E61900CC8ACE /* el-GR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32ED2EF4E61900CC8ACE /* el-GR.ini */; };
+		F36C333A2EF4E61900CC8ACE /* ka-GE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32FF2EF4E61900CC8ACE /* ka-GE.ini */; };
+		F36C333B2EF4E61900CC8ACE /* kaa.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33002EF4E61900CC8ACE /* kaa.ini */; };
+		F36C333C2EF4E61900CC8ACE /* fil-PH.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32F42EF4E61900CC8ACE /* fil-PH.ini */; };
+		F36C333D2EF4E61900CC8ACE /* hi-IN.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32F82EF4E61900CC8ACE /* hi-IN.ini */; };
+		F36C333E2EF4E61900CC8ACE /* tr-TR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33102EF4E61900CC8ACE /* tr-TR.ini */; };
+		F36C333F2EF4E61900CC8ACE /* sv-SE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C330E2EF4E61900CC8ACE /* sv-SE.ini */; };
+		F36C33402EF4E61900CC8ACE /* de-DE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32EC2EF4E61900CC8ACE /* de-DE.ini */; };
+		F36C33412EF4E61900CC8ACE /* nb-NO.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33042EF4E61900CC8ACE /* nb-NO.ini */; };
+		F36C33422EF4E61900CC8ACE /* ms-MY.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33032EF4E61900CC8ACE /* ms-MY.ini */; };
+		F36C33432EF4E61900CC8ACE /* hu-HU.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32FA2EF4E61900CC8ACE /* hu-HU.ini */; };
+		F36C33442EF4E61900CC8ACE /* it-IT.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32FD2EF4E61900CC8ACE /* it-IT.ini */; };
+		F36C33452EF4E61900CC8ACE /* da-DK.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32EB2EF4E61900CC8ACE /* da-DK.ini */; };
+		F36C33462EF4E61900CC8ACE /* nl-NL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33052EF4E61900CC8ACE /* nl-NL.ini */; };
+		F36C33472EF4E61900CC8ACE /* ar-SA.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32E62EF4E61900CC8ACE /* ar-SA.ini */; };
+		F36C33482EF4E61900CC8ACE /* he-IL.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32F72EF4E61900CC8ACE /* he-IL.ini */; };
+		F36C33492EF4E61900CC8ACE /* pt-BR.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33072EF4E61900CC8ACE /* pt-BR.ini */; };
+		F36C334A2EF4E61900CC8ACE /* en-US.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32EF2EF4E61900CC8ACE /* en-US.ini */; };
+		F36C334B2EF4E61900CC8ACE /* zh-TW.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33152EF4E61900CC8ACE /* zh-TW.ini */; };
+		F36C334C2EF4E61900CC8ACE /* pt-PT.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C33082EF4E61900CC8ACE /* pt-PT.ini */; };
+		F36C334D2EF4E61900CC8ACE /* en-GB.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32EE2EF4E61900CC8ACE /* en-GB.ini */; };
+		F36C334E2EF4E61900CC8ACE /* fi-FI.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32F32EF4E61900CC8ACE /* fi-FI.ini */; };
+		F36C334F2EF4E61900CC8ACE /* hy-AM.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32FB2EF4E61900CC8ACE /* hy-AM.ini */; };
+		F36C33502EF4E61900CC8ACE /* gl-ES.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32F62EF4E61900CC8ACE /* gl-ES.ini */; };
+		F36C33512EF4E61900CC8ACE /* be-BY.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = F36C32E72EF4E61900CC8ACE /* be-BY.ini */; };
+		F36C33532EF4E63C00CC8ACE /* libcore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C2F02C78591D00FD11BA /* libcore.framework */; };
+		F36C33542EF4E63C00CC8ACE /* libcore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9078C2F02C78591D00FD11BA /* libcore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F36C33592EF4E64800CC8ACE /* libdatachannel.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F36C33582EF4E64800CC8ACE /* libdatachannel.dylib */; };
+		F36C335A2EF4E64800CC8ACE /* libdatachannel.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F36C33582EF4E64800CC8ACE /* libdatachannel.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		F36C335B2EF4E6AE00CC8ACE /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F36C30F62EF3CD6300CC8ACE /* libcurl.tbd */; };
+		F36C335C2EF4E6C200CC8ACE /* obs-webrtc.plugin in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = F36C32E12EF4E5F700CC8ACE /* obs-webrtc.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F36C335F2EF4E6F200CC8ACE /* libdatachannel.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F36C33582EF4E64800CC8ACE /* libdatachannel.dylib */; };
+		F36C33602EF4E6F200CC8ACE /* libdatachannel.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F36C33582EF4E64800CC8ACE /* libdatachannel.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		F37B21782E52BC9200B0C754 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B88C392C77288100A77D50 /* libiconv.tbd */; };
 		F37B21792E52BC9B00B0C754 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 90B88C392C77288100A77D50 /* libiconv.tbd */; };
 		F37B21932E52C4E300B0C754 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F38BB5872E4F0C0D003CC59E /* libavcodec.a */; };
@@ -1031,12 +1347,54 @@
 			remoteGlobalIDString = 9078C2EF2C78591D00FD11BA;
 			remoteInfo = libcore;
 		};
+		F33F4D102EF6910A001147D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90B88B762C77263400A77D50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F36C31002EF3D0B300CC8ACE;
+			remoteInfo = "obs-outputs";
+		};
 		F353E0DE2E6191BE0036D0D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 90B88B762C77263400A77D50 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 9078C2EF2C78591D00FD11BA;
 			remoteInfo = libcore;
+		};
+		F36C30F92EF3CE2700CC8ACE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90B88B762C77263400A77D50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F36C2FB52EF3C9EC00CC8ACE;
+			remoteInfo = "rtmp-service";
+		};
+		F36C32D62EF4E23100CC8ACE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90B88B762C77263400A77D50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9078C2EF2C78591D00FD11BA;
+			remoteInfo = libcore;
+		};
+		F36C32DA2EF4E27E00CC8ACE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90B88B762C77263400A77D50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F36C32482EF4E1C000CC8ACE;
+			remoteInfo = "mac-videotoolbox";
+		};
+		F36C33552EF4E63C00CC8ACE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90B88B762C77263400A77D50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9078C2EF2C78591D00FD11BA;
+			remoteInfo = libcore;
+		};
+		F36C335D2EF4E6C200CC8ACE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90B88B762C77263400A77D50 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F36C32E02EF4E5F700CC8ACE;
+			remoteInfo = "obs-webrtc";
 		};
 		F37B219C2E52C72300B0C754 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1291,9 +1649,13 @@
 			files = (
 				90AD9F342D27D36B009F3070 /* mac-capture.plugin in Embed PlugIns */,
 				9054BAFE2C8AED470051AD7F /* obs-transitions.plugin in Embed PlugIns */,
+				F33F4D0F2EF6910A001147D9 /* obs-outputs.plugin in Embed PlugIns */,
+				F36C30F82EF3CE2600CC8ACE /* rtmp-service.plugin in Embed PlugIns */,
 				90F6C4432C88094D003483EC /* image-source.plugin in Embed PlugIns */,
 				9079FFF72C7EB82700B670E9 /* obs-ffmpeg.plugin in Embed PlugIns */,
+				F36C32D92EF4E27E00CC8ACE /* mac-videotoolbox.plugin in Embed PlugIns */,
 				90B88EF92C7825DC00A77D50 /* avcapture.plugin in Embed PlugIns */,
+				F36C335C2EF4E6C200CC8ACE /* obs-webrtc.plugin in Embed PlugIns */,
 				90C0F0662C7C4EE7001A0C5B /* obs-x264.plugin in Embed PlugIns */,
 			);
 			name = "Embed PlugIns";
@@ -1305,8 +1667,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F36C32412EF4E03400CC8ACE /* libmbedx509.dylib in Embed Frameworks */,
+				F36C323F2EF4E03100CC8ACE /* libmbedtls.dylib in Embed Frameworks */,
 				9088D06E2C789851007EB8B5 /* liblibobs-opengl.dylib in Embed Frameworks */,
 				9078C2F72C78591D00FD11BA /* libcore.framework in Embed Frameworks */,
+				F36C33602EF4E6F200CC8ACE /* libdatachannel.dylib in Embed Frameworks */,
+				F36C32432EF4E03700CC8ACE /* libmbedcrypto.dylib in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1725,6 +2091,313 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F36C30AA2EF3CB8D00CC8ACE /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = locale;
+			dstSubfolderSpec = 7;
+			files = (
+				F36C30AB2EF3CBA500CC8ACE /* af-ZA.ini in Copy Files */,
+				F36C30AC2EF3CBA500CC8ACE /* ar-SA.ini in Copy Files */,
+				F36C30AD2EF3CBA500CC8ACE /* az-AZ.ini in Copy Files */,
+				F36C30AE2EF3CBA500CC8ACE /* ba-RU.ini in Copy Files */,
+				F36C30AF2EF3CBA500CC8ACE /* be-BY.ini in Copy Files */,
+				F36C30B02EF3CBA500CC8ACE /* bg-BG.ini in Copy Files */,
+				F36C30B12EF3CBA500CC8ACE /* bn-BD.ini in Copy Files */,
+				F36C30B22EF3CBA500CC8ACE /* ca-ES.ini in Copy Files */,
+				F36C30B32EF3CBA500CC8ACE /* cs-CZ.ini in Copy Files */,
+				F36C30B42EF3CBA500CC8ACE /* da-DK.ini in Copy Files */,
+				F36C30B52EF3CBA500CC8ACE /* de-DE.ini in Copy Files */,
+				F36C30B62EF3CBA500CC8ACE /* el-GR.ini in Copy Files */,
+				F36C30B72EF3CBA500CC8ACE /* en-GB.ini in Copy Files */,
+				F36C30B82EF3CBA500CC8ACE /* en-US.ini in Copy Files */,
+				F36C30B92EF3CBA500CC8ACE /* es-ES.ini in Copy Files */,
+				F36C30BA2EF3CBA500CC8ACE /* et-EE.ini in Copy Files */,
+				F36C30BB2EF3CBA500CC8ACE /* eu-ES.ini in Copy Files */,
+				F36C30BC2EF3CBA500CC8ACE /* fa-IR.ini in Copy Files */,
+				F36C30BD2EF3CBA500CC8ACE /* fi-FI.ini in Copy Files */,
+				F36C30BE2EF3CBA500CC8ACE /* fil-PH.ini in Copy Files */,
+				F36C30BF2EF3CBA500CC8ACE /* fr-FR.ini in Copy Files */,
+				F36C30C02EF3CBA500CC8ACE /* gd-GB.ini in Copy Files */,
+				F36C30C12EF3CBA500CC8ACE /* gl-ES.ini in Copy Files */,
+				F36C30C22EF3CBA500CC8ACE /* he-IL.ini in Copy Files */,
+				F36C30C32EF3CBA500CC8ACE /* hi-IN.ini in Copy Files */,
+				F36C30C42EF3CBA500CC8ACE /* hr-HR.ini in Copy Files */,
+				F36C30C52EF3CBA500CC8ACE /* hu-HU.ini in Copy Files */,
+				F36C30C62EF3CBA500CC8ACE /* hy-AM.ini in Copy Files */,
+				F36C30C72EF3CBA500CC8ACE /* id-ID.ini in Copy Files */,
+				F36C30C82EF3CBA500CC8ACE /* it-IT.ini in Copy Files */,
+				F36C30C92EF3CBA500CC8ACE /* ja-JP.ini in Copy Files */,
+				F36C30CA2EF3CBA500CC8ACE /* ka-GE.ini in Copy Files */,
+				F36C30CB2EF3CBA500CC8ACE /* kaa.ini in Copy Files */,
+				F36C30CC2EF3CBA500CC8ACE /* kab-KAB.ini in Copy Files */,
+				F36C30CD2EF3CBA500CC8ACE /* kmr-TR.ini in Copy Files */,
+				F36C30CE2EF3CBA500CC8ACE /* ko-KR.ini in Copy Files */,
+				F36C30CF2EF3CBA500CC8ACE /* mn-MN.ini in Copy Files */,
+				F36C30D02EF3CBA500CC8ACE /* ms-MY.ini in Copy Files */,
+				F36C30D12EF3CBA500CC8ACE /* nb-NO.ini in Copy Files */,
+				F36C30D22EF3CBA500CC8ACE /* nl-NL.ini in Copy Files */,
+				F36C30D32EF3CBA500CC8ACE /* nn-NO.ini in Copy Files */,
+				F36C30D42EF3CBA500CC8ACE /* pl-PL.ini in Copy Files */,
+				F36C30D52EF3CBA500CC8ACE /* pt-BR.ini in Copy Files */,
+				F36C30D62EF3CBA500CC8ACE /* pt-PT.ini in Copy Files */,
+				F36C30D72EF3CBA500CC8ACE /* ro-RO.ini in Copy Files */,
+				F36C30D82EF3CBA500CC8ACE /* ru-RU.ini in Copy Files */,
+				F36C30D92EF3CBA500CC8ACE /* si-LK.ini in Copy Files */,
+				F36C30DA2EF3CBA500CC8ACE /* sk-SK.ini in Copy Files */,
+				F36C30DB2EF3CBA500CC8ACE /* sl-SI.ini in Copy Files */,
+				F36C30DC2EF3CBA500CC8ACE /* sq-AL.ini in Copy Files */,
+				F36C30DD2EF3CBA500CC8ACE /* sr-CS.ini in Copy Files */,
+				F36C30DE2EF3CBA500CC8ACE /* sr-SP.ini in Copy Files */,
+				F36C30DF2EF3CBA500CC8ACE /* sv-SE.ini in Copy Files */,
+				F36C30E02EF3CBA500CC8ACE /* szl-PL.ini in Copy Files */,
+				F36C30E12EF3CBA500CC8ACE /* ta-IN.ini in Copy Files */,
+				F36C30E22EF3CBA500CC8ACE /* th-TH.ini in Copy Files */,
+				F36C30E32EF3CBA500CC8ACE /* tl-PH.ini in Copy Files */,
+				F36C30E42EF3CBA500CC8ACE /* tr-TR.ini in Copy Files */,
+				F36C30E52EF3CBA500CC8ACE /* tt-RU.ini in Copy Files */,
+				F36C30E62EF3CBA500CC8ACE /* ug-CN.ini in Copy Files */,
+				F36C30E72EF3CBA500CC8ACE /* uk-UA.ini in Copy Files */,
+				F36C30E82EF3CBA500CC8ACE /* ur-PK.ini in Copy Files */,
+				F36C30E92EF3CBA500CC8ACE /* vi-VN.ini in Copy Files */,
+				F36C30EA2EF3CBA500CC8ACE /* zh-CN.ini in Copy Files */,
+				F36C30EB2EF3CBA500CC8ACE /* zh-TW.ini in Copy Files */,
+				F36C30EC2EF3CBA500CC8ACE /* package.json in Copy Files */,
+				F36C30ED2EF3CBA500CC8ACE /* package-schema.json in Copy Files */,
+				F36C30EE2EF3CBA500CC8ACE /* service-schema-v5.json in Copy Files */,
+				F36C30EF2EF3CBA500CC8ACE /* services.json in Copy Files */,
+			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C31052EF3D0E800CC8ACE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = locale;
+			dstSubfolderSpec = 7;
+			files = (
+				F36C31612EF3D0FA00CC8ACE /* zh-TW.ini in CopyFiles */,
+				F36C31482EF3D0FA00CC8ACE /* ca-ES.ini in CopyFiles */,
+				F36C317D2EF3D0FA00CC8ACE /* es-ES.ini in CopyFiles */,
+				F36C315E2EF3D0FA00CC8ACE /* ug-CN.ini in CopyFiles */,
+				F36C31832EF3D0FA00CC8ACE /* ba-RU.ini in CopyFiles */,
+				F36C31652EF3D0FA00CC8ACE /* af-ZA.ini in CopyFiles */,
+				F36C31572EF3D0FA00CC8ACE /* hy-AM.ini in CopyFiles */,
+				F36C31632EF3D0FA00CC8ACE /* fi-FI.ini in CopyFiles */,
+				F36C31662EF3D0FA00CC8ACE /* sl-SI.ini in CopyFiles */,
+				F36C316B2EF3D0FA00CC8ACE /* ar-SA.ini in CopyFiles */,
+				F36C317E2EF3D0FA00CC8ACE /* pt-PT.ini in CopyFiles */,
+				F36C31532EF3D0FA00CC8ACE /* ms-MY.ini in CopyFiles */,
+				F36C31772EF3D0FA00CC8ACE /* sk-SK.ini in CopyFiles */,
+				F36C31862EF3D0FA00CC8ACE /* tr-TR.ini in CopyFiles */,
+				F36C316C2EF3D0FA00CC8ACE /* kmr-TR.ini in CopyFiles */,
+				F36C31592EF3D0FA00CC8ACE /* nb-NO.ini in CopyFiles */,
+				F36C31712EF3D0FA00CC8ACE /* bg-BG.ini in CopyFiles */,
+				F36C315B2EF3D0FA00CC8ACE /* el-GR.ini in CopyFiles */,
+				F36C31492EF3D0FA00CC8ACE /* cs-CZ.ini in CopyFiles */,
+				F36C31822EF3D0FA00CC8ACE /* nn-NO.ini in CopyFiles */,
+				F36C31472EF3D0FA00CC8ACE /* ru-RU.ini in CopyFiles */,
+				F36C314B2EF3D0FA00CC8ACE /* hi-IN.ini in CopyFiles */,
+				F36C31682EF3D0FA00CC8ACE /* vi-VN.ini in CopyFiles */,
+				F36C31782EF3D0FA00CC8ACE /* gl-ES.ini in CopyFiles */,
+				F36C31762EF3D0FA00CC8ACE /* sr-CS.ini in CopyFiles */,
+				F36C31502EF3D0FA00CC8ACE /* ka-GE.ini in CopyFiles */,
+				F36C31852EF3D0FA00CC8ACE /* ta-IN.ini in CopyFiles */,
+				F36C31522EF3D0FA00CC8ACE /* et-EE.ini in CopyFiles */,
+				F36C31742EF3D0FA00CC8ACE /* th-TH.ini in CopyFiles */,
+				F36C31802EF3D0FA00CC8ACE /* da-DK.ini in CopyFiles */,
+				F36C316E2EF3D0FA00CC8ACE /* bn-BD.ini in CopyFiles */,
+				F36C317F2EF3D0FA00CC8ACE /* uk-UA.ini in CopyFiles */,
+				F36C31512EF3D0FA00CC8ACE /* pl-PL.ini in CopyFiles */,
+				F36C31842EF3D0FA00CC8ACE /* fr-FR.ini in CopyFiles */,
+				F36C317A2EF3D0FA00CC8ACE /* pt-BR.ini in CopyFiles */,
+				F36C31622EF3D0FA00CC8ACE /* eu-ES.ini in CopyFiles */,
+				F36C31672EF3D0FA00CC8ACE /* hr-HR.ini in CopyFiles */,
+				F36C31552EF3D0FA00CC8ACE /* tt-RU.ini in CopyFiles */,
+				F36C314C2EF3D0FA00CC8ACE /* szl-PL.ini in CopyFiles */,
+				F36C31792EF3D0FA00CC8ACE /* he-IL.ini in CopyFiles */,
+				F36C316A2EF3D0FA00CC8ACE /* en-US.ini in CopyFiles */,
+				F36C31582EF3D0FA00CC8ACE /* be-BY.ini in CopyFiles */,
+				F36C31702EF3D0FA00CC8ACE /* en-GB.ini in CopyFiles */,
+				F36C314F2EF3D0FA00CC8ACE /* tl-PH.ini in CopyFiles */,
+				F36C314D2EF3D0FA00CC8ACE /* si-LK.ini in CopyFiles */,
+				F36C31752EF3D0FA00CC8ACE /* hu-HU.ini in CopyFiles */,
+				F36C31812EF3D0FA00CC8ACE /* is-IS.ini in CopyFiles */,
+				F36C31542EF3D0FA00CC8ACE /* de-DE.ini in CopyFiles */,
+				F36C31562EF3D0FA00CC8ACE /* sr-SP.ini in CopyFiles */,
+				F36C316F2EF3D0FA00CC8ACE /* gd-GB.ini in CopyFiles */,
+				F36C315C2EF3D0FA00CC8ACE /* fa-IR.ini in CopyFiles */,
+				F36C314A2EF3D0FA00CC8ACE /* ko-KR.ini in CopyFiles */,
+				F36C31642EF3D0FA00CC8ACE /* sv-SE.ini in CopyFiles */,
+				F36C316D2EF3D0FA00CC8ACE /* nl-NL.ini in CopyFiles */,
+				F36C31722EF3D0FA00CC8ACE /* kaa.ini in CopyFiles */,
+				F36C314E2EF3D0FA00CC8ACE /* it-IT.ini in CopyFiles */,
+				F36C31732EF3D0FA00CC8ACE /* ja-JP.ini in CopyFiles */,
+				F36C315A2EF3D0FA00CC8ACE /* fil-PH.ini in CopyFiles */,
+				F36C315F2EF3D0FA00CC8ACE /* zh-CN.ini in CopyFiles */,
+				F36C317B2EF3D0FA00CC8ACE /* ur-PK.ini in CopyFiles */,
+				F36C31692EF3D0FA00CC8ACE /* kab-KAB.ini in CopyFiles */,
+				F36C317C2EF3D0FA00CC8ACE /* ro-RO.ini in CopyFiles */,
+				F36C315D2EF3D0FA00CC8ACE /* mn-MN.ini in CopyFiles */,
+				F36C31602EF3D0FA00CC8ACE /* id-ID.ini in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C32D32EF4E20D00CC8ACE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = locale;
+			dstSubfolderSpec = 7;
+			files = (
+				F36C32912EF4E1FE00CC8ACE /* bn-BD.ini in CopyFiles */,
+				F36C32922EF4E1FE00CC8ACE /* fa-IR.ini in CopyFiles */,
+				F36C32932EF4E1FE00CC8ACE /* ca-ES.ini in CopyFiles */,
+				F36C32942EF4E1FE00CC8ACE /* ba-RU.ini in CopyFiles */,
+				F36C32952EF4E1FE00CC8ACE /* zh-TW.ini in CopyFiles */,
+				F36C32962EF4E1FE00CC8ACE /* hu-HU.ini in CopyFiles */,
+				F36C32972EF4E1FE00CC8ACE /* he-IL.ini in CopyFiles */,
+				F36C32982EF4E1FE00CC8ACE /* pt-BR.ini in CopyFiles */,
+				F36C32992EF4E1FE00CC8ACE /* sk-SK.ini in CopyFiles */,
+				F36C329A2EF4E1FE00CC8ACE /* fil-PH.ini in CopyFiles */,
+				F36C329B2EF4E1FE00CC8ACE /* nb-NO.ini in CopyFiles */,
+				F36C329C2EF4E1FE00CC8ACE /* es-ES.ini in CopyFiles */,
+				F36C329D2EF4E1FE00CC8ACE /* ta-IN.ini in CopyFiles */,
+				F36C329E2EF4E1FE00CC8ACE /* sv-SE.ini in CopyFiles */,
+				F36C329F2EF4E1FE00CC8ACE /* de-DE.ini in CopyFiles */,
+				F36C32A02EF4E1FE00CC8ACE /* da-DK.ini in CopyFiles */,
+				F36C32A12EF4E1FE00CC8ACE /* tl-PH.ini in CopyFiles */,
+				F36C32A22EF4E1FE00CC8ACE /* it-IT.ini in CopyFiles */,
+				F36C32A32EF4E1FE00CC8ACE /* ko-KR.ini in CopyFiles */,
+				F36C32A42EF4E1FE00CC8ACE /* oc-FR.ini in CopyFiles */,
+				F36C32A52EF4E1FE00CC8ACE /* hy-AM.ini in CopyFiles */,
+				F36C32A62EF4E1FE00CC8ACE /* ja-JP.ini in CopyFiles */,
+				F36C32A72EF4E1FE00CC8ACE /* sr-CS.ini in CopyFiles */,
+				F36C32A82EF4E1FE00CC8ACE /* nl-NL.ini in CopyFiles */,
+				F36C32A92EF4E1FE00CC8ACE /* kab-KAB.ini in CopyFiles */,
+				F36C32AA2EF4E1FE00CC8ACE /* sr-SP.ini in CopyFiles */,
+				F36C32AB2EF4E1FE00CC8ACE /* fr-FR.ini in CopyFiles */,
+				F36C32AC2EF4E1FE00CC8ACE /* pt-PT.ini in CopyFiles */,
+				F36C32AD2EF4E1FE00CC8ACE /* zh-CN.ini in CopyFiles */,
+				F36C32AE2EF4E1FE00CC8ACE /* nn-NO.ini in CopyFiles */,
+				F36C32AF2EF4E1FE00CC8ACE /* az-AZ.ini in CopyFiles */,
+				F36C32B02EF4E1FE00CC8ACE /* fi-FI.ini in CopyFiles */,
+				F36C32B12EF4E1FE00CC8ACE /* cs-CZ.ini in CopyFiles */,
+				F36C32B22EF4E1FE00CC8ACE /* eu-ES.ini in CopyFiles */,
+				F36C32B32EF4E1FE00CC8ACE /* pl-PL.ini in CopyFiles */,
+				F36C32B42EF4E1FE00CC8ACE /* lt-LT.ini in CopyFiles */,
+				F36C32B52EF4E1FE00CC8ACE /* tr-TR.ini in CopyFiles */,
+				F36C32B62EF4E1FE00CC8ACE /* ar-SA.ini in CopyFiles */,
+				F36C32B72EF4E1FE00CC8ACE /* en-US.ini in CopyFiles */,
+				F36C32B82EF4E1FE00CC8ACE /* vi-VN.ini in CopyFiles */,
+				F36C32B92EF4E1FE00CC8ACE /* gl-ES.ini in CopyFiles */,
+				F36C32BA2EF4E1FE00CC8ACE /* gd-GB.ini in CopyFiles */,
+				F36C32BB2EF4E1FE00CC8ACE /* et-EE.ini in CopyFiles */,
+				F36C32BC2EF4E1FE00CC8ACE /* kmr-TR.ini in CopyFiles */,
+				F36C32BD2EF4E1FE00CC8ACE /* szl-PL.ini in CopyFiles */,
+				F36C32BE2EF4E1FE00CC8ACE /* af-ZA.ini in CopyFiles */,
+				F36C32BF2EF4E1FE00CC8ACE /* ka-GE.ini in CopyFiles */,
+				F36C32C02EF4E1FE00CC8ACE /* hi-IN.ini in CopyFiles */,
+				F36C32C12EF4E1FE00CC8ACE /* id-ID.ini in CopyFiles */,
+				F36C32C22EF4E1FE00CC8ACE /* sl-SI.ini in CopyFiles */,
+				F36C32C32EF4E1FE00CC8ACE /* bg-BG.ini in CopyFiles */,
+				F36C32C42EF4E1FE00CC8ACE /* th-TH.ini in CopyFiles */,
+				F36C32C52EF4E1FE00CC8ACE /* ug-CN.ini in CopyFiles */,
+				F36C32C62EF4E1FE00CC8ACE /* tt-RU.ini in CopyFiles */,
+				F36C32C72EF4E1FE00CC8ACE /* el-GR.ini in CopyFiles */,
+				F36C32C82EF4E1FE00CC8ACE /* hr-HR.ini in CopyFiles */,
+				F36C32C92EF4E1FE00CC8ACE /* kaa.ini in CopyFiles */,
+				F36C32CA2EF4E1FE00CC8ACE /* sq-AL.ini in CopyFiles */,
+				F36C32CB2EF4E1FE00CC8ACE /* ms-MY.ini in CopyFiles */,
+				F36C32CC2EF4E1FE00CC8ACE /* en-GB.ini in CopyFiles */,
+				F36C32CD2EF4E1FE00CC8ACE /* be-BY.ini in CopyFiles */,
+				F36C32CE2EF4E1FE00CC8ACE /* ru-RU.ini in CopyFiles */,
+				F36C32CF2EF4E1FE00CC8ACE /* uk-UA.ini in CopyFiles */,
+				F36C32D02EF4E1FE00CC8ACE /* ro-RO.ini in CopyFiles */,
+				F36C32D12EF4E1FE00CC8ACE /* si-LK.ini in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C32D82EF4E23100CC8ACE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F36C32D52EF4E23100CC8ACE /* libcore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C33522EF4E62200CC8ACE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = locale;
+			dstSubfolderSpec = 7;
+			files = (
+				F36C33212EF4E61900CC8ACE /* ug-CN.ini in CopyFiles */,
+				F36C33222EF4E61900CC8ACE /* cs-CZ.ini in CopyFiles */,
+				F36C33232EF4E61900CC8ACE /* et-EE.ini in CopyFiles */,
+				F36C33242EF4E61900CC8ACE /* ko-KR.ini in CopyFiles */,
+				F36C33252EF4E61900CC8ACE /* ro-RO.ini in CopyFiles */,
+				F36C33262EF4E61900CC8ACE /* es-ES.ini in CopyFiles */,
+				F36C33272EF4E61900CC8ACE /* bg-BG.ini in CopyFiles */,
+				F36C33282EF4E61900CC8ACE /* fa-IR.ini in CopyFiles */,
+				F36C33292EF4E61900CC8ACE /* ru-RU.ini in CopyFiles */,
+				F36C332A2EF4E61900CC8ACE /* pl-PL.ini in CopyFiles */,
+				F36C332B2EF4E61900CC8ACE /* fr-FR.ini in CopyFiles */,
+				F36C332C2EF4E61900CC8ACE /* vi-VN.ini in CopyFiles */,
+				F36C332D2EF4E61900CC8ACE /* sl-SI.ini in CopyFiles */,
+				F36C332E2EF4E61900CC8ACE /* zh-CN.ini in CopyFiles */,
+				F36C332F2EF4E61900CC8ACE /* ca-ES.ini in CopyFiles */,
+				F36C33302EF4E61900CC8ACE /* id-ID.ini in CopyFiles */,
+				F36C33312EF4E61900CC8ACE /* sk-SK.ini in CopyFiles */,
+				F36C33322EF4E61900CC8ACE /* kmr-TR.ini in CopyFiles */,
+				F36C33332EF4E61900CC8ACE /* th-TH.ini in CopyFiles */,
+				F36C33342EF4E61900CC8ACE /* hr-HR.ini in CopyFiles */,
+				F36C33352EF4E61900CC8ACE /* ja-JP.ini in CopyFiles */,
+				F36C33362EF4E61900CC8ACE /* si-LK.ini in CopyFiles */,
+				F36C33372EF4E61900CC8ACE /* af-ZA.ini in CopyFiles */,
+				F36C33382EF4E61900CC8ACE /* uk-UA.ini in CopyFiles */,
+				F36C33392EF4E61900CC8ACE /* el-GR.ini in CopyFiles */,
+				F36C333A2EF4E61900CC8ACE /* ka-GE.ini in CopyFiles */,
+				F36C333B2EF4E61900CC8ACE /* kaa.ini in CopyFiles */,
+				F36C333C2EF4E61900CC8ACE /* fil-PH.ini in CopyFiles */,
+				F36C333D2EF4E61900CC8ACE /* hi-IN.ini in CopyFiles */,
+				F36C333E2EF4E61900CC8ACE /* tr-TR.ini in CopyFiles */,
+				F36C333F2EF4E61900CC8ACE /* sv-SE.ini in CopyFiles */,
+				F36C33402EF4E61900CC8ACE /* de-DE.ini in CopyFiles */,
+				F36C33412EF4E61900CC8ACE /* nb-NO.ini in CopyFiles */,
+				F36C33422EF4E61900CC8ACE /* ms-MY.ini in CopyFiles */,
+				F36C33432EF4E61900CC8ACE /* hu-HU.ini in CopyFiles */,
+				F36C33442EF4E61900CC8ACE /* it-IT.ini in CopyFiles */,
+				F36C33452EF4E61900CC8ACE /* da-DK.ini in CopyFiles */,
+				F36C33462EF4E61900CC8ACE /* nl-NL.ini in CopyFiles */,
+				F36C33472EF4E61900CC8ACE /* ar-SA.ini in CopyFiles */,
+				F36C33482EF4E61900CC8ACE /* he-IL.ini in CopyFiles */,
+				F36C33492EF4E61900CC8ACE /* pt-BR.ini in CopyFiles */,
+				F36C334A2EF4E61900CC8ACE /* en-US.ini in CopyFiles */,
+				F36C334B2EF4E61900CC8ACE /* zh-TW.ini in CopyFiles */,
+				F36C334C2EF4E61900CC8ACE /* pt-PT.ini in CopyFiles */,
+				F36C334D2EF4E61900CC8ACE /* en-GB.ini in CopyFiles */,
+				F36C334E2EF4E61900CC8ACE /* fi-FI.ini in CopyFiles */,
+				F36C334F2EF4E61900CC8ACE /* hy-AM.ini in CopyFiles */,
+				F36C33502EF4E61900CC8ACE /* gl-ES.ini in CopyFiles */,
+				F36C33512EF4E61900CC8ACE /* be-BY.ini in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C33572EF4E63C00CC8ACE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F36C335A2EF4E64800CC8ACE /* libdatachannel.dylib in Embed Frameworks */,
+				F36C33542EF4E63C00CC8ACE /* libcore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F37B219E2E52C72300B0C754 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1931,7 +2604,6 @@
 		9078C3642C7859D300FD11BA /* cf-parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "cf-parser.c"; sourceTree = "<group>"; };
 		9078C3652C7859D300FD11BA /* lexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lexer.h; sourceTree = "<group>"; };
 		9078C3662C7859D300FD11BA /* file-serializer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "file-serializer.c"; sourceTree = "<group>"; };
-		9078C3672C7859D300FD11BA /* threading-windows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "threading-windows.h"; sourceTree = "<group>"; };
 		9078C3682C7859D300FD11BA /* platform-nix-portal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "platform-nix-portal.c"; sourceTree = "<group>"; };
 		9078C3692C7859D300FD11BA /* util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = util.hpp; sourceTree = "<group>"; };
 		9078C36A2C7859D300FD11BA /* pipe-posix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "pipe-posix.c"; sourceTree = "<group>"; };
@@ -1942,7 +2614,6 @@
 		9078C36F2C7859D300FD11BA /* config-file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "config-file.h"; sourceTree = "<group>"; };
 		9078C3702C7859D300FD11BA /* array-serializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "array-serializer.h"; sourceTree = "<group>"; };
 		9078C3712C7859D300FD11BA /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
-		9078C3722C7859D300FD11BA /* pipe-windows.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "pipe-windows.c"; sourceTree = "<group>"; };
 		9078C3732C7859D300FD11BA /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf8.h; sourceTree = "<group>"; };
 		9078C3742C7859D300FD11BA /* profiler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = profiler.hpp; sourceTree = "<group>"; };
 		9078C3752C7859D300FD11BA /* circlebuf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = circlebuf.h; sourceTree = "<group>"; };
@@ -2584,6 +3255,346 @@
 		F353E0C92E618AFF0036D0D4 /* obs-ffmpeg-mux */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "obs-ffmpeg-mux"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F353E0D42E618BD60036D0D4 /* obs-ffmpeg-mux.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "obs-ffmpeg-mux.c"; sourceTree = "<group>"; };
 		F353E0E42E6192B50036D0D4 /* obs-ffmpeg-mux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "obs-ffmpeg-mux.h"; sourceTree = "<group>"; };
+		F36C2FB62EF3C9EC00CC8ACE /* rtmp-service.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "rtmp-service.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F36C2FBB2EF3CA9000CC8ACE /* af-ZA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "af-ZA.ini"; sourceTree = "<group>"; };
+		F36C2FBC2EF3CA9000CC8ACE /* ar-SA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ar-SA.ini"; sourceTree = "<group>"; };
+		F36C2FBD2EF3CA9000CC8ACE /* az-AZ.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "az-AZ.ini"; sourceTree = "<group>"; };
+		F36C2FBE2EF3CA9000CC8ACE /* ba-RU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ba-RU.ini"; sourceTree = "<group>"; };
+		F36C2FBF2EF3CA9000CC8ACE /* be-BY.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "be-BY.ini"; sourceTree = "<group>"; };
+		F36C2FC02EF3CA9000CC8ACE /* bg-BG.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "bg-BG.ini"; sourceTree = "<group>"; };
+		F36C2FC12EF3CA9000CC8ACE /* bn-BD.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "bn-BD.ini"; sourceTree = "<group>"; };
+		F36C2FC22EF3CA9000CC8ACE /* ca-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ca-ES.ini"; sourceTree = "<group>"; };
+		F36C2FC32EF3CA9000CC8ACE /* cs-CZ.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "cs-CZ.ini"; sourceTree = "<group>"; };
+		F36C2FC42EF3CA9000CC8ACE /* da-DK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "da-DK.ini"; sourceTree = "<group>"; };
+		F36C2FC52EF3CA9000CC8ACE /* de-DE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "de-DE.ini"; sourceTree = "<group>"; };
+		F36C2FC62EF3CA9000CC8ACE /* el-GR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "el-GR.ini"; sourceTree = "<group>"; };
+		F36C2FC72EF3CA9000CC8ACE /* en-GB.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "en-GB.ini"; sourceTree = "<group>"; };
+		F36C2FC82EF3CA9000CC8ACE /* en-US.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "en-US.ini"; sourceTree = "<group>"; };
+		F36C2FC92EF3CA9000CC8ACE /* es-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "es-ES.ini"; sourceTree = "<group>"; };
+		F36C2FCA2EF3CA9000CC8ACE /* et-EE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "et-EE.ini"; sourceTree = "<group>"; };
+		F36C2FCB2EF3CA9000CC8ACE /* eu-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "eu-ES.ini"; sourceTree = "<group>"; };
+		F36C2FCC2EF3CA9000CC8ACE /* fa-IR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fa-IR.ini"; sourceTree = "<group>"; };
+		F36C2FCD2EF3CA9000CC8ACE /* fi-FI.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fi-FI.ini"; sourceTree = "<group>"; };
+		F36C2FCE2EF3CA9000CC8ACE /* fil-PH.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fil-PH.ini"; sourceTree = "<group>"; };
+		F36C2FCF2EF3CA9000CC8ACE /* fr-FR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fr-FR.ini"; sourceTree = "<group>"; };
+		F36C2FD02EF3CA9000CC8ACE /* gd-GB.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "gd-GB.ini"; sourceTree = "<group>"; };
+		F36C2FD12EF3CA9000CC8ACE /* gl-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "gl-ES.ini"; sourceTree = "<group>"; };
+		F36C2FD22EF3CA9000CC8ACE /* he-IL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "he-IL.ini"; sourceTree = "<group>"; };
+		F36C2FD32EF3CA9000CC8ACE /* hi-IN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hi-IN.ini"; sourceTree = "<group>"; };
+		F36C2FD42EF3CA9000CC8ACE /* hr-HR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hr-HR.ini"; sourceTree = "<group>"; };
+		F36C2FD52EF3CA9000CC8ACE /* hu-HU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hu-HU.ini"; sourceTree = "<group>"; };
+		F36C2FD62EF3CA9000CC8ACE /* hy-AM.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hy-AM.ini"; sourceTree = "<group>"; };
+		F36C2FD72EF3CA9000CC8ACE /* id-ID.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "id-ID.ini"; sourceTree = "<group>"; };
+		F36C2FD82EF3CA9000CC8ACE /* it-IT.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "it-IT.ini"; sourceTree = "<group>"; };
+		F36C2FD92EF3CA9000CC8ACE /* ja-JP.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ja-JP.ini"; sourceTree = "<group>"; };
+		F36C2FDA2EF3CA9000CC8ACE /* ka-GE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ka-GE.ini"; sourceTree = "<group>"; };
+		F36C2FDB2EF3CA9000CC8ACE /* kaa.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = kaa.ini; sourceTree = "<group>"; };
+		F36C2FDC2EF3CA9000CC8ACE /* kab-KAB.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kab-KAB.ini"; sourceTree = "<group>"; };
+		F36C2FDD2EF3CA9000CC8ACE /* kmr-TR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kmr-TR.ini"; sourceTree = "<group>"; };
+		F36C2FDE2EF3CA9000CC8ACE /* ko-KR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ko-KR.ini"; sourceTree = "<group>"; };
+		F36C2FDF2EF3CA9000CC8ACE /* mn-MN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "mn-MN.ini"; sourceTree = "<group>"; };
+		F36C2FE02EF3CA9000CC8ACE /* ms-MY.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ms-MY.ini"; sourceTree = "<group>"; };
+		F36C2FE12EF3CA9000CC8ACE /* nb-NO.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nb-NO.ini"; sourceTree = "<group>"; };
+		F36C2FE22EF3CA9000CC8ACE /* nl-NL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nl-NL.ini"; sourceTree = "<group>"; };
+		F36C2FE32EF3CA9000CC8ACE /* nn-NO.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nn-NO.ini"; sourceTree = "<group>"; };
+		F36C2FE42EF3CA9000CC8ACE /* pl-PL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pl-PL.ini"; sourceTree = "<group>"; };
+		F36C2FE52EF3CA9000CC8ACE /* pt-BR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pt-BR.ini"; sourceTree = "<group>"; };
+		F36C2FE62EF3CA9000CC8ACE /* pt-PT.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pt-PT.ini"; sourceTree = "<group>"; };
+		F36C2FE72EF3CA9000CC8ACE /* ro-RO.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ro-RO.ini"; sourceTree = "<group>"; };
+		F36C2FE82EF3CA9000CC8ACE /* ru-RU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ru-RU.ini"; sourceTree = "<group>"; };
+		F36C2FE92EF3CA9000CC8ACE /* si-LK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "si-LK.ini"; sourceTree = "<group>"; };
+		F36C2FEA2EF3CA9000CC8ACE /* sk-SK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sk-SK.ini"; sourceTree = "<group>"; };
+		F36C2FEB2EF3CA9000CC8ACE /* sl-SI.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sl-SI.ini"; sourceTree = "<group>"; };
+		F36C2FEC2EF3CA9000CC8ACE /* sq-AL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sq-AL.ini"; sourceTree = "<group>"; };
+		F36C2FED2EF3CA9000CC8ACE /* sr-CS.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sr-CS.ini"; sourceTree = "<group>"; };
+		F36C2FEE2EF3CA9000CC8ACE /* sr-SP.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sr-SP.ini"; sourceTree = "<group>"; };
+		F36C2FEF2EF3CA9000CC8ACE /* sv-SE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sv-SE.ini"; sourceTree = "<group>"; };
+		F36C2FF02EF3CA9000CC8ACE /* szl-PL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "szl-PL.ini"; sourceTree = "<group>"; };
+		F36C2FF12EF3CA9000CC8ACE /* ta-IN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ta-IN.ini"; sourceTree = "<group>"; };
+		F36C2FF22EF3CA9000CC8ACE /* th-TH.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "th-TH.ini"; sourceTree = "<group>"; };
+		F36C2FF32EF3CA9000CC8ACE /* tl-PH.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tl-PH.ini"; sourceTree = "<group>"; };
+		F36C2FF42EF3CA9000CC8ACE /* tr-TR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tr-TR.ini"; sourceTree = "<group>"; };
+		F36C2FF52EF3CA9000CC8ACE /* tt-RU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tt-RU.ini"; sourceTree = "<group>"; };
+		F36C2FF62EF3CA9000CC8ACE /* ug-CN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ug-CN.ini"; sourceTree = "<group>"; };
+		F36C2FF72EF3CA9000CC8ACE /* uk-UA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "uk-UA.ini"; sourceTree = "<group>"; };
+		F36C2FF82EF3CA9000CC8ACE /* ur-PK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ur-PK.ini"; sourceTree = "<group>"; };
+		F36C2FF92EF3CA9000CC8ACE /* vi-VN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "vi-VN.ini"; sourceTree = "<group>"; };
+		F36C2FFA2EF3CA9000CC8ACE /* zh-CN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "zh-CN.ini"; sourceTree = "<group>"; };
+		F36C2FFB2EF3CA9000CC8ACE /* zh-TW.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "zh-TW.ini"; sourceTree = "<group>"; };
+		F36C2FFD2EF3CA9000CC8ACE /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
+		F36C2FFE2EF3CA9000CC8ACE /* package-schema.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "package-schema.json"; sourceTree = "<group>"; };
+		F36C2FFF2EF3CA9000CC8ACE /* service-schema-v5.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "service-schema-v5.json"; sourceTree = "<group>"; };
+		F36C30012EF3CA9000CC8ACE /* services.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = services.json; sourceTree = "<group>"; };
+		F36C30482EF3CAB400CC8ACE /* rtmp-common.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "rtmp-common.c"; sourceTree = "<group>"; };
+		F36C30492EF3CAB400CC8ACE /* rtmp-custom.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "rtmp-custom.c"; sourceTree = "<group>"; };
+		F36C304A2EF3CAB400CC8ACE /* rtmp-format-ver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "rtmp-format-ver.h"; sourceTree = "<group>"; };
+		F36C304B2EF3CAB400CC8ACE /* rtmp-services-main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "rtmp-services-main.c"; sourceTree = "<group>"; };
+		F36C304C2EF3CAB400CC8ACE /* amazon-ivs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "amazon-ivs.h"; sourceTree = "<group>"; };
+		F36C304D2EF3CAB400CC8ACE /* amazon-ivs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "amazon-ivs.c"; sourceTree = "<group>"; };
+		F36C304E2EF3CAB400CC8ACE /* dacast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dacast.h; sourceTree = "<group>"; };
+		F36C304F2EF3CAB400CC8ACE /* dacast.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dacast.c; sourceTree = "<group>"; };
+		F36C30502EF3CAB400CC8ACE /* nimotv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = nimotv.h; sourceTree = "<group>"; };
+		F36C30512EF3CAB400CC8ACE /* nimotv.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = nimotv.c; sourceTree = "<group>"; };
+		F36C30522EF3CAB400CC8ACE /* service-ingest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "service-ingest.h"; sourceTree = "<group>"; };
+		F36C30532EF3CAB400CC8ACE /* service-ingest.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "service-ingest.c"; sourceTree = "<group>"; };
+		F36C30542EF3CAB400CC8ACE /* showroom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = showroom.h; sourceTree = "<group>"; };
+		F36C30552EF3CAB400CC8ACE /* showroom.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = showroom.c; sourceTree = "<group>"; };
+		F36C30562EF3CAB400CC8ACE /* twitch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = twitch.h; sourceTree = "<group>"; };
+		F36C30572EF3CAB400CC8ACE /* twitch.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = twitch.c; sourceTree = "<group>"; };
+		F36C30F32EF3CD0500CC8ACE /* file-updater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "file-updater.h"; sourceTree = "<group>"; };
+		F36C30F42EF3CD0500CC8ACE /* file-updater.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "file-updater.c"; sourceTree = "<group>"; };
+		F36C30F62EF3CD6300CC8ACE /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
+		F36C31012EF3D0B300CC8ACE /* obs-outputs.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "obs-outputs.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F36C31062EF3D0FA00CC8ACE /* af-ZA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "af-ZA.ini"; sourceTree = "<group>"; };
+		F36C31072EF3D0FA00CC8ACE /* ar-SA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ar-SA.ini"; sourceTree = "<group>"; };
+		F36C31082EF3D0FA00CC8ACE /* ba-RU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ba-RU.ini"; sourceTree = "<group>"; };
+		F36C31092EF3D0FA00CC8ACE /* be-BY.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "be-BY.ini"; sourceTree = "<group>"; };
+		F36C310A2EF3D0FA00CC8ACE /* bg-BG.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "bg-BG.ini"; sourceTree = "<group>"; };
+		F36C310B2EF3D0FA00CC8ACE /* bn-BD.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "bn-BD.ini"; sourceTree = "<group>"; };
+		F36C310C2EF3D0FA00CC8ACE /* ca-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ca-ES.ini"; sourceTree = "<group>"; };
+		F36C310D2EF3D0FA00CC8ACE /* cs-CZ.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "cs-CZ.ini"; sourceTree = "<group>"; };
+		F36C310E2EF3D0FA00CC8ACE /* da-DK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "da-DK.ini"; sourceTree = "<group>"; };
+		F36C310F2EF3D0FA00CC8ACE /* de-DE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "de-DE.ini"; sourceTree = "<group>"; };
+		F36C31102EF3D0FA00CC8ACE /* el-GR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "el-GR.ini"; sourceTree = "<group>"; };
+		F36C31112EF3D0FA00CC8ACE /* en-GB.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "en-GB.ini"; sourceTree = "<group>"; };
+		F36C31122EF3D0FA00CC8ACE /* en-US.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "en-US.ini"; sourceTree = "<group>"; };
+		F36C31132EF3D0FA00CC8ACE /* es-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "es-ES.ini"; sourceTree = "<group>"; };
+		F36C31142EF3D0FA00CC8ACE /* et-EE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "et-EE.ini"; sourceTree = "<group>"; };
+		F36C31152EF3D0FA00CC8ACE /* eu-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "eu-ES.ini"; sourceTree = "<group>"; };
+		F36C31162EF3D0FA00CC8ACE /* fa-IR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fa-IR.ini"; sourceTree = "<group>"; };
+		F36C31172EF3D0FA00CC8ACE /* fi-FI.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fi-FI.ini"; sourceTree = "<group>"; };
+		F36C31182EF3D0FA00CC8ACE /* fil-PH.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fil-PH.ini"; sourceTree = "<group>"; };
+		F36C31192EF3D0FA00CC8ACE /* fr-FR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fr-FR.ini"; sourceTree = "<group>"; };
+		F36C311A2EF3D0FA00CC8ACE /* gd-GB.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "gd-GB.ini"; sourceTree = "<group>"; };
+		F36C311B2EF3D0FA00CC8ACE /* gl-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "gl-ES.ini"; sourceTree = "<group>"; };
+		F36C311C2EF3D0FA00CC8ACE /* he-IL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "he-IL.ini"; sourceTree = "<group>"; };
+		F36C311D2EF3D0FA00CC8ACE /* hi-IN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hi-IN.ini"; sourceTree = "<group>"; };
+		F36C311E2EF3D0FA00CC8ACE /* hr-HR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hr-HR.ini"; sourceTree = "<group>"; };
+		F36C311F2EF3D0FA00CC8ACE /* hu-HU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hu-HU.ini"; sourceTree = "<group>"; };
+		F36C31202EF3D0FA00CC8ACE /* hy-AM.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hy-AM.ini"; sourceTree = "<group>"; };
+		F36C31212EF3D0FA00CC8ACE /* id-ID.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "id-ID.ini"; sourceTree = "<group>"; };
+		F36C31222EF3D0FA00CC8ACE /* is-IS.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "is-IS.ini"; sourceTree = "<group>"; };
+		F36C31232EF3D0FA00CC8ACE /* it-IT.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "it-IT.ini"; sourceTree = "<group>"; };
+		F36C31242EF3D0FA00CC8ACE /* ja-JP.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ja-JP.ini"; sourceTree = "<group>"; };
+		F36C31252EF3D0FA00CC8ACE /* ka-GE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ka-GE.ini"; sourceTree = "<group>"; };
+		F36C31262EF3D0FA00CC8ACE /* kaa.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = kaa.ini; sourceTree = "<group>"; };
+		F36C31272EF3D0FA00CC8ACE /* kab-KAB.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kab-KAB.ini"; sourceTree = "<group>"; };
+		F36C31282EF3D0FA00CC8ACE /* kmr-TR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kmr-TR.ini"; sourceTree = "<group>"; };
+		F36C31292EF3D0FA00CC8ACE /* ko-KR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ko-KR.ini"; sourceTree = "<group>"; };
+		F36C312A2EF3D0FA00CC8ACE /* mn-MN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "mn-MN.ini"; sourceTree = "<group>"; };
+		F36C312B2EF3D0FA00CC8ACE /* ms-MY.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ms-MY.ini"; sourceTree = "<group>"; };
+		F36C312C2EF3D0FA00CC8ACE /* nb-NO.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nb-NO.ini"; sourceTree = "<group>"; };
+		F36C312D2EF3D0FA00CC8ACE /* nl-NL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nl-NL.ini"; sourceTree = "<group>"; };
+		F36C312E2EF3D0FA00CC8ACE /* nn-NO.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nn-NO.ini"; sourceTree = "<group>"; };
+		F36C312F2EF3D0FA00CC8ACE /* pl-PL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pl-PL.ini"; sourceTree = "<group>"; };
+		F36C31302EF3D0FA00CC8ACE /* pt-BR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pt-BR.ini"; sourceTree = "<group>"; };
+		F36C31312EF3D0FA00CC8ACE /* pt-PT.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pt-PT.ini"; sourceTree = "<group>"; };
+		F36C31322EF3D0FA00CC8ACE /* ro-RO.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ro-RO.ini"; sourceTree = "<group>"; };
+		F36C31332EF3D0FA00CC8ACE /* ru-RU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ru-RU.ini"; sourceTree = "<group>"; };
+		F36C31342EF3D0FA00CC8ACE /* si-LK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "si-LK.ini"; sourceTree = "<group>"; };
+		F36C31352EF3D0FA00CC8ACE /* sk-SK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sk-SK.ini"; sourceTree = "<group>"; };
+		F36C31362EF3D0FA00CC8ACE /* sl-SI.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sl-SI.ini"; sourceTree = "<group>"; };
+		F36C31372EF3D0FA00CC8ACE /* sr-CS.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sr-CS.ini"; sourceTree = "<group>"; };
+		F36C31382EF3D0FA00CC8ACE /* sr-SP.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sr-SP.ini"; sourceTree = "<group>"; };
+		F36C31392EF3D0FA00CC8ACE /* sv-SE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sv-SE.ini"; sourceTree = "<group>"; };
+		F36C313A2EF3D0FA00CC8ACE /* szl-PL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "szl-PL.ini"; sourceTree = "<group>"; };
+		F36C313B2EF3D0FA00CC8ACE /* ta-IN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ta-IN.ini"; sourceTree = "<group>"; };
+		F36C313C2EF3D0FA00CC8ACE /* th-TH.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "th-TH.ini"; sourceTree = "<group>"; };
+		F36C313D2EF3D0FA00CC8ACE /* tl-PH.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tl-PH.ini"; sourceTree = "<group>"; };
+		F36C313E2EF3D0FA00CC8ACE /* tr-TR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tr-TR.ini"; sourceTree = "<group>"; };
+		F36C313F2EF3D0FA00CC8ACE /* tt-RU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tt-RU.ini"; sourceTree = "<group>"; };
+		F36C31402EF3D0FA00CC8ACE /* ug-CN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ug-CN.ini"; sourceTree = "<group>"; };
+		F36C31412EF3D0FA00CC8ACE /* uk-UA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "uk-UA.ini"; sourceTree = "<group>"; };
+		F36C31422EF3D0FA00CC8ACE /* ur-PK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ur-PK.ini"; sourceTree = "<group>"; };
+		F36C31432EF3D0FA00CC8ACE /* vi-VN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "vi-VN.ini"; sourceTree = "<group>"; };
+		F36C31442EF3D0FA00CC8ACE /* zh-CN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "zh-CN.ini"; sourceTree = "<group>"; };
+		F36C31452EF3D0FA00CC8ACE /* zh-TW.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "zh-TW.ini"; sourceTree = "<group>"; };
+		F36C31872EF3D13E00CC8ACE /* flv-mux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "flv-mux.h"; sourceTree = "<group>"; };
+		F36C31882EF3D13E00CC8ACE /* flv-mux.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "flv-mux.c"; sourceTree = "<group>"; };
+		F36C31892EF3D13E00CC8ACE /* flv-output.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "flv-output.c"; sourceTree = "<group>"; };
+		F36C318A2EF3D13E00CC8ACE /* mp4-mux.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mp4-mux.h"; sourceTree = "<group>"; };
+		F36C318B2EF3D13E00CC8ACE /* mp4-mux.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "mp4-mux.c"; sourceTree = "<group>"; };
+		F36C318C2EF3D13E00CC8ACE /* mp4-mux-internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mp4-mux-internal.h"; sourceTree = "<group>"; };
+		F36C318D2EF3D13E00CC8ACE /* mp4-output.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "mp4-output.c"; sourceTree = "<group>"; };
+		F36C318E2EF3D13E00CC8ACE /* net-if.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "net-if.h"; sourceTree = "<group>"; };
+		F36C318F2EF3D13E00CC8ACE /* net-if.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "net-if.c"; sourceTree = "<group>"; };
+		F36C31902EF3D13E00CC8ACE /* null-output.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "null-output.c"; sourceTree = "<group>"; };
+		F36C31912EF3D13E00CC8ACE /* obs-output-ver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "obs-output-ver.h"; sourceTree = "<group>"; };
+		F36C31922EF3D13E00CC8ACE /* obs-outputs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "obs-outputs.c"; sourceTree = "<group>"; };
+		F36C31932EF3D13E00CC8ACE /* rtmp-av1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "rtmp-av1.h"; sourceTree = "<group>"; };
+		F36C31942EF3D13E00CC8ACE /* rtmp-av1.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "rtmp-av1.c"; sourceTree = "<group>"; };
+		F36C31952EF3D13E00CC8ACE /* rtmp-helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "rtmp-helpers.h"; sourceTree = "<group>"; };
+		F36C31962EF3D13E00CC8ACE /* rtmp-hevc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "rtmp-hevc.h"; sourceTree = "<group>"; };
+		F36C31972EF3D13E00CC8ACE /* rtmp-hevc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "rtmp-hevc.c"; sourceTree = "<group>"; };
+		F36C31982EF3D13E00CC8ACE /* rtmp-stream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "rtmp-stream.h"; sourceTree = "<group>"; };
+		F36C31992EF3D13E00CC8ACE /* rtmp-stream.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "rtmp-stream.c"; sourceTree = "<group>"; };
+		F36C319B2EF3D13E00CC8ACE /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		F36C31C02EF3D1F300CC8ACE /* .clang-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".clang-format"; sourceTree = "<group>"; };
+		F36C31C12EF3D1F300CC8ACE /* amf.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = amf.h; sourceTree = "<group>"; };
+		F36C31C22EF3D1F300CC8ACE /* amf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = amf.c; sourceTree = "<group>"; };
+		F36C31C32EF3D1F300CC8ACE /* bytes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bytes.h; sourceTree = "<group>"; };
+		F36C31C42EF3D1F300CC8ACE /* cencode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cencode.h; sourceTree = "<group>"; };
+		F36C31C52EF3D1F300CC8ACE /* cencode.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cencode.c; sourceTree = "<group>"; };
+		F36C31C62EF3D1F300CC8ACE /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		F36C31C72EF3D1F300CC8ACE /* handshake.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = handshake.h; sourceTree = "<group>"; };
+		F36C31C82EF3D1F300CC8ACE /* hashswf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hashswf.c; sourceTree = "<group>"; };
+		F36C31C92EF3D1F300CC8ACE /* http.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = http.h; sourceTree = "<group>"; };
+		F36C31CA2EF3D1F300CC8ACE /* log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
+		F36C31CB2EF3D1F300CC8ACE /* log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = log.c; sourceTree = "<group>"; };
+		F36C31CC2EF3D1F300CC8ACE /* md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		F36C31CD2EF3D1F300CC8ACE /* md5.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = md5.c; sourceTree = "<group>"; };
+		F36C31CE2EF3D1F300CC8ACE /* parseurl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = parseurl.c; sourceTree = "<group>"; };
+		F36C31CF2EF3D1F300CC8ACE /* rtmp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rtmp.h; sourceTree = "<group>"; };
+		F36C31D02EF3D1F300CC8ACE /* rtmp.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = rtmp.c; sourceTree = "<group>"; };
+		F36C31D12EF3D1F300CC8ACE /* rtmp_sys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rtmp_sys.h; sourceTree = "<group>"; };
+		F36C31DD2EF3D36600CC8ACE /* deque.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = deque.h; sourceTree = "<group>"; };
+		F36C31DF2EF3D48700CC8ACE /* happy-eyeballs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "happy-eyeballs.h"; sourceTree = "<group>"; };
+		F36C31E02EF3D48700CC8ACE /* happy-eyeballs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "happy-eyeballs.c"; sourceTree = "<group>"; };
+		F36C31E22EF3D4DC00CC8ACE /* buffered-file-serializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "buffered-file-serializer.h"; sourceTree = "<group>"; };
+		F36C31E32EF3D4DC00CC8ACE /* buffered-file-serializer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "buffered-file-serializer.c"; sourceTree = "<group>"; };
+		F36C31E62EF3D6A200CC8ACE /* obs-av1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "obs-av1.h"; sourceTree = "<group>"; };
+		F36C31E72EF3D6A200CC8ACE /* obs-av1.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "obs-av1.c"; sourceTree = "<group>"; };
+		F36C31EA2EF3ED7A00CC8ACE /* obs-canvas.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "obs-canvas.c"; sourceTree = "<group>"; };
+		F36C31EC2EF3F69600CC8ACE /* pipe.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pipe.c; sourceTree = "<group>"; };
+		F36C31ED2EF3F69600CC8ACE /* source-profiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "source-profiler.h"; sourceTree = "<group>"; };
+		F36C31EE2EF3F69600CC8ACE /* source-profiler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "source-profiler.c"; sourceTree = "<group>"; };
+		F36C31F42EF3F92E00CC8ACE /* obsversion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = obsversion.h; sourceTree = "<group>"; };
+		F36C31F52EF3F92E00CC8ACE /* obsversion.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = obsversion.c; sourceTree = "<group>"; };
+		F36C31FC2EF40A8E00CC8ACE /* libmbedcrypto.3.6.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmbedcrypto.3.6.4.dylib; path = ViewApp/mbedtls/libmbedcrypto.3.6.4.dylib; sourceTree = "<group>"; };
+		F36C31FD2EF40A8E00CC8ACE /* libmbedtls.3.6.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmbedtls.3.6.4.dylib; path = ViewApp/mbedtls/libmbedtls.3.6.4.dylib; sourceTree = "<group>"; };
+		F36C31FE2EF40A8E00CC8ACE /* libmbedx509.3.6.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmbedx509.3.6.4.dylib; path = ViewApp/mbedtls/libmbedx509.3.6.4.dylib; sourceTree = "<group>"; };
+		F36C32062EF40B3800CC8ACE /* bpm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bpm.h; sourceTree = "<group>"; };
+		F36C32072EF40B3800CC8ACE /* bpm.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bpm.c; sourceTree = "<group>"; };
+		F36C32082EF40B3800CC8ACE /* bpm-internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "bpm-internal.h"; sourceTree = "<group>"; };
+		F36C320A2EF40B6D00CC8ACE /* opts-parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "opts-parser.h"; sourceTree = "<group>"; };
+		F36C320B2EF40B6D00CC8ACE /* opts-parser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "opts-parser.c"; sourceTree = "<group>"; };
+		F36C32342EF4DF1F00CC8ACE /* libmbedtls.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmbedtls.dylib; path = ViewApp/mbedtls/libmbedtls.dylib; sourceTree = "<group>"; };
+		F36C32382EF4DF2A00CC8ACE /* libmbedx509.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmbedx509.dylib; path = ViewApp/mbedtls/libmbedx509.dylib; sourceTree = "<group>"; };
+		F36C323B2EF4DF3200CC8ACE /* libmbedcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libmbedcrypto.dylib; path = ViewApp/mbedtls/libmbedcrypto.dylib; sourceTree = "<group>"; };
+		F36C32492EF4E1C000CC8ACE /* mac-videotoolbox.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mac-videotoolbox.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F36C324D2EF4E1FE00CC8ACE /* af-ZA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "af-ZA.ini"; sourceTree = "<group>"; };
+		F36C324E2EF4E1FE00CC8ACE /* ar-SA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ar-SA.ini"; sourceTree = "<group>"; };
+		F36C324F2EF4E1FE00CC8ACE /* az-AZ.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "az-AZ.ini"; sourceTree = "<group>"; };
+		F36C32502EF4E1FE00CC8ACE /* ba-RU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ba-RU.ini"; sourceTree = "<group>"; };
+		F36C32512EF4E1FE00CC8ACE /* be-BY.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "be-BY.ini"; sourceTree = "<group>"; };
+		F36C32522EF4E1FE00CC8ACE /* bg-BG.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "bg-BG.ini"; sourceTree = "<group>"; };
+		F36C32532EF4E1FE00CC8ACE /* bn-BD.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "bn-BD.ini"; sourceTree = "<group>"; };
+		F36C32542EF4E1FE00CC8ACE /* ca-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ca-ES.ini"; sourceTree = "<group>"; };
+		F36C32552EF4E1FE00CC8ACE /* cs-CZ.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "cs-CZ.ini"; sourceTree = "<group>"; };
+		F36C32562EF4E1FE00CC8ACE /* da-DK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "da-DK.ini"; sourceTree = "<group>"; };
+		F36C32572EF4E1FE00CC8ACE /* de-DE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "de-DE.ini"; sourceTree = "<group>"; };
+		F36C32582EF4E1FE00CC8ACE /* el-GR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "el-GR.ini"; sourceTree = "<group>"; };
+		F36C32592EF4E1FE00CC8ACE /* en-GB.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "en-GB.ini"; sourceTree = "<group>"; };
+		F36C325A2EF4E1FE00CC8ACE /* en-US.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "en-US.ini"; sourceTree = "<group>"; };
+		F36C325B2EF4E1FE00CC8ACE /* es-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "es-ES.ini"; sourceTree = "<group>"; };
+		F36C325C2EF4E1FE00CC8ACE /* et-EE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "et-EE.ini"; sourceTree = "<group>"; };
+		F36C325D2EF4E1FE00CC8ACE /* eu-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "eu-ES.ini"; sourceTree = "<group>"; };
+		F36C325E2EF4E1FE00CC8ACE /* fa-IR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fa-IR.ini"; sourceTree = "<group>"; };
+		F36C325F2EF4E1FE00CC8ACE /* fi-FI.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fi-FI.ini"; sourceTree = "<group>"; };
+		F36C32602EF4E1FE00CC8ACE /* fil-PH.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fil-PH.ini"; sourceTree = "<group>"; };
+		F36C32612EF4E1FE00CC8ACE /* fr-FR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fr-FR.ini"; sourceTree = "<group>"; };
+		F36C32622EF4E1FE00CC8ACE /* gd-GB.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "gd-GB.ini"; sourceTree = "<group>"; };
+		F36C32632EF4E1FE00CC8ACE /* gl-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "gl-ES.ini"; sourceTree = "<group>"; };
+		F36C32642EF4E1FE00CC8ACE /* he-IL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "he-IL.ini"; sourceTree = "<group>"; };
+		F36C32652EF4E1FE00CC8ACE /* hi-IN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hi-IN.ini"; sourceTree = "<group>"; };
+		F36C32662EF4E1FE00CC8ACE /* hr-HR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hr-HR.ini"; sourceTree = "<group>"; };
+		F36C32672EF4E1FE00CC8ACE /* hu-HU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hu-HU.ini"; sourceTree = "<group>"; };
+		F36C32682EF4E1FE00CC8ACE /* hy-AM.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hy-AM.ini"; sourceTree = "<group>"; };
+		F36C32692EF4E1FE00CC8ACE /* id-ID.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "id-ID.ini"; sourceTree = "<group>"; };
+		F36C326A2EF4E1FE00CC8ACE /* it-IT.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "it-IT.ini"; sourceTree = "<group>"; };
+		F36C326B2EF4E1FE00CC8ACE /* ja-JP.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ja-JP.ini"; sourceTree = "<group>"; };
+		F36C326C2EF4E1FE00CC8ACE /* ka-GE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ka-GE.ini"; sourceTree = "<group>"; };
+		F36C326D2EF4E1FE00CC8ACE /* kaa.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = kaa.ini; sourceTree = "<group>"; };
+		F36C326E2EF4E1FE00CC8ACE /* kab-KAB.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kab-KAB.ini"; sourceTree = "<group>"; };
+		F36C326F2EF4E1FE00CC8ACE /* kmr-TR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kmr-TR.ini"; sourceTree = "<group>"; };
+		F36C32702EF4E1FE00CC8ACE /* ko-KR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ko-KR.ini"; sourceTree = "<group>"; };
+		F36C32712EF4E1FE00CC8ACE /* lt-LT.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "lt-LT.ini"; sourceTree = "<group>"; };
+		F36C32722EF4E1FE00CC8ACE /* ms-MY.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ms-MY.ini"; sourceTree = "<group>"; };
+		F36C32732EF4E1FE00CC8ACE /* nb-NO.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nb-NO.ini"; sourceTree = "<group>"; };
+		F36C32742EF4E1FE00CC8ACE /* nl-NL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nl-NL.ini"; sourceTree = "<group>"; };
+		F36C32752EF4E1FE00CC8ACE /* nn-NO.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nn-NO.ini"; sourceTree = "<group>"; };
+		F36C32762EF4E1FE00CC8ACE /* oc-FR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "oc-FR.ini"; sourceTree = "<group>"; };
+		F36C32772EF4E1FE00CC8ACE /* pl-PL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pl-PL.ini"; sourceTree = "<group>"; };
+		F36C32782EF4E1FE00CC8ACE /* pt-BR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pt-BR.ini"; sourceTree = "<group>"; };
+		F36C32792EF4E1FE00CC8ACE /* pt-PT.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pt-PT.ini"; sourceTree = "<group>"; };
+		F36C327A2EF4E1FE00CC8ACE /* ro-RO.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ro-RO.ini"; sourceTree = "<group>"; };
+		F36C327B2EF4E1FE00CC8ACE /* ru-RU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ru-RU.ini"; sourceTree = "<group>"; };
+		F36C327C2EF4E1FE00CC8ACE /* si-LK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "si-LK.ini"; sourceTree = "<group>"; };
+		F36C327D2EF4E1FE00CC8ACE /* sk-SK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sk-SK.ini"; sourceTree = "<group>"; };
+		F36C327E2EF4E1FE00CC8ACE /* sl-SI.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sl-SI.ini"; sourceTree = "<group>"; };
+		F36C327F2EF4E1FE00CC8ACE /* sq-AL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sq-AL.ini"; sourceTree = "<group>"; };
+		F36C32802EF4E1FE00CC8ACE /* sr-CS.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sr-CS.ini"; sourceTree = "<group>"; };
+		F36C32812EF4E1FE00CC8ACE /* sr-SP.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sr-SP.ini"; sourceTree = "<group>"; };
+		F36C32822EF4E1FE00CC8ACE /* sv-SE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sv-SE.ini"; sourceTree = "<group>"; };
+		F36C32832EF4E1FE00CC8ACE /* szl-PL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "szl-PL.ini"; sourceTree = "<group>"; };
+		F36C32842EF4E1FE00CC8ACE /* ta-IN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ta-IN.ini"; sourceTree = "<group>"; };
+		F36C32852EF4E1FE00CC8ACE /* th-TH.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "th-TH.ini"; sourceTree = "<group>"; };
+		F36C32862EF4E1FE00CC8ACE /* tl-PH.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tl-PH.ini"; sourceTree = "<group>"; };
+		F36C32872EF4E1FE00CC8ACE /* tr-TR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tr-TR.ini"; sourceTree = "<group>"; };
+		F36C32882EF4E1FE00CC8ACE /* tt-RU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tt-RU.ini"; sourceTree = "<group>"; };
+		F36C32892EF4E1FE00CC8ACE /* ug-CN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ug-CN.ini"; sourceTree = "<group>"; };
+		F36C328A2EF4E1FE00CC8ACE /* uk-UA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "uk-UA.ini"; sourceTree = "<group>"; };
+		F36C328B2EF4E1FE00CC8ACE /* vi-VN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "vi-VN.ini"; sourceTree = "<group>"; };
+		F36C328C2EF4E1FE00CC8ACE /* zh-CN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "zh-CN.ini"; sourceTree = "<group>"; };
+		F36C328D2EF4E1FE00CC8ACE /* zh-TW.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "zh-TW.ini"; sourceTree = "<group>"; };
+		F36C32902EF4E1FE00CC8ACE /* encoder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = encoder.c; sourceTree = "<group>"; };
+		F36C32E12EF4E5F700CC8ACE /* obs-webrtc.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "obs-webrtc.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F36C32E52EF4E61900CC8ACE /* af-ZA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "af-ZA.ini"; sourceTree = "<group>"; };
+		F36C32E62EF4E61900CC8ACE /* ar-SA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ar-SA.ini"; sourceTree = "<group>"; };
+		F36C32E72EF4E61900CC8ACE /* be-BY.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "be-BY.ini"; sourceTree = "<group>"; };
+		F36C32E82EF4E61900CC8ACE /* bg-BG.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "bg-BG.ini"; sourceTree = "<group>"; };
+		F36C32E92EF4E61900CC8ACE /* ca-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ca-ES.ini"; sourceTree = "<group>"; };
+		F36C32EA2EF4E61900CC8ACE /* cs-CZ.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "cs-CZ.ini"; sourceTree = "<group>"; };
+		F36C32EB2EF4E61900CC8ACE /* da-DK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "da-DK.ini"; sourceTree = "<group>"; };
+		F36C32EC2EF4E61900CC8ACE /* de-DE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "de-DE.ini"; sourceTree = "<group>"; };
+		F36C32ED2EF4E61900CC8ACE /* el-GR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "el-GR.ini"; sourceTree = "<group>"; };
+		F36C32EE2EF4E61900CC8ACE /* en-GB.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "en-GB.ini"; sourceTree = "<group>"; };
+		F36C32EF2EF4E61900CC8ACE /* en-US.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "en-US.ini"; sourceTree = "<group>"; };
+		F36C32F02EF4E61900CC8ACE /* es-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "es-ES.ini"; sourceTree = "<group>"; };
+		F36C32F12EF4E61900CC8ACE /* et-EE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "et-EE.ini"; sourceTree = "<group>"; };
+		F36C32F22EF4E61900CC8ACE /* fa-IR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fa-IR.ini"; sourceTree = "<group>"; };
+		F36C32F32EF4E61900CC8ACE /* fi-FI.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fi-FI.ini"; sourceTree = "<group>"; };
+		F36C32F42EF4E61900CC8ACE /* fil-PH.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fil-PH.ini"; sourceTree = "<group>"; };
+		F36C32F52EF4E61900CC8ACE /* fr-FR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "fr-FR.ini"; sourceTree = "<group>"; };
+		F36C32F62EF4E61900CC8ACE /* gl-ES.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "gl-ES.ini"; sourceTree = "<group>"; };
+		F36C32F72EF4E61900CC8ACE /* he-IL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "he-IL.ini"; sourceTree = "<group>"; };
+		F36C32F82EF4E61900CC8ACE /* hi-IN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hi-IN.ini"; sourceTree = "<group>"; };
+		F36C32F92EF4E61900CC8ACE /* hr-HR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hr-HR.ini"; sourceTree = "<group>"; };
+		F36C32FA2EF4E61900CC8ACE /* hu-HU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hu-HU.ini"; sourceTree = "<group>"; };
+		F36C32FB2EF4E61900CC8ACE /* hy-AM.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "hy-AM.ini"; sourceTree = "<group>"; };
+		F36C32FC2EF4E61900CC8ACE /* id-ID.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "id-ID.ini"; sourceTree = "<group>"; };
+		F36C32FD2EF4E61900CC8ACE /* it-IT.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "it-IT.ini"; sourceTree = "<group>"; };
+		F36C32FE2EF4E61900CC8ACE /* ja-JP.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ja-JP.ini"; sourceTree = "<group>"; };
+		F36C32FF2EF4E61900CC8ACE /* ka-GE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ka-GE.ini"; sourceTree = "<group>"; };
+		F36C33002EF4E61900CC8ACE /* kaa.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = kaa.ini; sourceTree = "<group>"; };
+		F36C33012EF4E61900CC8ACE /* kmr-TR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kmr-TR.ini"; sourceTree = "<group>"; };
+		F36C33022EF4E61900CC8ACE /* ko-KR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ko-KR.ini"; sourceTree = "<group>"; };
+		F36C33032EF4E61900CC8ACE /* ms-MY.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ms-MY.ini"; sourceTree = "<group>"; };
+		F36C33042EF4E61900CC8ACE /* nb-NO.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nb-NO.ini"; sourceTree = "<group>"; };
+		F36C33052EF4E61900CC8ACE /* nl-NL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "nl-NL.ini"; sourceTree = "<group>"; };
+		F36C33062EF4E61900CC8ACE /* pl-PL.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pl-PL.ini"; sourceTree = "<group>"; };
+		F36C33072EF4E61900CC8ACE /* pt-BR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pt-BR.ini"; sourceTree = "<group>"; };
+		F36C33082EF4E61900CC8ACE /* pt-PT.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pt-PT.ini"; sourceTree = "<group>"; };
+		F36C33092EF4E61900CC8ACE /* ro-RO.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ro-RO.ini"; sourceTree = "<group>"; };
+		F36C330A2EF4E61900CC8ACE /* ru-RU.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ru-RU.ini"; sourceTree = "<group>"; };
+		F36C330B2EF4E61900CC8ACE /* si-LK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "si-LK.ini"; sourceTree = "<group>"; };
+		F36C330C2EF4E61900CC8ACE /* sk-SK.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sk-SK.ini"; sourceTree = "<group>"; };
+		F36C330D2EF4E61900CC8ACE /* sl-SI.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sl-SI.ini"; sourceTree = "<group>"; };
+		F36C330E2EF4E61900CC8ACE /* sv-SE.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "sv-SE.ini"; sourceTree = "<group>"; };
+		F36C330F2EF4E61900CC8ACE /* th-TH.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "th-TH.ini"; sourceTree = "<group>"; };
+		F36C33102EF4E61900CC8ACE /* tr-TR.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tr-TR.ini"; sourceTree = "<group>"; };
+		F36C33112EF4E61900CC8ACE /* ug-CN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ug-CN.ini"; sourceTree = "<group>"; };
+		F36C33122EF4E61900CC8ACE /* uk-UA.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "uk-UA.ini"; sourceTree = "<group>"; };
+		F36C33132EF4E61900CC8ACE /* vi-VN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "vi-VN.ini"; sourceTree = "<group>"; };
+		F36C33142EF4E61900CC8ACE /* zh-CN.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "zh-CN.ini"; sourceTree = "<group>"; };
+		F36C33152EF4E61900CC8ACE /* zh-TW.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = "zh-TW.ini"; sourceTree = "<group>"; };
+		F36C33182EF4E61900CC8ACE /* obs-webrtc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "obs-webrtc.cpp"; sourceTree = "<group>"; };
+		F36C33192EF4E61900CC8ACE /* whip-output.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "whip-output.h"; sourceTree = "<group>"; };
+		F36C331A2EF4E61900CC8ACE /* whip-output.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "whip-output.cpp"; sourceTree = "<group>"; };
+		F36C331B2EF4E61900CC8ACE /* whip-service.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "whip-service.h"; sourceTree = "<group>"; };
+		F36C331C2EF4E61900CC8ACE /* whip-service.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "whip-service.cpp"; sourceTree = "<group>"; };
+		F36C331D2EF4E61900CC8ACE /* whip-utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "whip-utils.h"; sourceTree = "<group>"; };
+		F36C33582EF4E64800CC8ACE /* libdatachannel.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libdatachannel.dylib; path = ViewApp/rtc/libdatachannel.dylib; sourceTree = "<group>"; };
 		F38BB5822E4F0C0D003CC59E /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ViewApp/ffmpeg/lib/libswscale.a; sourceTree = "<group>"; };
 		F38BB5842E4F0C0D003CC59E /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ViewApp/ffmpeg/lib/libavfilter.a; sourceTree = "<group>"; };
 		F38BB5852E4F0C0D003CC59E /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ViewApp/ffmpeg/lib/libavformat.a; sourceTree = "<group>"; };
@@ -2669,12 +3680,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F36C32402EF4E03400CC8ACE /* libmbedx509.dylib in Frameworks */,
+				F36C32422EF4E03700CC8ACE /* libmbedcrypto.dylib in Frameworks */,
 				9078C6662C7876E400FD11BA /* CoreMedia.framework in Frameworks */,
 				90B88C282C77281700A77D50 /* VideoToolbox.framework in Frameworks */,
+				F36C323E2EF4E03100CC8ACE /* libmbedtls.dylib in Frameworks */,
 				90B88C262C77280D00A77D50 /* CoreMedia.framework in Frameworks */,
 				9078C6632C78769D00FD11BA /* AVFoundation.framework in Frameworks */,
 				90B88C382C77285600A77D50 /* libjansson.a in Frameworks */,
 				9078C2F62C78591D00FD11BA /* libcore.framework in Frameworks */,
+				F36C335F2EF4E6F200CC8ACE /* libdatachannel.dylib in Frameworks */,
 				90B88C3A2C77288B00A77D50 /* libiconv.tbd in Frameworks */,
 				9078C6692C78771F00FD11BA /* CoreMediaIO.framework in Frameworks */,
 				9078C6652C7876DB00FD11BA /* CoreMedia.framework in Frameworks */,
@@ -2734,6 +3749,47 @@
 				F353E0DC2E6191BE0036D0D4 /* libcore.framework in Frameworks */,
 				F353E0E32E6191E20036D0D4 /* libavutil.a in Frameworks */,
 				F353E0E12E6191E20036D0D4 /* libavcodec.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C2FB32EF3C9EC00CC8ACE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F36C30F72EF3CD6E00CC8ACE /* libcurl.tbd in Frameworks */,
+				F36C30F12EF3CC0100CC8ACE /* libcaption.a in Frameworks */,
+				F36C30F22EF3CC0100CC8ACE /* libjansson.a in Frameworks */,
+				F36C30F02EF3CBC200CC8ACE /* libcore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C321A2EF40F4400CC8ACE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F36C32392EF4DF2B00CC8ACE /* libmbedx509.dylib in Frameworks */,
+				F36C32352EF4DF1F00CC8ACE /* libmbedtls.dylib in Frameworks */,
+				F36C322A2EF4115B00CC8ACE /* libcaption.a in Frameworks */,
+				F36C32232EF4103D00CC8ACE /* libcore.framework in Frameworks */,
+				F36C323C2EF4DF3200CC8ACE /* libmbedcrypto.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C32462EF4E1C000CC8ACE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F36C32D42EF4E23100CC8ACE /* libcore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C32DE2EF4E5F700CC8ACE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F36C33592EF4E64800CC8ACE /* libdatachannel.dylib in Frameworks */,
+				F36C33532EF4E63C00CC8ACE /* libcore.framework in Frameworks */,
+				F36C335B2EF4E6AE00CC8ACE /* libcurl.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2953,13 +4009,38 @@
 				9078C4F92C785D7100FD11BA /* callback */,
 				9078C32A2C7859D300FD11BA /* util */,
 				9078C5872C785FEF00FD11BA /* media-io */,
-				9078C5432C785FED00FD11BA /* obs-audio-controls.c */,
-				9078C5822C785FEF00FD11BA /* obs-audio-controls.h */,
+				9078C5B22C785FF100FD11BA /* obs-source.c */,
+				9078C5A22C785FF000FD11BA /* obs-scene.c */,
+				9078C54E2C785FEE00FD11BA /* obs-output.c */,
+				9078C59C2C785FF000FD11BA /* obs-output-delay.c */,
+				9078C5AB2C785FF000FD11BA /* obs-service.c */,
+				9078C5B42C785FF100FD11BA /* obs-encoder.c */,
+				9078C54B2C785FEE00FD11BA /* obs-module.c */,
 				9078C5862C785FEF00FD11BA /* obs-display.c */,
 				9078C5A82C785FF000FD11BA /* obs-video.c */,
 				9078C5482C785FEE00FD11BA /* obs-audio.c */,
+				F36C31EA2EF3ED7A00CC8ACE /* obs-canvas.c */,
+				9078C5AE2C785FF100FD11BA /* obs-view.c */,
+				9078C5842C785FEF00FD11BA /* obs-source-deinterlace.c */,
+				9078C57F2C785FEF00FD11BA /* obs-source-transition.c */,
+				9078C5AA2C785FF000FD11BA /* obs-internal.h */,
+				9078C5B52C785FF100FD11BA /* obs.c */,
+				9078C5832C785FEF00FD11BA /* obs.h */,
+				9078C5B12C785FF100FD11BA /* obs.hpp */,
+				9078C5B32C785FF100FD11BA /* obs-source.h */,
+				9078C5472C785FEE00FD11BA /* obs-scene.h */,
+				9078C5AC2C785FF000FD11BA /* obs-output.h */,
+				9078C5852C785FEF00FD11BA /* obs-service.h */,
+				9078C5812C785FEF00FD11BA /* obs-encoder.h */,
+				9078C57E2C785FEF00FD11BA /* obs-module.h */,
+				9078C5432C785FED00FD11BA /* obs-audio-controls.c */,
+				9078C5822C785FEF00FD11BA /* obs-audio-controls.h */,
+				9078C5B02C785FF100FD11BA /* obs-data.c */,
+				9078C54C2C785FEE00FD11BA /* obs-data.h */,
 				9078C5492C785FEE00FD11BA /* obs-avc.c */,
 				9078C5A62C785FF000FD11BA /* obs-avc.h */,
+				F36C31E62EF3D6A200CC8ACE /* obs-av1.h */,
+				F36C31E72EF3D6A200CC8ACE /* obs-av1.c */,
 				9078C5A12C785FF000FD11BA /* obs-cocoa.m */,
 				9078C5A42C785FF000FD11BA /* obs-config.h */,
 				9078C59D2C785FF000FD11BA /* obs-defs.h */,
@@ -2978,32 +4059,12 @@
 				9078C5AF2C785FF100FD11BA /* obs-nix-platform.c */,
 				9078C54A2C785FEE00FD11BA /* obs-nix-platform.h */,
 				9078C5A02C785FF000FD11BA /* obs-nix.h */,
-				9078C5B52C785FF100FD11BA /* obs.c */,
-				9078C5832C785FEF00FD11BA /* obs.h */,
-				9078C5B12C785FF100FD11BA /* obs.hpp */,
-				9078C5B02C785FF100FD11BA /* obs-data.c */,
-				9078C54C2C785FEE00FD11BA /* obs-data.h */,
-				9078C54B2C785FEE00FD11BA /* obs-module.c */,
-				9078C57E2C785FEF00FD11BA /* obs-module.h */,
-				9078C5AB2C785FF000FD11BA /* obs-service.c */,
-				9078C5852C785FEF00FD11BA /* obs-service.h */,
-				9078C5B42C785FF100FD11BA /* obs-encoder.c */,
-				9078C5812C785FEF00FD11BA /* obs-encoder.h */,
-				9078C5AA2C785FF000FD11BA /* obs-internal.h */,
-				9078C54E2C785FEE00FD11BA /* obs-output.c */,
-				9078C5AC2C785FF000FD11BA /* obs-output.h */,
-				9078C59C2C785FF000FD11BA /* obs-output-delay.c */,
 				9078C54D2C785FEE00FD11BA /* obs-properties.c */,
 				9078C5AD2C785FF100FD11BA /* obs-properties.h */,
-				9078C5A22C785FF000FD11BA /* obs-scene.c */,
-				9078C5472C785FEE00FD11BA /* obs-scene.h */,
-				9078C5842C785FEF00FD11BA /* obs-source-deinterlace.c */,
-				9078C57F2C785FEF00FD11BA /* obs-source-transition.c */,
-				9078C5B22C785FF100FD11BA /* obs-source.c */,
-				9078C5B32C785FF100FD11BA /* obs-source.h */,
 				9078C57D2C785FEF00FD11BA /* obs-ui.h */,
 				9078C5802C785FEF00FD11BA /* obs-video-gpu-encode.c */,
-				9078C5AE2C785FF100FD11BA /* obs-view.c */,
+				F36C31F42EF3F92E00CC8ACE /* obsversion.h */,
+				F36C31F52EF3F92E00CC8ACE /* obsversion.c */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -3024,6 +4085,8 @@
 				9078C3462C7859D300FD11BA /* platform-nix.c */,
 				9078C3472C7859D300FD11BA /* profiler.c */,
 				9078C3482C7859D300FD11BA /* bmem.c */,
+				F36C31E22EF3D4DC00CC8ACE /* buffered-file-serializer.h */,
+				F36C31E32EF3D4DC00CC8ACE /* buffered-file-serializer.c */,
 				9078C3492C7859D300FD11BA /* AlignedNew.hpp */,
 				9078C34A2C7859D300FD11BA /* threading.h */,
 				9078C34B2C7859D300FD11BA /* util_uint64.h */,
@@ -3033,6 +4096,9 @@
 				9078C34F2C7859D300FD11BA /* sse-intrin.h */,
 				9078C3502C7859D300FD11BA /* threading-posix.c */,
 				9078C3512C7859D300FD11BA /* base.c */,
+				F36C31EC2EF3F69600CC8ACE /* pipe.c */,
+				F36C31ED2EF3F69600CC8ACE /* source-profiler.h */,
+				F36C31EE2EF3F69600CC8ACE /* source-profiler.c */,
 				9078C3522C7859D300FD11BA /* utf8.c */,
 				9078C3532C7859D300FD11BA /* platform.c */,
 				9078C3542C7859D300FD11BA /* uthash.h */,
@@ -3044,6 +4110,8 @@
 				9078C35C2C7859D300FD11BA /* serializer.h */,
 				9078C35D2C7859D300FD11BA /* text-lookup.h */,
 				9078C35E2C7859D300FD11BA /* darray.h */,
+				F36C31DD2EF3D36600CC8ACE /* deque.h */,
+				9078C3752C7859D300FD11BA /* circlebuf.h */,
 				9078C35F2C7859D300FD11BA /* bitstream.h */,
 				9078C3602C7859D300FD11BA /* cf-lexer.c */,
 				9078C3612C7859D300FD11BA /* dstr.h */,
@@ -3052,7 +4120,6 @@
 				9078C3642C7859D300FD11BA /* cf-parser.c */,
 				9078C3652C7859D300FD11BA /* lexer.h */,
 				9078C3662C7859D300FD11BA /* file-serializer.c */,
-				9078C3672C7859D300FD11BA /* threading-windows.h */,
 				9078C3682C7859D300FD11BA /* platform-nix-portal.c */,
 				9078C3692C7859D300FD11BA /* util.hpp */,
 				9078C36A2C7859D300FD11BA /* pipe-posix.c */,
@@ -3063,10 +4130,8 @@
 				9078C36F2C7859D300FD11BA /* config-file.h */,
 				9078C3702C7859D300FD11BA /* array-serializer.h */,
 				9078C3712C7859D300FD11BA /* platform.h */,
-				9078C3722C7859D300FD11BA /* pipe-windows.c */,
 				9078C3732C7859D300FD11BA /* utf8.h */,
 				9078C3742C7859D300FD11BA /* profiler.hpp */,
-				9078C3752C7859D300FD11BA /* circlebuf.h */,
 				9078C3762C7859D300FD11BA /* base.h */,
 				9078C3772C7859D300FD11BA /* threading-posix.h */,
 			);
@@ -3397,6 +4462,10 @@
 				9054B9532C8AEBCC0051AD7F /* obs-transitions.plugin */,
 				90AD9E252D27D00A009F3070 /* mac-capture.plugin */,
 				F353E0C92E618AFF0036D0D4 /* obs-ffmpeg-mux */,
+				F36C2FB62EF3C9EC00CC8ACE /* rtmp-service.plugin */,
+				F36C31012EF3D0B300CC8ACE /* obs-outputs.plugin */,
+				F36C32492EF4E1C000CC8ACE /* mac-videotoolbox.plugin */,
+				F36C32E12EF4E5F700CC8ACE /* obs-webrtc.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3502,6 +4571,14 @@
 		90B88C242C77280C00A77D50 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F36C33582EF4E64800CC8ACE /* libdatachannel.dylib */,
+				F36C323B2EF4DF3200CC8ACE /* libmbedcrypto.dylib */,
+				F36C32382EF4DF2A00CC8ACE /* libmbedx509.dylib */,
+				F36C32342EF4DF1F00CC8ACE /* libmbedtls.dylib */,
+				F36C31FC2EF40A8E00CC8ACE /* libmbedcrypto.3.6.4.dylib */,
+				F36C31FD2EF40A8E00CC8ACE /* libmbedtls.3.6.4.dylib */,
+				F36C31FE2EF40A8E00CC8ACE /* libmbedx509.3.6.4.dylib */,
+				F36C30F62EF3CD6300CC8ACE /* libcurl.tbd */,
 				F38BB5992E4F46BF003CC59E /* libavdevice.a */,
 				F38BB5952E4F1333003CC59E /* libcrypto.a */,
 				F38BB5962E4F1333003CC59E /* libssl.a */,
@@ -3591,6 +4668,10 @@
 		90B88EF72C78253200A77D50 /* plugins */ = {
 			isa = PBXGroup;
 			children = (
+				F36C32DC2EF4E59900CC8ACE /* obs-wertc */,
+				F36C32442EF4E1A100CC8ACE /* mac-videotoolbox */,
+				F36C30FB2EF3D03700CC8ACE /* obs-outputs */,
+				F36C2FB12EF3C9C800CC8ACE /* rtmp-services */,
 				F353E0C42E618A5B0036D0D4 /* obs-ffmpeg-mux */,
 				90AD9E292D27D017009F3070 /* mac-capture */,
 				9054B94E2C8AEBB40051AD7F /* obs-transitions */,
@@ -3996,6 +5077,439 @@
 			path = "obs-ffmpeg-mux";
 			sourceTree = "<group>";
 		};
+		F36C2FB12EF3C9C800CC8ACE /* rtmp-services */ = {
+			isa = PBXGroup;
+			children = (
+				F36C30F32EF3CD0500CC8ACE /* file-updater.h */,
+				F36C30F42EF3CD0500CC8ACE /* file-updater.c */,
+				F36C30482EF3CAB400CC8ACE /* rtmp-common.c */,
+				F36C30492EF3CAB400CC8ACE /* rtmp-custom.c */,
+				F36C304A2EF3CAB400CC8ACE /* rtmp-format-ver.h */,
+				F36C304B2EF3CAB400CC8ACE /* rtmp-services-main.c */,
+				F36C30582EF3CAB400CC8ACE /* service-specific */,
+				F36C2FBA2EF3CA6400CC8ACE /* data */,
+			);
+			path = "rtmp-services";
+			sourceTree = "<group>";
+		};
+		F36C2FBA2EF3CA6400CC8ACE /* data */ = {
+			isa = PBXGroup;
+			children = (
+				F36C2FFC2EF3CA9000CC8ACE /* locale */,
+				F36C2FFD2EF3CA9000CC8ACE /* package.json */,
+				F36C30002EF3CA9000CC8ACE /* schema */,
+				F36C30012EF3CA9000CC8ACE /* services.json */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		F36C2FFC2EF3CA9000CC8ACE /* locale */ = {
+			isa = PBXGroup;
+			children = (
+				F36C2FBB2EF3CA9000CC8ACE /* af-ZA.ini */,
+				F36C2FBC2EF3CA9000CC8ACE /* ar-SA.ini */,
+				F36C2FBD2EF3CA9000CC8ACE /* az-AZ.ini */,
+				F36C2FBE2EF3CA9000CC8ACE /* ba-RU.ini */,
+				F36C2FBF2EF3CA9000CC8ACE /* be-BY.ini */,
+				F36C2FC02EF3CA9000CC8ACE /* bg-BG.ini */,
+				F36C2FC12EF3CA9000CC8ACE /* bn-BD.ini */,
+				F36C2FC22EF3CA9000CC8ACE /* ca-ES.ini */,
+				F36C2FC32EF3CA9000CC8ACE /* cs-CZ.ini */,
+				F36C2FC42EF3CA9000CC8ACE /* da-DK.ini */,
+				F36C2FC52EF3CA9000CC8ACE /* de-DE.ini */,
+				F36C2FC62EF3CA9000CC8ACE /* el-GR.ini */,
+				F36C2FC72EF3CA9000CC8ACE /* en-GB.ini */,
+				F36C2FC82EF3CA9000CC8ACE /* en-US.ini */,
+				F36C2FC92EF3CA9000CC8ACE /* es-ES.ini */,
+				F36C2FCA2EF3CA9000CC8ACE /* et-EE.ini */,
+				F36C2FCB2EF3CA9000CC8ACE /* eu-ES.ini */,
+				F36C2FCC2EF3CA9000CC8ACE /* fa-IR.ini */,
+				F36C2FCD2EF3CA9000CC8ACE /* fi-FI.ini */,
+				F36C2FCE2EF3CA9000CC8ACE /* fil-PH.ini */,
+				F36C2FCF2EF3CA9000CC8ACE /* fr-FR.ini */,
+				F36C2FD02EF3CA9000CC8ACE /* gd-GB.ini */,
+				F36C2FD12EF3CA9000CC8ACE /* gl-ES.ini */,
+				F36C2FD22EF3CA9000CC8ACE /* he-IL.ini */,
+				F36C2FD32EF3CA9000CC8ACE /* hi-IN.ini */,
+				F36C2FD42EF3CA9000CC8ACE /* hr-HR.ini */,
+				F36C2FD52EF3CA9000CC8ACE /* hu-HU.ini */,
+				F36C2FD62EF3CA9000CC8ACE /* hy-AM.ini */,
+				F36C2FD72EF3CA9000CC8ACE /* id-ID.ini */,
+				F36C2FD82EF3CA9000CC8ACE /* it-IT.ini */,
+				F36C2FD92EF3CA9000CC8ACE /* ja-JP.ini */,
+				F36C2FDA2EF3CA9000CC8ACE /* ka-GE.ini */,
+				F36C2FDB2EF3CA9000CC8ACE /* kaa.ini */,
+				F36C2FDC2EF3CA9000CC8ACE /* kab-KAB.ini */,
+				F36C2FDD2EF3CA9000CC8ACE /* kmr-TR.ini */,
+				F36C2FDE2EF3CA9000CC8ACE /* ko-KR.ini */,
+				F36C2FDF2EF3CA9000CC8ACE /* mn-MN.ini */,
+				F36C2FE02EF3CA9000CC8ACE /* ms-MY.ini */,
+				F36C2FE12EF3CA9000CC8ACE /* nb-NO.ini */,
+				F36C2FE22EF3CA9000CC8ACE /* nl-NL.ini */,
+				F36C2FE32EF3CA9000CC8ACE /* nn-NO.ini */,
+				F36C2FE42EF3CA9000CC8ACE /* pl-PL.ini */,
+				F36C2FE52EF3CA9000CC8ACE /* pt-BR.ini */,
+				F36C2FE62EF3CA9000CC8ACE /* pt-PT.ini */,
+				F36C2FE72EF3CA9000CC8ACE /* ro-RO.ini */,
+				F36C2FE82EF3CA9000CC8ACE /* ru-RU.ini */,
+				F36C2FE92EF3CA9000CC8ACE /* si-LK.ini */,
+				F36C2FEA2EF3CA9000CC8ACE /* sk-SK.ini */,
+				F36C2FEB2EF3CA9000CC8ACE /* sl-SI.ini */,
+				F36C2FEC2EF3CA9000CC8ACE /* sq-AL.ini */,
+				F36C2FED2EF3CA9000CC8ACE /* sr-CS.ini */,
+				F36C2FEE2EF3CA9000CC8ACE /* sr-SP.ini */,
+				F36C2FEF2EF3CA9000CC8ACE /* sv-SE.ini */,
+				F36C2FF02EF3CA9000CC8ACE /* szl-PL.ini */,
+				F36C2FF12EF3CA9000CC8ACE /* ta-IN.ini */,
+				F36C2FF22EF3CA9000CC8ACE /* th-TH.ini */,
+				F36C2FF32EF3CA9000CC8ACE /* tl-PH.ini */,
+				F36C2FF42EF3CA9000CC8ACE /* tr-TR.ini */,
+				F36C2FF52EF3CA9000CC8ACE /* tt-RU.ini */,
+				F36C2FF62EF3CA9000CC8ACE /* ug-CN.ini */,
+				F36C2FF72EF3CA9000CC8ACE /* uk-UA.ini */,
+				F36C2FF82EF3CA9000CC8ACE /* ur-PK.ini */,
+				F36C2FF92EF3CA9000CC8ACE /* vi-VN.ini */,
+				F36C2FFA2EF3CA9000CC8ACE /* zh-CN.ini */,
+				F36C2FFB2EF3CA9000CC8ACE /* zh-TW.ini */,
+			);
+			path = locale;
+			sourceTree = "<group>";
+		};
+		F36C30002EF3CA9000CC8ACE /* schema */ = {
+			isa = PBXGroup;
+			children = (
+				F36C2FFE2EF3CA9000CC8ACE /* package-schema.json */,
+				F36C2FFF2EF3CA9000CC8ACE /* service-schema-v5.json */,
+			);
+			path = schema;
+			sourceTree = "<group>";
+		};
+		F36C30582EF3CAB400CC8ACE /* service-specific */ = {
+			isa = PBXGroup;
+			children = (
+				F36C304C2EF3CAB400CC8ACE /* amazon-ivs.h */,
+				F36C304D2EF3CAB400CC8ACE /* amazon-ivs.c */,
+				F36C304E2EF3CAB400CC8ACE /* dacast.h */,
+				F36C304F2EF3CAB400CC8ACE /* dacast.c */,
+				F36C30502EF3CAB400CC8ACE /* nimotv.h */,
+				F36C30512EF3CAB400CC8ACE /* nimotv.c */,
+				F36C30522EF3CAB400CC8ACE /* service-ingest.h */,
+				F36C30532EF3CAB400CC8ACE /* service-ingest.c */,
+				F36C30542EF3CAB400CC8ACE /* showroom.h */,
+				F36C30552EF3CAB400CC8ACE /* showroom.c */,
+				F36C30562EF3CAB400CC8ACE /* twitch.h */,
+				F36C30572EF3CAB400CC8ACE /* twitch.c */,
+			);
+			path = "service-specific";
+			sourceTree = "<group>";
+		};
+		F36C30FB2EF3D03700CC8ACE /* obs-outputs */ = {
+			isa = PBXGroup;
+			children = (
+				F36C31D22EF3D1F300CC8ACE /* librtmp */,
+				F36C31DF2EF3D48700CC8ACE /* happy-eyeballs.h */,
+				F36C31E02EF3D48700CC8ACE /* happy-eyeballs.c */,
+				F36C31872EF3D13E00CC8ACE /* flv-mux.h */,
+				F36C31882EF3D13E00CC8ACE /* flv-mux.c */,
+				F36C31892EF3D13E00CC8ACE /* flv-output.c */,
+				F36C318A2EF3D13E00CC8ACE /* mp4-mux.h */,
+				F36C318B2EF3D13E00CC8ACE /* mp4-mux.c */,
+				F36C318C2EF3D13E00CC8ACE /* mp4-mux-internal.h */,
+				F36C318D2EF3D13E00CC8ACE /* mp4-output.c */,
+				F36C318E2EF3D13E00CC8ACE /* net-if.h */,
+				F36C318F2EF3D13E00CC8ACE /* net-if.c */,
+				F36C31902EF3D13E00CC8ACE /* null-output.c */,
+				F36C31912EF3D13E00CC8ACE /* obs-output-ver.h */,
+				F36C31922EF3D13E00CC8ACE /* obs-outputs.c */,
+				F36C31932EF3D13E00CC8ACE /* rtmp-av1.h */,
+				F36C31942EF3D13E00CC8ACE /* rtmp-av1.c */,
+				F36C31952EF3D13E00CC8ACE /* rtmp-helpers.h */,
+				F36C31962EF3D13E00CC8ACE /* rtmp-hevc.h */,
+				F36C31972EF3D13E00CC8ACE /* rtmp-hevc.c */,
+				F36C31982EF3D13E00CC8ACE /* rtmp-stream.h */,
+				F36C31992EF3D13E00CC8ACE /* rtmp-stream.c */,
+				F36C319B2EF3D13E00CC8ACE /* utils.h */,
+				F36C32062EF40B3800CC8ACE /* bpm.h */,
+				F36C32072EF40B3800CC8ACE /* bpm.c */,
+				F36C32082EF40B3800CC8ACE /* bpm-internal.h */,
+				F36C320A2EF40B6D00CC8ACE /* opts-parser.h */,
+				F36C320B2EF40B6D00CC8ACE /* opts-parser.c */,
+				F36C30FC2EF3D04D00CC8ACE /* data */,
+			);
+			path = "obs-outputs";
+			sourceTree = "<group>";
+		};
+		F36C30FC2EF3D04D00CC8ACE /* data */ = {
+			isa = PBXGroup;
+			children = (
+				F36C31462EF3D0FA00CC8ACE /* locale */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		F36C31462EF3D0FA00CC8ACE /* locale */ = {
+			isa = PBXGroup;
+			children = (
+				F36C31062EF3D0FA00CC8ACE /* af-ZA.ini */,
+				F36C31072EF3D0FA00CC8ACE /* ar-SA.ini */,
+				F36C31082EF3D0FA00CC8ACE /* ba-RU.ini */,
+				F36C31092EF3D0FA00CC8ACE /* be-BY.ini */,
+				F36C310A2EF3D0FA00CC8ACE /* bg-BG.ini */,
+				F36C310B2EF3D0FA00CC8ACE /* bn-BD.ini */,
+				F36C310C2EF3D0FA00CC8ACE /* ca-ES.ini */,
+				F36C310D2EF3D0FA00CC8ACE /* cs-CZ.ini */,
+				F36C310E2EF3D0FA00CC8ACE /* da-DK.ini */,
+				F36C310F2EF3D0FA00CC8ACE /* de-DE.ini */,
+				F36C31102EF3D0FA00CC8ACE /* el-GR.ini */,
+				F36C31112EF3D0FA00CC8ACE /* en-GB.ini */,
+				F36C31122EF3D0FA00CC8ACE /* en-US.ini */,
+				F36C31132EF3D0FA00CC8ACE /* es-ES.ini */,
+				F36C31142EF3D0FA00CC8ACE /* et-EE.ini */,
+				F36C31152EF3D0FA00CC8ACE /* eu-ES.ini */,
+				F36C31162EF3D0FA00CC8ACE /* fa-IR.ini */,
+				F36C31172EF3D0FA00CC8ACE /* fi-FI.ini */,
+				F36C31182EF3D0FA00CC8ACE /* fil-PH.ini */,
+				F36C31192EF3D0FA00CC8ACE /* fr-FR.ini */,
+				F36C311A2EF3D0FA00CC8ACE /* gd-GB.ini */,
+				F36C311B2EF3D0FA00CC8ACE /* gl-ES.ini */,
+				F36C311C2EF3D0FA00CC8ACE /* he-IL.ini */,
+				F36C311D2EF3D0FA00CC8ACE /* hi-IN.ini */,
+				F36C311E2EF3D0FA00CC8ACE /* hr-HR.ini */,
+				F36C311F2EF3D0FA00CC8ACE /* hu-HU.ini */,
+				F36C31202EF3D0FA00CC8ACE /* hy-AM.ini */,
+				F36C31212EF3D0FA00CC8ACE /* id-ID.ini */,
+				F36C31222EF3D0FA00CC8ACE /* is-IS.ini */,
+				F36C31232EF3D0FA00CC8ACE /* it-IT.ini */,
+				F36C31242EF3D0FA00CC8ACE /* ja-JP.ini */,
+				F36C31252EF3D0FA00CC8ACE /* ka-GE.ini */,
+				F36C31262EF3D0FA00CC8ACE /* kaa.ini */,
+				F36C31272EF3D0FA00CC8ACE /* kab-KAB.ini */,
+				F36C31282EF3D0FA00CC8ACE /* kmr-TR.ini */,
+				F36C31292EF3D0FA00CC8ACE /* ko-KR.ini */,
+				F36C312A2EF3D0FA00CC8ACE /* mn-MN.ini */,
+				F36C312B2EF3D0FA00CC8ACE /* ms-MY.ini */,
+				F36C312C2EF3D0FA00CC8ACE /* nb-NO.ini */,
+				F36C312D2EF3D0FA00CC8ACE /* nl-NL.ini */,
+				F36C312E2EF3D0FA00CC8ACE /* nn-NO.ini */,
+				F36C312F2EF3D0FA00CC8ACE /* pl-PL.ini */,
+				F36C31302EF3D0FA00CC8ACE /* pt-BR.ini */,
+				F36C31312EF3D0FA00CC8ACE /* pt-PT.ini */,
+				F36C31322EF3D0FA00CC8ACE /* ro-RO.ini */,
+				F36C31332EF3D0FA00CC8ACE /* ru-RU.ini */,
+				F36C31342EF3D0FA00CC8ACE /* si-LK.ini */,
+				F36C31352EF3D0FA00CC8ACE /* sk-SK.ini */,
+				F36C31362EF3D0FA00CC8ACE /* sl-SI.ini */,
+				F36C31372EF3D0FA00CC8ACE /* sr-CS.ini */,
+				F36C31382EF3D0FA00CC8ACE /* sr-SP.ini */,
+				F36C31392EF3D0FA00CC8ACE /* sv-SE.ini */,
+				F36C313A2EF3D0FA00CC8ACE /* szl-PL.ini */,
+				F36C313B2EF3D0FA00CC8ACE /* ta-IN.ini */,
+				F36C313C2EF3D0FA00CC8ACE /* th-TH.ini */,
+				F36C313D2EF3D0FA00CC8ACE /* tl-PH.ini */,
+				F36C313E2EF3D0FA00CC8ACE /* tr-TR.ini */,
+				F36C313F2EF3D0FA00CC8ACE /* tt-RU.ini */,
+				F36C31402EF3D0FA00CC8ACE /* ug-CN.ini */,
+				F36C31412EF3D0FA00CC8ACE /* uk-UA.ini */,
+				F36C31422EF3D0FA00CC8ACE /* ur-PK.ini */,
+				F36C31432EF3D0FA00CC8ACE /* vi-VN.ini */,
+				F36C31442EF3D0FA00CC8ACE /* zh-CN.ini */,
+				F36C31452EF3D0FA00CC8ACE /* zh-TW.ini */,
+			);
+			path = locale;
+			sourceTree = "<group>";
+		};
+		F36C31D22EF3D1F300CC8ACE /* librtmp */ = {
+			isa = PBXGroup;
+			children = (
+				F36C31C02EF3D1F300CC8ACE /* .clang-format */,
+				F36C31C12EF3D1F300CC8ACE /* amf.h */,
+				F36C31C22EF3D1F300CC8ACE /* amf.c */,
+				F36C31C32EF3D1F300CC8ACE /* bytes.h */,
+				F36C31C42EF3D1F300CC8ACE /* cencode.h */,
+				F36C31C52EF3D1F300CC8ACE /* cencode.c */,
+				F36C31C62EF3D1F300CC8ACE /* COPYING */,
+				F36C31C72EF3D1F300CC8ACE /* handshake.h */,
+				F36C31C82EF3D1F300CC8ACE /* hashswf.c */,
+				F36C31C92EF3D1F300CC8ACE /* http.h */,
+				F36C31CA2EF3D1F300CC8ACE /* log.h */,
+				F36C31CB2EF3D1F300CC8ACE /* log.c */,
+				F36C31CC2EF3D1F300CC8ACE /* md5.h */,
+				F36C31CD2EF3D1F300CC8ACE /* md5.c */,
+				F36C31CE2EF3D1F300CC8ACE /* parseurl.c */,
+				F36C31CF2EF3D1F300CC8ACE /* rtmp.h */,
+				F36C31D02EF3D1F300CC8ACE /* rtmp.c */,
+				F36C31D12EF3D1F300CC8ACE /* rtmp_sys.h */,
+			);
+			path = librtmp;
+			sourceTree = "<group>";
+		};
+		F36C32442EF4E1A100CC8ACE /* mac-videotoolbox */ = {
+			isa = PBXGroup;
+			children = (
+				F36C328F2EF4E1FE00CC8ACE /* data */,
+				F36C32902EF4E1FE00CC8ACE /* encoder.c */,
+			);
+			path = "mac-videotoolbox";
+			sourceTree = "<group>";
+		};
+		F36C328E2EF4E1FE00CC8ACE /* locale */ = {
+			isa = PBXGroup;
+			children = (
+				F36C324D2EF4E1FE00CC8ACE /* af-ZA.ini */,
+				F36C324E2EF4E1FE00CC8ACE /* ar-SA.ini */,
+				F36C324F2EF4E1FE00CC8ACE /* az-AZ.ini */,
+				F36C32502EF4E1FE00CC8ACE /* ba-RU.ini */,
+				F36C32512EF4E1FE00CC8ACE /* be-BY.ini */,
+				F36C32522EF4E1FE00CC8ACE /* bg-BG.ini */,
+				F36C32532EF4E1FE00CC8ACE /* bn-BD.ini */,
+				F36C32542EF4E1FE00CC8ACE /* ca-ES.ini */,
+				F36C32552EF4E1FE00CC8ACE /* cs-CZ.ini */,
+				F36C32562EF4E1FE00CC8ACE /* da-DK.ini */,
+				F36C32572EF4E1FE00CC8ACE /* de-DE.ini */,
+				F36C32582EF4E1FE00CC8ACE /* el-GR.ini */,
+				F36C32592EF4E1FE00CC8ACE /* en-GB.ini */,
+				F36C325A2EF4E1FE00CC8ACE /* en-US.ini */,
+				F36C325B2EF4E1FE00CC8ACE /* es-ES.ini */,
+				F36C325C2EF4E1FE00CC8ACE /* et-EE.ini */,
+				F36C325D2EF4E1FE00CC8ACE /* eu-ES.ini */,
+				F36C325E2EF4E1FE00CC8ACE /* fa-IR.ini */,
+				F36C325F2EF4E1FE00CC8ACE /* fi-FI.ini */,
+				F36C32602EF4E1FE00CC8ACE /* fil-PH.ini */,
+				F36C32612EF4E1FE00CC8ACE /* fr-FR.ini */,
+				F36C32622EF4E1FE00CC8ACE /* gd-GB.ini */,
+				F36C32632EF4E1FE00CC8ACE /* gl-ES.ini */,
+				F36C32642EF4E1FE00CC8ACE /* he-IL.ini */,
+				F36C32652EF4E1FE00CC8ACE /* hi-IN.ini */,
+				F36C32662EF4E1FE00CC8ACE /* hr-HR.ini */,
+				F36C32672EF4E1FE00CC8ACE /* hu-HU.ini */,
+				F36C32682EF4E1FE00CC8ACE /* hy-AM.ini */,
+				F36C32692EF4E1FE00CC8ACE /* id-ID.ini */,
+				F36C326A2EF4E1FE00CC8ACE /* it-IT.ini */,
+				F36C326B2EF4E1FE00CC8ACE /* ja-JP.ini */,
+				F36C326C2EF4E1FE00CC8ACE /* ka-GE.ini */,
+				F36C326D2EF4E1FE00CC8ACE /* kaa.ini */,
+				F36C326E2EF4E1FE00CC8ACE /* kab-KAB.ini */,
+				F36C326F2EF4E1FE00CC8ACE /* kmr-TR.ini */,
+				F36C32702EF4E1FE00CC8ACE /* ko-KR.ini */,
+				F36C32712EF4E1FE00CC8ACE /* lt-LT.ini */,
+				F36C32722EF4E1FE00CC8ACE /* ms-MY.ini */,
+				F36C32732EF4E1FE00CC8ACE /* nb-NO.ini */,
+				F36C32742EF4E1FE00CC8ACE /* nl-NL.ini */,
+				F36C32752EF4E1FE00CC8ACE /* nn-NO.ini */,
+				F36C32762EF4E1FE00CC8ACE /* oc-FR.ini */,
+				F36C32772EF4E1FE00CC8ACE /* pl-PL.ini */,
+				F36C32782EF4E1FE00CC8ACE /* pt-BR.ini */,
+				F36C32792EF4E1FE00CC8ACE /* pt-PT.ini */,
+				F36C327A2EF4E1FE00CC8ACE /* ro-RO.ini */,
+				F36C327B2EF4E1FE00CC8ACE /* ru-RU.ini */,
+				F36C327C2EF4E1FE00CC8ACE /* si-LK.ini */,
+				F36C327D2EF4E1FE00CC8ACE /* sk-SK.ini */,
+				F36C327E2EF4E1FE00CC8ACE /* sl-SI.ini */,
+				F36C327F2EF4E1FE00CC8ACE /* sq-AL.ini */,
+				F36C32802EF4E1FE00CC8ACE /* sr-CS.ini */,
+				F36C32812EF4E1FE00CC8ACE /* sr-SP.ini */,
+				F36C32822EF4E1FE00CC8ACE /* sv-SE.ini */,
+				F36C32832EF4E1FE00CC8ACE /* szl-PL.ini */,
+				F36C32842EF4E1FE00CC8ACE /* ta-IN.ini */,
+				F36C32852EF4E1FE00CC8ACE /* th-TH.ini */,
+				F36C32862EF4E1FE00CC8ACE /* tl-PH.ini */,
+				F36C32872EF4E1FE00CC8ACE /* tr-TR.ini */,
+				F36C32882EF4E1FE00CC8ACE /* tt-RU.ini */,
+				F36C32892EF4E1FE00CC8ACE /* ug-CN.ini */,
+				F36C328A2EF4E1FE00CC8ACE /* uk-UA.ini */,
+				F36C328B2EF4E1FE00CC8ACE /* vi-VN.ini */,
+				F36C328C2EF4E1FE00CC8ACE /* zh-CN.ini */,
+				F36C328D2EF4E1FE00CC8ACE /* zh-TW.ini */,
+			);
+			path = locale;
+			sourceTree = "<group>";
+		};
+		F36C328F2EF4E1FE00CC8ACE /* data */ = {
+			isa = PBXGroup;
+			children = (
+				F36C328E2EF4E1FE00CC8ACE /* locale */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		F36C32DC2EF4E59900CC8ACE /* obs-wertc */ = {
+			isa = PBXGroup;
+			children = (
+				F36C33172EF4E61900CC8ACE /* data */,
+				F36C33182EF4E61900CC8ACE /* obs-webrtc.cpp */,
+				F36C33192EF4E61900CC8ACE /* whip-output.h */,
+				F36C331A2EF4E61900CC8ACE /* whip-output.cpp */,
+				F36C331B2EF4E61900CC8ACE /* whip-service.h */,
+				F36C331C2EF4E61900CC8ACE /* whip-service.cpp */,
+				F36C331D2EF4E61900CC8ACE /* whip-utils.h */,
+			);
+			path = "obs-wertc";
+			sourceTree = "<group>";
+		};
+		F36C33162EF4E61900CC8ACE /* locale */ = {
+			isa = PBXGroup;
+			children = (
+				F36C32E52EF4E61900CC8ACE /* af-ZA.ini */,
+				F36C32E62EF4E61900CC8ACE /* ar-SA.ini */,
+				F36C32E72EF4E61900CC8ACE /* be-BY.ini */,
+				F36C32E82EF4E61900CC8ACE /* bg-BG.ini */,
+				F36C32E92EF4E61900CC8ACE /* ca-ES.ini */,
+				F36C32EA2EF4E61900CC8ACE /* cs-CZ.ini */,
+				F36C32EB2EF4E61900CC8ACE /* da-DK.ini */,
+				F36C32EC2EF4E61900CC8ACE /* de-DE.ini */,
+				F36C32ED2EF4E61900CC8ACE /* el-GR.ini */,
+				F36C32EE2EF4E61900CC8ACE /* en-GB.ini */,
+				F36C32EF2EF4E61900CC8ACE /* en-US.ini */,
+				F36C32F02EF4E61900CC8ACE /* es-ES.ini */,
+				F36C32F12EF4E61900CC8ACE /* et-EE.ini */,
+				F36C32F22EF4E61900CC8ACE /* fa-IR.ini */,
+				F36C32F32EF4E61900CC8ACE /* fi-FI.ini */,
+				F36C32F42EF4E61900CC8ACE /* fil-PH.ini */,
+				F36C32F52EF4E61900CC8ACE /* fr-FR.ini */,
+				F36C32F62EF4E61900CC8ACE /* gl-ES.ini */,
+				F36C32F72EF4E61900CC8ACE /* he-IL.ini */,
+				F36C32F82EF4E61900CC8ACE /* hi-IN.ini */,
+				F36C32F92EF4E61900CC8ACE /* hr-HR.ini */,
+				F36C32FA2EF4E61900CC8ACE /* hu-HU.ini */,
+				F36C32FB2EF4E61900CC8ACE /* hy-AM.ini */,
+				F36C32FC2EF4E61900CC8ACE /* id-ID.ini */,
+				F36C32FD2EF4E61900CC8ACE /* it-IT.ini */,
+				F36C32FE2EF4E61900CC8ACE /* ja-JP.ini */,
+				F36C32FF2EF4E61900CC8ACE /* ka-GE.ini */,
+				F36C33002EF4E61900CC8ACE /* kaa.ini */,
+				F36C33012EF4E61900CC8ACE /* kmr-TR.ini */,
+				F36C33022EF4E61900CC8ACE /* ko-KR.ini */,
+				F36C33032EF4E61900CC8ACE /* ms-MY.ini */,
+				F36C33042EF4E61900CC8ACE /* nb-NO.ini */,
+				F36C33052EF4E61900CC8ACE /* nl-NL.ini */,
+				F36C33062EF4E61900CC8ACE /* pl-PL.ini */,
+				F36C33072EF4E61900CC8ACE /* pt-BR.ini */,
+				F36C33082EF4E61900CC8ACE /* pt-PT.ini */,
+				F36C33092EF4E61900CC8ACE /* ro-RO.ini */,
+				F36C330A2EF4E61900CC8ACE /* ru-RU.ini */,
+				F36C330B2EF4E61900CC8ACE /* si-LK.ini */,
+				F36C330C2EF4E61900CC8ACE /* sk-SK.ini */,
+				F36C330D2EF4E61900CC8ACE /* sl-SI.ini */,
+				F36C330E2EF4E61900CC8ACE /* sv-SE.ini */,
+				F36C330F2EF4E61900CC8ACE /* th-TH.ini */,
+				F36C33102EF4E61900CC8ACE /* tr-TR.ini */,
+				F36C33112EF4E61900CC8ACE /* ug-CN.ini */,
+				F36C33122EF4E61900CC8ACE /* uk-UA.ini */,
+				F36C33132EF4E61900CC8ACE /* vi-VN.ini */,
+				F36C33142EF4E61900CC8ACE /* zh-CN.ini */,
+				F36C33152EF4E61900CC8ACE /* zh-TW.ini */,
+			);
+			path = locale;
+			sourceTree = "<group>";
+		};
+		F36C33172EF4E61900CC8ACE /* data */ = {
+			isa = PBXGroup;
+			children = (
+				F36C33162EF4E61900CC8ACE /* locale */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -4022,7 +5536,6 @@
 				9078C42D2C7859D300FD11BA /* sse.h in Headers */,
 				9078C5D92C785FF100FD11BA /* plane.h in Headers */,
 				9078C6022C785FF100FD11BA /* audio-math.h in Headers */,
-				9078C4542C7859D300FD11BA /* threading-windows.h in Headers */,
 				9078C6112C785FF100FD11BA /* obs-nix.h in Headers */,
 				9078C5C12C785FF100FD11BA /* obs-data.h in Headers */,
 				9078C5E42C785FF100FD11BA /* bounds.h in Headers */,
@@ -4033,6 +5546,8 @@
 				9078C5E92C785FF100FD11BA /* matrix3.h in Headers */,
 				9078C6042C785FF100FD11BA /* video-io.h in Headers */,
 				9078C60A2C785FF100FD11BA /* audio-io.h in Headers */,
+				F36C31E82EF3D6A200CC8ACE /* obs-av1.h in Headers */,
+				F36C31EF2EF3F69600CC8ACE /* source-profiler.h in Headers */,
 				9078C5EB2C785FF100FD11BA /* libnsgif.h in Headers */,
 				9078C4482C7859D300FD11BA /* curl-helper.h in Headers */,
 				9078C4302C7859D300FD11BA /* simde-align.h in Headers */,
@@ -4050,6 +5565,8 @@
 				9078C41C2C7859D300FD11BA /* cf-lexer.h in Headers */,
 				9078C42A2C7859D300FD11BA /* check.h in Headers */,
 				9078C5E12C785FF100FD11BA /* image-file.h in Headers */,
+				F36C31DE2EF3D36600CC8ACE /* deque.h in Headers */,
+				F36C31E52EF3D4DC00CC8ACE /* buffered-file-serializer.h in Headers */,
 				9078C5FC2C785FF100FD11BA /* frame-rate.h in Headers */,
 				9078C5B92C785FF100FD11BA /* obs-hotkeys.h in Headers */,
 				9078C5DF2C785FF100FD11BA /* math-defs.h in Headers */,
@@ -4111,6 +5628,7 @@
 				9078C5CB2C785FF100FD11BA /* input.h in Headers */,
 				9078C44C2C7859D300FD11BA /* bitstream.h in Headers */,
 				9078C4242C7859D300FD11BA /* simde-detect-clang.h in Headers */,
+				F36C31F62EF3F92E00CC8ACE /* obsversion.h in Headers */,
 				9078C5FE2C785FF100FD11BA /* video-frame.h in Headers */,
 				9078C5D82C785FF100FD11BA /* device-exports.h in Headers */,
 				9078C5FD2C785FF100FD11BA /* video-scaler.h in Headers */,
@@ -4249,6 +5767,10 @@
 				9088D0702C789876007EB8B5 /* PBXTargetDependency */,
 				9078C2F52C78591D00FD11BA /* PBXTargetDependency */,
 				90C0F0682C7C4EE7001A0C5B /* PBXTargetDependency */,
+				F36C30FA2EF3CE2700CC8ACE /* PBXTargetDependency */,
+				F36C32DB2EF4E27E00CC8ACE /* PBXTargetDependency */,
+				F36C335E2EF4E6C200CC8ACE /* PBXTargetDependency */,
+				F33F4D112EF6910A001147D9 /* PBXTargetDependency */,
 			);
 			name = ViewApp;
 			productName = ViewApp;
@@ -4354,6 +5876,88 @@
 			productReference = F353E0C92E618AFF0036D0D4 /* obs-ffmpeg-mux */;
 			productType = "com.apple.product-type.tool";
 		};
+		F36C2FB52EF3C9EC00CC8ACE /* rtmp-service */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F36C2FB72EF3C9EC00CC8ACE /* Build configuration list for PBXNativeTarget "rtmp-service" */;
+			buildPhases = (
+				F36C2FB22EF3C9EC00CC8ACE /* Sources */,
+				F36C2FB32EF3C9EC00CC8ACE /* Frameworks */,
+				F36C30AA2EF3CB8D00CC8ACE /* Copy Files */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "rtmp-service";
+			packageProductDependencies = (
+			);
+			productName = "rtmp-service";
+			productReference = F36C2FB62EF3C9EC00CC8ACE /* rtmp-service.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		F36C31002EF3D0B300CC8ACE /* obs-outputs */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F36C31022EF3D0B300CC8ACE /* Build configuration list for PBXNativeTarget "obs-outputs" */;
+			buildPhases = (
+				F36C30FD2EF3D0B300CC8ACE /* Sources */,
+				F36C31052EF3D0E800CC8ACE /* CopyFiles */,
+				F36C321A2EF40F4400CC8ACE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "obs-outputs";
+			packageProductDependencies = (
+			);
+			productName = "obs-outputs";
+			productReference = F36C31012EF3D0B300CC8ACE /* obs-outputs.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		F36C32482EF4E1C000CC8ACE /* mac-videotoolbox */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F36C324A2EF4E1C000CC8ACE /* Build configuration list for PBXNativeTarget "mac-videotoolbox" */;
+			buildPhases = (
+				F36C32452EF4E1C000CC8ACE /* Sources */,
+				F36C32462EF4E1C000CC8ACE /* Frameworks */,
+				F36C32472EF4E1C000CC8ACE /* Resources */,
+				F36C32D32EF4E20D00CC8ACE /* CopyFiles */,
+				F36C32D82EF4E23100CC8ACE /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F36C32D72EF4E23100CC8ACE /* PBXTargetDependency */,
+			);
+			name = "mac-videotoolbox";
+			packageProductDependencies = (
+			);
+			productName = "mac-videotoolbox";
+			productReference = F36C32492EF4E1C000CC8ACE /* mac-videotoolbox.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
+		F36C32E02EF4E5F700CC8ACE /* obs-webrtc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F36C32E22EF4E5F700CC8ACE /* Build configuration list for PBXNativeTarget "obs-webrtc" */;
+			buildPhases = (
+				F36C32DD2EF4E5F700CC8ACE /* Sources */,
+				F36C32DE2EF4E5F700CC8ACE /* Frameworks */,
+				F36C32DF2EF4E5F700CC8ACE /* Resources */,
+				F36C33522EF4E62200CC8ACE /* CopyFiles */,
+				F36C33572EF4E63C00CC8ACE /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F36C33562EF4E63C00CC8ACE /* PBXTargetDependency */,
+			);
+			name = "obs-webrtc";
+			packageProductDependencies = (
+			);
+			productName = "obs-webrtc";
+			productReference = F36C32E12EF4E5F700CC8ACE /* obs-webrtc.plugin */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -4398,6 +6002,18 @@
 					F353E0C82E618AFF0036D0D4 = {
 						CreatedOnToolsVersion = 16.4;
 					};
+					F36C2FB52EF3C9EC00CC8ACE = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					F36C31002EF3D0B300CC8ACE = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					F36C32482EF4E1C000CC8ACE = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					F36C32E02EF4E5F700CC8ACE = {
+						CreatedOnToolsVersion = 16.4;
+					};
 				};
 			};
 			buildConfigurationList = 90B88B792C77263400A77D50 /* Build configuration list for PBXProject "ViewApp" */;
@@ -4424,6 +6040,10 @@
 				9054B9522C8AEBCC0051AD7F /* obs-transitions */,
 				90AD9E242D27D00A009F3070 /* mac-capture */,
 				F353E0C82E618AFF0036D0D4 /* obs-ffmpeg-mux */,
+				F36C2FB52EF3C9EC00CC8ACE /* rtmp-service */,
+				F36C31002EF3D0B300CC8ACE /* obs-outputs */,
+				F36C32482EF4E1C000CC8ACE /* mac-videotoolbox */,
+				F36C32E02EF4E5F700CC8ACE /* obs-webrtc */,
 			);
 		};
 /* End PBXProject section */
@@ -4593,6 +6213,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F36C32472EF4E1C000CC8ACE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C32DF2EF4E5F700CC8ACE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -4642,8 +6276,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F36C31F02EF3F69600CC8ACE /* pipe.c in Sources */,
+				F36C31F12EF3F69600CC8ACE /* source-profiler.c in Sources */,
 				9078C4342C7859D300FD11BA /* platform-nix.c in Sources */,
 				9078C5F82C785FF100FD11BA /* obs-display.c in Sources */,
+				F36C31E42EF3D4DC00CC8ACE /* buffered-file-serializer.c in Sources */,
 				9078C5E02C785FF100FD11BA /* vec2.c in Sources */,
 				9078C41E2C7859D300FD11BA /* dstr.c in Sources */,
 				9078C4202C7859D300FD11BA /* bitstream.c in Sources */,
@@ -4658,6 +6295,7 @@
 				9078C6002C785FF100FD11BA /* audio-io.c in Sources */,
 				9078C5D12C785FF100FD11BA /* texture-render.c in Sources */,
 				9078C5C32C785FF100FD11BA /* obs-output.c in Sources */,
+				F36C31EB2EF3ED7A00CC8ACE /* obs-canvas.c in Sources */,
 				9078C4402C7859D300FD11BA /* utf8.c in Sources */,
 				9078C5BA2C785FF100FD11BA /* obs-missing-files.c in Sources */,
 				9078C5D72C785FF100FD11BA /* graphics-imports.c in Sources */,
@@ -4685,13 +6323,12 @@
 				9078C4352C7859D300FD11BA /* profiler.c in Sources */,
 				9078C61F2C785FF100FD11BA /* obs-view.c in Sources */,
 				9078C5F12C785FF100FD11BA /* obs-source-transition.c in Sources */,
+				F36C31F72EF3F92E00CC8ACE /* obsversion.c in Sources */,
 				9078C61C2C785FF100FD11BA /* obs-service.c in Sources */,
 				9078C60D2C785FF100FD11BA /* obs-output-delay.c in Sources */,
-				9078C43B2C7859D300FD11BA /* threading-windows.c in Sources */,
 				9078C5DC2C785FF100FD11BA /* axisang.c in Sources */,
 				9078C5C92C785FF100FD11BA /* vec4.c in Sources */,
 				9078C6032C785FF100FD11BA /* format-conversion.c in Sources */,
-				9078C4552C7859D300FD11BA /* platform-nix-portal.c in Sources */,
 				9078C4452C7859D300FD11BA /* array-serializer.c in Sources */,
 				9078C53F2C785FD100FD11BA /* coreaudio-monitoring-available.c in Sources */,
 				9078C4462C7859D300FD11BA /* task.c in Sources */,
@@ -4712,8 +6349,8 @@
 				9078C4512C7859D300FD11BA /* cf-parser.c in Sources */,
 				9078C5D62C785FF100FD11BA /* vec3.c in Sources */,
 				9078C6192C785FF100FD11BA /* obs-video.c in Sources */,
-				9078C45F2C7859D300FD11BA /* pipe-windows.c in Sources */,
 				9078C41F2C7859D300FD11BA /* text-lookup.c in Sources */,
+				F36C31E92EF3D6A200CC8ACE /* obs-av1.c in Sources */,
 				9078C6182C785FF100FD11BA /* obs-hevc.c in Sources */,
 				9078C6262C785FF100FD11BA /* obs.c in Sources */,
 				9078C5F62C785FF100FD11BA /* obs-source-deinterlace.c in Sources */,
@@ -4835,6 +6472,68 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F36C2FB22EF3C9EC00CC8ACE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F36C305A2EF3CAB400CC8ACE /* amazon-ivs.c in Sources */,
+				F36C305B2EF3CAB400CC8ACE /* showroom.c in Sources */,
+				F36C305C2EF3CAB400CC8ACE /* rtmp-custom.c in Sources */,
+				F36C305D2EF3CAB400CC8ACE /* rtmp-common.c in Sources */,
+				F36C305E2EF3CAB400CC8ACE /* rtmp-services-main.c in Sources */,
+				F36C305F2EF3CAB400CC8ACE /* service-ingest.c in Sources */,
+				F36C30602EF3CAB400CC8ACE /* nimotv.c in Sources */,
+				F36C30612EF3CAB400CC8ACE /* twitch.c in Sources */,
+				F36C30622EF3CAB400CC8ACE /* dacast.c in Sources */,
+				F36C30F52EF3CD0500CC8ACE /* file-updater.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C30FD2EF3D0B300CC8ACE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F36C319C2EF3D13E00CC8ACE /* rtmp-av1.c in Sources */,
+				F36C32092EF40B3800CC8ACE /* bpm.c in Sources */,
+				F36C31E12EF3D48700CC8ACE /* happy-eyeballs.c in Sources */,
+				F36C319D2EF3D13E00CC8ACE /* rtmp-hevc.c in Sources */,
+				F36C319F2EF3D13E00CC8ACE /* flv-output.c in Sources */,
+				F36C31A02EF3D13E00CC8ACE /* mp4-mux.c in Sources */,
+				F36C31A12EF3D13E00CC8ACE /* mp4-output.c in Sources */,
+				F36C31A22EF3D13E00CC8ACE /* rtmp-stream.c in Sources */,
+				F36C31A32EF3D13E00CC8ACE /* net-if.c in Sources */,
+				F36C31A42EF3D13E00CC8ACE /* obs-outputs.c in Sources */,
+				F36C31A52EF3D13E00CC8ACE /* null-output.c in Sources */,
+				F36C31D32EF3D1F300CC8ACE /* hashswf.c in Sources */,
+				F36C31D42EF3D1F300CC8ACE /* amf.c in Sources */,
+				F36C31D52EF3D1F300CC8ACE /* log.c in Sources */,
+				F36C320C2EF40B6D00CC8ACE /* opts-parser.c in Sources */,
+				F36C31D62EF3D1F300CC8ACE /* rtmp.c in Sources */,
+				F36C31D72EF3D1F300CC8ACE /* cencode.c in Sources */,
+				F36C31D82EF3D1F300CC8ACE /* md5.c in Sources */,
+				F36C31D92EF3D1F300CC8ACE /* parseurl.c in Sources */,
+				F36C31A62EF3D13E00CC8ACE /* flv-mux.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C32452EF4E1C000CC8ACE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F36C32D22EF4E1FE00CC8ACE /* encoder.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F36C32DD2EF4E5F700CC8ACE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F36C331E2EF4E61900CC8ACE /* whip-service.cpp in Sources */,
+				F36C331F2EF4E61900CC8ACE /* whip-output.cpp in Sources */,
+				F36C33202EF4E61900CC8ACE /* obs-webrtc.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -4888,10 +6587,40 @@
 			target = 9078C2EF2C78591D00FD11BA /* libcore */;
 			targetProxy = 90F6C4402C880921003483EC /* PBXContainerItemProxy */;
 		};
+		F33F4D112EF6910A001147D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F36C31002EF3D0B300CC8ACE /* obs-outputs */;
+			targetProxy = F33F4D102EF6910A001147D9 /* PBXContainerItemProxy */;
+		};
 		F353E0DF2E6191BE0036D0D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9078C2EF2C78591D00FD11BA /* libcore */;
 			targetProxy = F353E0DE2E6191BE0036D0D4 /* PBXContainerItemProxy */;
+		};
+		F36C30FA2EF3CE2700CC8ACE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F36C2FB52EF3C9EC00CC8ACE /* rtmp-service */;
+			targetProxy = F36C30F92EF3CE2700CC8ACE /* PBXContainerItemProxy */;
+		};
+		F36C32D72EF4E23100CC8ACE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9078C2EF2C78591D00FD11BA /* libcore */;
+			targetProxy = F36C32D62EF4E23100CC8ACE /* PBXContainerItemProxy */;
+		};
+		F36C32DB2EF4E27E00CC8ACE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F36C32482EF4E1C000CC8ACE /* mac-videotoolbox */;
+			targetProxy = F36C32DA2EF4E27E00CC8ACE /* PBXContainerItemProxy */;
+		};
+		F36C33562EF4E63C00CC8ACE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9078C2EF2C78591D00FD11BA /* libcore */;
+			targetProxy = F36C33552EF4E63C00CC8ACE /* PBXContainerItemProxy */;
+		};
+		F36C335E2EF4E6C200CC8ACE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F36C32E02EF4E5F700CC8ACE /* obs-webrtc */;
+			targetProxy = F36C335D2EF4E6C200CC8ACE /* PBXContainerItemProxy */;
 		};
 		F37B219D2E52C72300B0C754 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -5320,6 +7049,8 @@
 					"$(PROJECT_DIR)/ViewApp/ffmpeg/lib",
 					"$(PROJECT_DIR)/ViewApp/libs",
 					"$(PROJECT_DIR)/ViewApp/deps",
+					"$(PROJECT_DIR)/ViewApp/mbedtls",
+					"$(PROJECT_DIR)/ViewApp/rtc",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
@@ -5365,6 +7096,8 @@
 					"$(PROJECT_DIR)/ViewApp/ffmpeg/lib",
 					"$(PROJECT_DIR)/ViewApp/libs",
 					"$(PROJECT_DIR)/ViewApp/deps",
+					"$(PROJECT_DIR)/ViewApp/mbedtls",
+					"$(PROJECT_DIR)/ViewApp/rtc",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
@@ -5654,6 +7387,263 @@
 			};
 			name = Release;
 		};
+		F36C2FB82EF3C9EC00CC8ACE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 85CWKC69K9;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/libcore/core/",
+					"$(PROJECT_DIR)/ViewApp/json/include/",
+					"$(PROJECT_DIR)/ViewApp/libcaption/",
+					"$(PROJECT_DIR)/ViewApp/uthash/",
+					"$(PROJECT_DIR)/ViewApp/",
+				);
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ViewApp/libs",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ERE.rtmp-service";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		F36C2FB92EF3C9EC00CC8ACE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 85CWKC69K9;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/libcore/core/",
+					"$(PROJECT_DIR)/ViewApp/json/include/",
+					"$(PROJECT_DIR)/ViewApp/libcaption/",
+					"$(PROJECT_DIR)/ViewApp/uthash/",
+					"$(PROJECT_DIR)/ViewApp/",
+				);
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ViewApp/libs",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ERE.rtmp-service";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		F36C31032EF3D0B300CC8ACE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 85CWKC69K9;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					USE_MBEDTLS,
+					"CRYPTO=1",
+					obs_outputs_EXPORTS,
+					"'CMAKE_INTDIR=\"$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"'",
+					"DEBUG=1",
+					"$(inherited)",
+					ENABLE_HEVC,
+					SIMDE_ENABLE_OPENMP,
+					_DEBUG,
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/libcore/core/",
+					"$(PROJECT_DIR)/ViewApp/json/include/",
+					"$(PROJECT_DIR)/ViewApp/libcaption/",
+					"$(PROJECT_DIR)/ViewApp/uthash/",
+					"$(PROJECT_DIR)/ViewApp/",
+					"$(PROJECT_DIR)/ViewApp/happy-eyeballs/",
+					"$(PROJECT_DIR)/ViewApp/bpm",
+					"$(PROJECT_DIR)/ViewApp/opts-parser",
+					"$(PROJECT_DIR)/ViewApp/mbedtls/",
+				);
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ViewApp/libs",
+					"$(PROJECT_DIR)/ViewApp/openssl/lib",
+					"$(PROJECT_DIR)/ViewApp/mbedtls",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ERE.obs-outputs";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		F36C31042EF3D0B300CC8ACE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 85CWKC69K9;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/libcore/core/",
+					"$(PROJECT_DIR)/ViewApp/json/include/",
+					"$(PROJECT_DIR)/ViewApp/libcaption/",
+					"$(PROJECT_DIR)/ViewApp/uthash/",
+					"$(PROJECT_DIR)/ViewApp/",
+					"$(PROJECT_DIR)/ViewApp/happy-eyeballs/",
+					"$(PROJECT_DIR)/ViewApp/bpm",
+					"$(PROJECT_DIR)/ViewApp/opts-parser",
+					"$(PROJECT_DIR)/ViewApp/mbedtls/",
+				);
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ViewApp/libs",
+					"$(PROJECT_DIR)/ViewApp/openssl/lib",
+					"$(PROJECT_DIR)/ViewApp/mbedtls",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ERE.obs-outputs";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		F36C324B2EF4E1C000CC8ACE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 85CWKC69K9;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/libcore/core/";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ERE.mac-videotoolbox";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		F36C324C2EF4E1C000CC8ACE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 85CWKC69K9;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/libcore/core/";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ERE.mac-videotoolbox";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		F36C32E32EF4E5F700CC8ACE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 85CWKC69K9;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/ViewApp/",
+					"$(PROJECT_DIR)/ViewApp/rtc/",
+					"$(PROJECT_DIR)/libcore/core/",
+				);
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ViewApp/rtc",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ERE.obs-webrtc";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		F36C32E42EF4E5F700CC8ACE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 85CWKC69K9;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/ViewApp/",
+					"$(PROJECT_DIR)/ViewApp/rtc/",
+					"$(PROJECT_DIR)/libcore/core/",
+				);
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ViewApp/rtc",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "ERE.obs-webrtc";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -5761,6 +7751,42 @@
 			buildConfigurations = (
 				F353E0CE2E618AFF0036D0D4 /* Debug */,
 				F353E0CF2E618AFF0036D0D4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F36C2FB72EF3C9EC00CC8ACE /* Build configuration list for PBXNativeTarget "rtmp-service" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F36C2FB82EF3C9EC00CC8ACE /* Debug */,
+				F36C2FB92EF3C9EC00CC8ACE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F36C31022EF3D0B300CC8ACE /* Build configuration list for PBXNativeTarget "obs-outputs" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F36C31032EF3D0B300CC8ACE /* Debug */,
+				F36C31042EF3D0B300CC8ACE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F36C324A2EF4E1C000CC8ACE /* Build configuration list for PBXNativeTarget "mac-videotoolbox" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F36C324B2EF4E1C000CC8ACE /* Debug */,
+				F36C324C2EF4E1C000CC8ACE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F36C32E22EF4E5F700CC8ACE /* Build configuration list for PBXNativeTarget "obs-webrtc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F36C32E32EF4E5F700CC8ACE /* Debug */,
+				F36C32E42EF4E5F700CC8ACE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
