@@ -9,6 +9,7 @@
 #define HANDLE_RADIUS     4.0f
 #define HANDLE_SEL_RADIUS (HANDLE_RADIUS * 1.5f)
 #define PREVIEW_EDGE_SIZE 4
+#define GRID_SIZE         50.0f  // 网格大小（像素）
 
 
 #pragma mark: //创建画布对象 并设置渲染回调
@@ -139,45 +140,48 @@ void ObsWindow::DrawGrid(float cx, float cy)
     gs_eparam_t    *color = gs_effect_get_param_by_name(solid, "color");
     gs_technique_t *tech = gs_effect_get_technique(solid, "Solid");
     
-    //设置网格线颜色（浅灰色，半透明）
-    vec4 colorVal;
-    vec4_set(&colorVal, 0.5f, 0.5f, 0.5f, 0.3f);
-    gs_effect_set_vec4(color, &colorVal);
+    // 设置网格线颜色（浅灰色，半透明）
+    vec4 gridColor;
+    vec4_set(&gridColor, 0.5f, 0.5f, 0.5f, 0.3f);
+    gs_effect_set_vec4(color, &gridColor);
     
     gs_technique_begin(tech);
     gs_technique_begin_pass(tech, 0);
+    gs_matrix_push();
+    gs_matrix_identity();
     
-    //网格间距（像素）
-    const float gridSpacing = 50.0f;
+    // 计算需要绘制的网格线数量
+    int verticalLines = int(cx / GRID_SIZE) + 1;
+    int horizontalLines = int(cy / GRID_SIZE) + 1;
     
-    //计算需要的线条数量
-    int verticalLines = int(cx / gridSpacing) + 1;
-    int horizontalLines = int(cy / gridSpacing) + 1;
-    int totalLines = verticalLines + horizontalLines;
+    // 一次性创建所有网格线的顶点缓冲区并绘制
+    gs_render_start(true);
     
-    if (totalLines > 0) {
-        //一次性创建所有线条的顶点缓冲区
-        gs_render_start(true);
-        
-        //绘制垂直线
-        for (float x = 0.0f; x <= cx; x += gridSpacing) {
+    // 添加垂直线的顶点
+    for (int i = 0; i <= verticalLines; i++) {
+        float x = i * GRID_SIZE;
+        if (x <= cx) {
             gs_vertex2f(x, 0.0f);
             gs_vertex2f(x, cy);
         }
-        
-        //绘制水平线
-        for (float y = 0.0f; y <= cy; y += gridSpacing) {
+    }
+    
+    // 添加水平线的顶点
+    for (int i = 0; i <= horizontalLines; i++) {
+        float y = i * GRID_SIZE;
+        if (y <= cy) {
             gs_vertex2f(0.0f, y);
             gs_vertex2f(cx, y);
         }
-        
-        gs_vertbuffer_t *gridBuffer = gs_render_save();
-        gs_load_vertexbuffer(gridBuffer);
-        gs_draw(GS_LINES, 0, totalLines * 2);
-        gs_vertexbuffer_destroy(gridBuffer);
     }
     
+    gs_vertbuffer_t *gridBuffer = gs_render_save();
+    gs_load_vertexbuffer(gridBuffer);
+    gs_draw(GS_LINES, 0, 0);
+    gs_vertexbuffer_destroy(gridBuffer);
+    
     gs_load_vertexbuffer(nullptr);
+    gs_matrix_pop();
     gs_technique_end_pass(tech);
     gs_technique_end(tech);
 }
