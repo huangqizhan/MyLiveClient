@@ -132,6 +132,55 @@ void ObsWindow::DrawBackdrop(float cx, float cy)
 
     gs_load_vertexbuffer(nullptr);
 }
+///绘制网格背景
+void ObsWindow::DrawGrid(float cx, float cy)
+{
+    gs_effect_t    *solid = obs_get_base_effect(OBS_EFFECT_SOLID);
+    gs_eparam_t    *color = gs_effect_get_param_by_name(solid, "color");
+    gs_technique_t *tech = gs_effect_get_technique(solid, "Solid");
+    
+    //设置网格线颜色（浅灰色，半透明）
+    vec4 colorVal;
+    vec4_set(&colorVal, 0.5f, 0.5f, 0.5f, 0.3f);
+    gs_effect_set_vec4(color, &colorVal);
+    
+    gs_technique_begin(tech);
+    gs_technique_begin_pass(tech, 0);
+    
+    //网格间距（像素）
+    const float gridSpacing = 50.0f;
+    
+    //计算需要的线条数量
+    int verticalLines = int(cx / gridSpacing) + 1;
+    int horizontalLines = int(cy / gridSpacing) + 1;
+    int totalLines = verticalLines + horizontalLines;
+    
+    if (totalLines > 0) {
+        //一次性创建所有线条的顶点缓冲区
+        gs_render_start(true);
+        
+        //绘制垂直线
+        for (float x = 0.0f; x <= cx; x += gridSpacing) {
+            gs_vertex2f(x, 0.0f);
+            gs_vertex2f(x, cy);
+        }
+        
+        //绘制水平线
+        for (float y = 0.0f; y <= cy; y += gridSpacing) {
+            gs_vertex2f(0.0f, y);
+            gs_vertex2f(cx, y);
+        }
+        
+        gs_vertbuffer_t *gridBuffer = gs_render_save();
+        gs_load_vertexbuffer(gridBuffer);
+        gs_draw(GS_LINES, 0, totalLines * 2);
+        gs_vertexbuffer_destroy(gridBuffer);
+    }
+    
+    gs_load_vertexbuffer(nullptr);
+    gs_technique_end_pass(tech);
+    gs_technique_end(tech);
+}
 ///绘制边框上的各个顶点
 static void DrawSquareAtPos(float x, float y){
     struct vec3 pos;
@@ -338,6 +387,8 @@ void ObsWindow::RenderWindow(uint32_t cx, uint32_t cy)
         gs_set_viewport(m_previewX, m_previewY, m_previewCX, m_previewCY);
         ///绘制背景
         DrawBackdrop(float(ovi.base_width), float(ovi.base_height));
+        ///绘制网格
+        DrawGrid(float(ovi.base_width), float(ovi.base_height));
         //绘制缓冲区中的合成后的主纹理到屏幕上
         obs_render_main_texture();
         ///置空device的顶点缓冲区

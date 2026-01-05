@@ -52,6 +52,7 @@ protected:
 
     void InitPrimitives();
     void DrawBackdrop(float cx, float cy);
+    void DrawGrid(float cx, float cy);
     void DrawSceneEditing();
 
     //是否锁定
